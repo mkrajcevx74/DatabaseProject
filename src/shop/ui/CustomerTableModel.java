@@ -15,7 +15,7 @@ public class CustomerTableModel extends EntityTableModel {
 	public CustomerTableModel(List<Object> theEntities) {
 		super(theEntities);
 	}
-	
+
 	@Override
 	public Object getValueAt(int row, int col) {
 		Customer temp = (Customer) entities.get(row);

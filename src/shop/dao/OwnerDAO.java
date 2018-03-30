@@ -6,7 +6,7 @@ import shop.core.Owner;
 
 public class OwnerDAO extends EntityDAO{
 	public OwnerDAO(String host, String user, String password, String dbName, String dburl) throws Exception {
-		super(host, user, password, dbName, dburl);
+		super();
 	}
 	
 	@Override

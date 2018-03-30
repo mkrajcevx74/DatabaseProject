@@ -8,15 +8,18 @@ import java.io.*;
 abstract public class EntityDAO {
 	protected Connection myConn;
 	
-	public EntityDAO(String host, String user, String password, String dbName, String dburl) throws Exception {
+	String host = "localhost";
+	String user;
+	String password;
+	String dbName = "carinfo";
+	String dburl = "jdbc:mysql://" + host + "/"+ dbName + "?user=" + user + "&password=" + password;
+	
+	public EntityDAO() throws Exception {
 		//Properties props = new Properties();
 		//props.load(new FileInputStream("demo.properties"));
 
 		host = "localhost";
-		user = "root";
-		password = "";
-		dbName = "carinfo";
-		dburl = "jdbc:mysql://" + host + "/"+ dbName + "?user=" + user + "&password=" + password;
+		
 		// Note: removed props.getProperty() from string declarations
 		myConn = DriverManager.getConnection(dburl);
 		System.out.println("DB connection successful to: " + dburl);

@@ -6,7 +6,7 @@ import shop.core.Vehicle;
 
 public class VehicleDAO extends EntityDAO {
 	public VehicleDAO(String host, String user, String password, String dbName, String dburl) throws Exception {
-		super(host, user, password, dbName, dburl);
+		super();
 	}
 	
 	@Override
