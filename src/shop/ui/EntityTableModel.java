@@ -2,7 +2,6 @@ package shop.ui;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import shop.core.Customer;
 
 abstract public class EntityTableModel extends AbstractTableModel {
 	String[] columnNames;

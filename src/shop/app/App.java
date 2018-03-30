@@ -21,7 +21,7 @@ import java.util.List;
 import shop.core.*;
 import shop.dao.*;
 
-public class App extends JFrame{
+public class App extends JFrame {
 	private JPanel contentPane;
 	private JTextField lNameTextField;
 	private JButton btnSearch;
@@ -31,14 +31,24 @@ public class App extends JFrame{
 	private CustomerDAO customerDAO;
 	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater( new Runnable() {
 			public void run() {
 				try {
 					App frame = new App();
-					frame.setVisible
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
-			
+		});
+	}
+	
+	public App() {
+		// Create DAO
+		try {
+			customerDAO = new CustomerDAO();
+		} catch (Exception exc) {
+			JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
 		}
 	}
 }

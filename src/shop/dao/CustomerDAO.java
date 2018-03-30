@@ -5,8 +5,8 @@ import java.sql.*;
 import shop.core.Customer;
 
 public class CustomerDAO extends EntityDAO {
-	public CustomerDAO() throws Exception {
-		super();
+	public CustomerDAO(String host, String user, String password, String dbName, String dburl) throws Exception {
+		super(host, user, password, dbName, dburl);
 	}
 	
 	@Override
@@ -64,11 +64,5 @@ public class CustomerDAO extends EntityDAO {
 		
 		Customer temp = new Customer(num, fName, lName, contact);
 		return temp;
-	}
-
-	public static void main(String[] args) throws Exception {
-		CustomerDAO dao = new CustomerDAO();
-		System.out.println(dao.searchCustomers("Yu"));
-		System.out.println(dao.getAllEntities());
 	}
 }

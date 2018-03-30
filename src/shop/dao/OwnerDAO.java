@@ -5,8 +5,8 @@ import java.sql.*;
 import shop.core.Owner;
 
 public class OwnerDAO extends EntityDAO{
-	public OwnerDAO() throws Exception {
-		super();
+	public OwnerDAO(String host, String user, String password, String dbName, String dburl) throws Exception {
+		super(host, user, password, dbName, dburl);
 	}
 	
 	@Override
@@ -65,11 +65,5 @@ public class OwnerDAO extends EntityDAO{
 		
 		Owner temp = new Owner(vin, cNum, vNum, year, record);
 		return temp;
-	}
-
-	public static void main(String[] args) throws Exception {
-		OwnerDAO dao = new OwnerDAO();
-		System.out.println(dao.searchOwners("YS3FA4CY1B1306923"));
-		System.out.println(dao.getAllEntities());
 	}
 }

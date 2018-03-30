@@ -1,7 +1,6 @@
 package shop.ui;
 
 import java.util.List;
-import javax.swing.table.AbstractTableModel;
 import shop.core.Customer;
 
 public class CustomerTableModel extends EntityTableModel {
@@ -11,8 +10,7 @@ public class CustomerTableModel extends EntityTableModel {
 	private static final int LNAME_COL = 2;
 	private static final int CONTACT_COL = 3;
 	
-	columnNames = new String[]{"Num", "First Name", "Last Name", "Contact"};
-	private List<Customer> customers;
+	String[] columnNames = new String[]{"Num", "First Name", "Last Name", "Contact"};
 	
 	public CustomerTableModel(List<Object> theEntities) {
 		super(theEntities);
@@ -20,7 +18,7 @@ public class CustomerTableModel extends EntityTableModel {
 	
 	@Override
 	public Object getValueAt(int row, int col) {
-		Customer temp = customers.get(row);
+		Customer temp = (Customer) entities.get(row);
 		
 		switch(col) {
 		case NUM_COL:

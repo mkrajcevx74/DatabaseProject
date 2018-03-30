@@ -5,8 +5,8 @@ import java.sql.*;
 import shop.core.Vehicle;
 
 public class VehicleDAO extends EntityDAO {
-	public VehicleDAO() throws Exception {
-		super();
+	public VehicleDAO(String host, String user, String password, String dbName, String dburl) throws Exception {
+		super(host, user, password, dbName, dburl);
 	}
 	
 	@Override
@@ -65,11 +65,5 @@ public class VehicleDAO extends EntityDAO {
 		
 		Vehicle temp = new Vehicle(num, make, model, year, misc);
 		return temp;
-	}
-
-	public static void main(String[] args) throws Exception {
-		VehicleDAO dao = new VehicleDAO();
-		System.out.println(dao.searchVehicles("9-3"));
-		System.out.println(dao.getAllEntities());
 	}
 }
