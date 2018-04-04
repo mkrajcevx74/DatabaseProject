@@ -40,11 +40,11 @@ public class Vehicle {
 		this.model = model;
 	}
 	
-	public int year() {
+	public int getYear() {
 		return year;
 	}
 	
-	public void year(int year) {
+	public void getYear(int year) {
 		this.year = year;
 	}
 	
@@ -54,6 +54,7 @@ public class Vehicle {
 	
 	@Override
 	public String toString() {
-		return String.format("Vehicle [num=%s, make=%s, model=%s, year=%s, misc=%s]", num, make, model, year, misc);
+		//return String.format("Vehicle [num=%s, make=%s, model=%s, year=%s, misc=%s]", num, make, model, year, misc);
+		return getYear() + " " + getMake() + " " + getModel();
 	}
 }

@@ -3,10 +3,7 @@ package shop.app;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.EventQueue;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.Window;
+import java.awt.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -60,6 +57,10 @@ public class LoginW extends JFrame{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		JLabel lblWelcome = new JLabel("Welcome");
+		lblWelcome.setBounds(178, 23, 46, 14);
+		frame.getContentPane().add(lblWelcome);
+		
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setBounds(46, 85, 100, 20);
 		frame.getContentPane().add(lblUsername);
@@ -67,6 +68,11 @@ public class LoginW extends JFrame{
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(46, 127, 100, 20);
 		frame.getContentPane().add(lblPassword);
+		
+		JLabel lblInvalidUsernameOr = new JLabel("Invalid Username or Password");
+		lblInvalidUsernameOr.setBounds(136, 177, 153, 14);
+		frame.getContentPane().add(lblInvalidUsernameOr);
+		lblInvalidUsernameOr.setVisible(false);
 		
 		userName = new JTextField();
 		userName.setBounds(208, 85, 100, 20);
@@ -77,11 +83,6 @@ public class LoginW extends JFrame{
 		passwordField.setBounds(208, 127, 100, 20);
 		frame.getContentPane().add(passwordField);
 		
-		JLabel lblInvalidUsernameOr = new JLabel("Invalid Username or Password");
-		lblInvalidUsernameOr.setBounds(136, 177, 153, 14);
-		frame.getContentPane().add(lblInvalidUsernameOr);
-		lblInvalidUsernameOr.setVisible(false);
-		
 		JButton btnLogIn = new JButton("Log In");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -90,7 +91,7 @@ public class LoginW extends JFrame{
 				dburl = "jdbc:mysql://" + host + "/"+ dbName + "?user=" + user + "&password=" + password;
 				try {
 					con = DriverManager.getConnection(dburl);
-					CustomerW w= new CustomerW(con);
+					CustomerSelectW w= new CustomerSelectW(con);
 					w.setVisible(true);
 					frame.dispose();
 				} catch (SQLException e1) {

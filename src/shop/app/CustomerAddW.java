@@ -3,10 +3,7 @@ package shop.app;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.EventQueue;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.Window;
+import java.awt.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -96,7 +93,7 @@ public class CustomerAddW extends JFrame {
 					}
 					myStmt = con.createStatement();
 					myStmt.executeUpdate("INSERT INTO CUSTOMER VALUES(" + cus.updateString()+ ");");
-					CustomerW w = new CustomerW(con);
+					CustomerSelectW w = new CustomerSelectW(con);
 					w.setVisible(true);
 					((Window) pane.getTopLevelAncestor()).dispose();
 				} catch(SQLException e3) {
@@ -112,7 +109,7 @@ public class CustomerAddW extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CustomerW w = new CustomerW(con);
+				CustomerSelectW w = new CustomerSelectW(con);
 				w.setVisible(true);
 				((Window) pane.getTopLevelAncestor()).dispose();
 			}
