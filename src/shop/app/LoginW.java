@@ -1,29 +1,25 @@
 package shop.app;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Window;
 
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.sql.*;
+import java.util.*;
 
 public class LoginW extends JFrame{
 
 	private JFrame frame;
 	private JTextField userName;
 	private JPasswordField passwordField;
+	
 	private Connection con;
 	
 	String host = "localhost";
@@ -94,11 +90,11 @@ public class LoginW extends JFrame{
 				dburl = "jdbc:mysql://" + host + "/"+ dbName + "?user=" + user + "&password=" + password;
 				try {
 					con = DriverManager.getConnection(dburl);
-					CustomerW c= new CustomerW(con);
-					c.setVisible(true);
+					CustomerW w= new CustomerW(con);
+					w.setVisible(true);
 					frame.dispose();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 					lblInvalidUsernameOr.setVisible(true);
 					System.out.println("1");
 				}

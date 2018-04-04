@@ -48,6 +48,11 @@ public class Customer {
 	
 	@Override
 	public String toString() {
-		return String.format("Customer [num=%s, fName=%s, lName=%s, contact=%s]", num, fName, lName, contact);
+		//return String.format("Customer [num=%s, fName=%s, lName=%s, contact=%s]", num, fName, lName, contact);
+		return getFName() + " " + getLName();
+	}
+	
+	public String updateString() {
+		return getNum() + ", \"" + getFName() + "\", \"" + getLName() + "\", \"" + getContact() + "\"";
 	}
 }
