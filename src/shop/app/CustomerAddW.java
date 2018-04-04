@@ -28,9 +28,6 @@ public class CustomerAddW extends JFrame {
 	private JTextField contactField;
 	
 	Customer cus;
-	String fName = null;
-	String lName = null;
-	String contact = null;
 
 	public CustomerAddW(Connection c, int n) {
 		con = c;
@@ -80,23 +77,23 @@ public class CustomerAddW extends JFrame {
 		JButton btnAddCustomer = new JButton("Add customer");
 		btnAddCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (fName != null) {
-					fName = fNameField.getText();
-				} else {
-					fName = "NULL";
-				}
-				if (lName != null) {
-					lName = lNameField.getText();
-				} else {
-					lName = "NULL";
-				}
-				if (contact != null) {
-					contact = contactField.getText();
-				} else {
-					contact = "NULL";
-				}
-				cus = new Customer(n+1, fName, lName, contact);
 				try {
+					cus = new Customer(n+1, "NULL", "NULL", "NULL");
+					if (fNameField.getText().equals("")) {
+						cus.setFName("NULL");
+					} else {
+						cus.setFName("\"" + fNameField.getText() + "\"");
+					}
+					if (lNameField.getText().equals("")) {
+						cus.setLName("NULL");
+					} else {
+						cus.setLName("\"" + lNameField.getText() + "\"");
+					}
+					if (contactField.getText().equals("")) {
+						cus.setContact("NULL");
+					} else {
+						cus.setContact("\"" + contactField.getText() + "\"");
+					}
 					myStmt = con.createStatement();
 					myStmt.executeUpdate("INSERT INTO CUSTOMER VALUES(" + cus.updateString()+ ");");
 					CustomerW w = new CustomerW(con);

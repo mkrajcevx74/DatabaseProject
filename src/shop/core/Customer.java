@@ -26,7 +26,7 @@ public class Customer {
 		return fName;
 	}
 	
-	public void setfName(String fName) {
+	public void setFName(String fName) {
 		this.fName = fName;
 	}
 	
@@ -53,6 +53,6 @@ public class Customer {
 	}
 	
 	public String updateString() {
-		return getNum() + ", \"" + getFName() + "\", \"" + getLName() + "\", \"" + getContact() + "\"";
+		return getNum() + ", " + getFName() + ", " + getLName() + ", " + getContact();
 	}
 }
