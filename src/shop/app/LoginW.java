@@ -91,13 +91,13 @@ public class LoginW extends JFrame{
 				dburl = "jdbc:mysql://" + host + "/"+ dbName + "?user=" + user + "&password=" + password;
 				try {
 					con = DriverManager.getConnection(dburl);
-					CustomerSelectW w= new CustomerSelectW(con);
-					w.setVisible(true);
+					AppHomeW ahw= new AppHomeW(con);
+					ahw.setVisible(true);
 					frame.dispose();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 					lblInvalidUsernameOr.setVisible(true);
-					System.out.println("1");
+					System.out.println("Login failure");
 				}
 			}
 		});

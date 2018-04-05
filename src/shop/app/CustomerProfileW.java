@@ -24,9 +24,9 @@ public class CustomerProfileW extends JFrame {
 
 	int listSize = 0;
 	
-	public CustomerProfileW(Connection c, int n) {
+	public CustomerProfileW(Connection c, int cusNum) {
 		con = c;
-		Vehicle[] vclList = getVehicles(n);
+		Vehicle[] vclList = getVehicles(cusNum);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -51,12 +51,12 @@ public class CustomerProfileW extends JFrame {
 		btnSelectVehicle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-				myStmt = con.createStatement();
-				myRs = myStmt.executeQuery("SELECT VIN FROM OWNER WHERE CUS_NUM = " + n + " AND VCL_NUM = " + vclList[comboBox.getSelectedIndex()].getNum());
-				String vin = myRs.getString("VIN");
-				OwnerViewW ovw = new OwnerViewW(con, vin);
-				ovw.setVisible(true);
-				((Window) contentPane.getTopLevelAncestor()).dispose();
+					myStmt = con.createStatement();
+					myRs = myStmt.executeQuery("SELECT VIN FROM OWNER WHERE CUS_NUM = " + cusNum + " AND VCL_NUM = " + vclList[comboBox.getSelectedIndex()].getNum());
+					String vin = myRs.getString("VIN");
+					OwnerViewW ovw = new OwnerViewW(con, vin);
+					ovw.setVisible(true);
+					((Window) contentPane.getTopLevelAncestor()).dispose();
 				} catch (SQLException e4) {
 					e4.printStackTrace();
 					System.out.println(4);
@@ -69,6 +69,9 @@ public class CustomerProfileW extends JFrame {
 		JButton btnAddAVehicle = new JButton("Add a Vehicle");
 		btnAddAVehicle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				VehicleSelectW vsw = new VehicleSelectW(con, cusNum);
+				vsw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
 		btnAddAVehicle.setBounds(151, 197, 105, 23);
@@ -87,7 +90,7 @@ public class CustomerProfileW extends JFrame {
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-			System.out.println("2");
+			System.out.println("Customer's vehicle retrieval failure");
 		}
 		listSize = tempL.size();
 		Vehicle[] tempA = new Vehicle[listSize];

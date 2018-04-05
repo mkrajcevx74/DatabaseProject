@@ -15,7 +15,7 @@ import shop.core.Customer;
 
 public class CustomerSelectW extends JFrame {
 
-	private JPanel pane;
+	private JPanel contentPane;
 	private JButton btnNewButton;
 	private JLabel lblNewLabel;
 	
@@ -30,46 +30,44 @@ public class CustomerSelectW extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		pane = new JPanel();
-		pane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(pane);
-		pane.setLayout(null);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Select a customer to work with");
 		lblNewLabel_1.setBounds(136, 28, 162, 14);
-		pane.add(lblNewLabel_1);
+		contentPane.add(lblNewLabel_1);
 		
 		lblNewLabel = new JLabel("Customer:");
 		lblNewLabel.setBounds(29, 69, 68, 14);
-		pane.add(lblNewLabel);
+		contentPane.add(lblNewLabel);
 		
 		JComboBox comboBox = new JComboBox(getCustomers());
 		comboBox.setBounds(122, 66, 244, 20);
-		pane.add(comboBox);
+		contentPane.add(comboBox);
 		
 		btnNewButton = new JButton("Select customer");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(comboBox.getSelectedIndex()+1);
 				CustomerProfileW cpw = new CustomerProfileW(con, comboBox.getSelectedIndex()+1);
-				System.out.println("fuck");
 				cpw.setVisible(true);
-				((Window) pane.getTopLevelAncestor()).dispose();
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
 		btnNewButton.setBounds(149, 138, 137, 23);
-		pane.add(btnNewButton);
+		contentPane.add(btnNewButton);
 		
 		JButton btnAddACustomer = new JButton("Add a customer");
 		btnAddACustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerAddW caw = new CustomerAddW(con, listSize);
 				caw.setVisible(true);
-				((Window) pane.getTopLevelAncestor()).dispose();
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
 		btnAddACustomer.setBounds(166, 187, 107, 23);
-		pane.add(btnAddACustomer);
+		contentPane.add(btnAddACustomer);
 	}
 	
 	public Customer[] getCustomers() {
@@ -84,7 +82,7 @@ public class CustomerSelectW extends JFrame {
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-			System.out.println("2");
+			System.out.println("Customer retrieval failure");
 		}
 		listSize = temp.size();
 		Customer[] cusNames = new Customer[listSize];
