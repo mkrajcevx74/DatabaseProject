@@ -60,4 +60,8 @@ public class Owner {
 	public String toString() {
 		return String.format("Owner [vin=%s, cNum=%s, vNum=%s, miles=%s,record=%s]", vin, cNum, vNum, miles, record);
 	}
+	
+	public String updateString() {
+		return "\"" + getVin() + "\", " + getCNum() + ", " + getVNum() + ", " + getMiles() + ", \"" + getRecord() + "\"";
+	}
 }

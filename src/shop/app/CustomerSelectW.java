@@ -4,90 +4,104 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.sql.*;
-import java.util.*;
 
 import shop.core.Customer;
 
 public class CustomerSelectW extends JFrame {
-
-	private JPanel pane;
-	private JButton btnNewButton;
-	private JLabel lblNewLabel;
+	//Component vars
+	private JPanel contentPane;
+	private JButton btnSelectCustomer;
+	private JLabel lblCustomer;
 	
+	//Connection vars
 	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
 	
-	int listSize = 0;
-	
+	//Customer selection screen constructor
 	public CustomerSelectW(Connection c) {
-		con = c;
-		
+		//Panel ini
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		pane = new JPanel();
-		pane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(pane);
-		pane.setLayout(null);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Select a customer to work with");
-		lblNewLabel_1.setBounds(136, 28, 162, 14);
-		pane.add(lblNewLabel_1);
+		con = c;
 		
-		lblNewLabel = new JLabel("Customer:");
-		lblNewLabel.setBounds(29, 69, 68, 14);
-		pane.add(lblNewLabel);
+		//Head label
+		JLabel lblHead = new JLabel("Select a customer to work with");
+		lblHead.setBounds(136, 28, 162, 14);
+		contentPane.add(lblHead);
 		
-		JComboBox comboBox = new JComboBox(getCustomers());
-		comboBox.setBounds(122, 66, 244, 20);
-		pane.add(comboBox);
+		//Customer label
+		lblCustomer = new JLabel("Customer:");
+		lblCustomer.setBounds(29, 69, 68, 14);
+		contentPane.add(lblCustomer);
 		
-		btnNewButton = new JButton("Select customer");
-		btnNewButton.addActionListener(new ActionListener() {
+		//Customer box
+		JComboBox<Customer> comboBox_Cus = new JComboBox<Customer>();
+		comboBox_Cus.setBounds(122, 66, 244, 20);
+		contentPane.add(comboBox_Cus);
+		comboBox_Cus.setModel(getCustomers());
+		
+		//Select button
+		btnSelectCustomer = new JButton("Select customer");
+		btnSelectCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(comboBox.getSelectedIndex()+1);
-				CustomerProfileW cpw = new CustomerProfileW(con, comboBox.getSelectedIndex()+1);
-				System.out.println("fuck");
+				CustomerProfileW cpw = new CustomerProfileW(con, comboBox_Cus.getSelectedIndex()+1);
 				cpw.setVisible(true);
-				((Window) pane.getTopLevelAncestor()).dispose();
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnNewButton.setBounds(149, 138, 137, 23);
-		pane.add(btnNewButton);
+		btnSelectCustomer.setBounds(148, 123, 137, 23);
+		contentPane.add(btnSelectCustomer);
 		
+		//Add button
 		JButton btnAddACustomer = new JButton("Add a customer");
 		btnAddACustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CustomerAddW caw = new CustomerAddW(con, listSize);
+				CustomerAddW caw = new CustomerAddW(con, comboBox_Cus.getItemCount());
 				caw.setVisible(true);
-				((Window) pane.getTopLevelAncestor()).dispose();
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnAddACustomer.setBounds(166, 187, 107, 23);
-		pane.add(btnAddACustomer);
+		btnAddACustomer.setBounds(159, 168, 107, 23);
+		contentPane.add(btnAddACustomer);
+		
+		//Home button
+		JButton btnHome = new JButton("Home");
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppHomeW ahw= new AppHomeW(con);
+				ahw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
+		btnHome.setBounds(159, 215, 89, 23);
+		contentPane.add(btnHome);
 	}
 	
-	public Customer[] getCustomers() {
-		ArrayList<Customer> temp = new ArrayList<Customer>();
-		Customer cust;
+	//Return customers
+	public ComboBoxModel<Customer> getCustomers() {
+		DefaultComboBoxModel<Customer> cusList = new DefaultComboBoxModel<Customer>();
+		Customer cus;
 		try {
 			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT * FROM CUSTOMER;");
 			while (myRs.next()) {
-				cust = new Customer(myRs.getInt("CUS_NUM"), myRs.getString("CUS_FNAME"), myRs.getString("CUS_LNAME"), myRs.getString("CUS_CONTACT"));
-				temp.add(cust);
+				cus = new Customer(myRs.getInt("CUS_NUM"), myRs.getString("CUS_FNAME"), myRs.getString("CUS_LNAME"), myRs.getString("CUS_CONTACT"));
+				cusList.addElement(cus);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			System.out.println("2");
+		} catch (SQLException eCusGet) {
+			eCusGet.printStackTrace();
+			System.out.println("Customer retrieval failure");
 		}
-		listSize = temp.size();
-		Customer[] cusNames = new Customer[listSize];
-		return temp.toArray(cusNames);
+		return cusList;
 	}
 }

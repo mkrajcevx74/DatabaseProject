@@ -4,30 +4,29 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.sql.*;
-import java.util.*;
 
 import shop.core.Customer;
 
 public class CustomerAddW extends JFrame {
-
+	//Component vars
 	private JPanel pane;
-	
-	Connection con;
-	Statement myStmt = null;
-	ResultSet myRs = null;
 	private JTextField fNameField;
 	private JTextField lNameField;
 	private JTextField contactField;
 	
+	//Connection vars
+	Connection con;
+	Statement myStmt = null;
+	ResultSet myRs = null;
+	
 	Customer cus;
 
 	public CustomerAddW(Connection c, int n) {
-		con = c;
+		//Panel ini
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		pane = new JPanel();
@@ -35,42 +34,53 @@ public class CustomerAddW extends JFrame {
 		setContentPane(pane);
 		pane.setLayout(null);
 		
+		con = c;
+		
+		//Head label
 		JLabel lblAddACustomer = new JLabel("Add a customer");
 		lblAddACustomer.setBounds(171, 35, 89, 14);
 		pane.add(lblAddACustomer);
 		
+		//FName label
 		JLabel lblFirstName = new JLabel("First name:");
 		lblFirstName.setBounds(45, 81, 89, 14);
 		pane.add(lblFirstName);
 		
+		//LName label
 		JLabel lblLastName = new JLabel("Last name:");
 		lblLastName.setBounds(45, 112, 89, 14);
 		pane.add(lblLastName);
 		
+		//Contact label
 		JLabel lblContactNumber = new JLabel("Contact number:");
 		lblContactNumber.setBounds(45, 143, 89, 14);
 		pane.add(lblContactNumber);
 		
+		//Invalid label
 		JLabel lblPleaseEnterValid = new JLabel("Please enter valid information.");
 		lblPleaseEnterValid.setBounds(130, 168, 169, 14);
 		pane.add(lblPleaseEnterValid);
 		lblPleaseEnterValid.setVisible(false);
 		
+		//FName field
 		fNameField = new JTextField();
 		fNameField.setBounds(161, 78, 136, 20);
 		pane.add(fNameField);
 		fNameField.setColumns(10);
 		
+		//LName field
 		lNameField = new JTextField();
 		lNameField.setColumns(10);
 		lNameField.setBounds(161, 109, 136, 20);
 		pane.add(lNameField);
 		
+		//Contact field
 		contactField = new JTextField();
 		contactField.setColumns(10);
 		contactField.setBounds(161, 140, 136, 20);
 		pane.add(contactField);
 		
+		//Add customer button
 		JButton btnAddCustomer = new JButton("Add customer");
 		btnAddCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,6 +116,7 @@ public class CustomerAddW extends JFrame {
 		btnAddCustomer.setBounds(229, 201, 111, 23);
 		pane.add(btnAddCustomer);
 		
+		//Cancel button
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
