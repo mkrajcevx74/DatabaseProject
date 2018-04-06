@@ -87,7 +87,7 @@ public class OwnerViewW extends JFrame {
 				mileageText.setEditable(false);
 				carRecord.setEditable(false);
 				System.out.println(Integer.parseInt(mileageText.getText()));
-				updateInfo( vin, cus.getNum(), vcl.getNum(), (int) Integer.(mileageText.getText()), carRecord.getText());
+				updateInfo( vin, cus.getNum(), vcl.getNum(), (int) Integer.parseInt(mileageText.getText()), carRecord.getText());
 			}
 		});
 		commitButton.setBounds(270, 215, 137, 25);
@@ -109,7 +109,7 @@ public class OwnerViewW extends JFrame {
 		contentPane.add(btnRecommendations);
 		
 		
-
+		
 		
 	}
 	

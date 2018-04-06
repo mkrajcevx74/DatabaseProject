@@ -16,7 +16,7 @@ public class LoginW extends JFrame{
 	
 	//Database info
 	String host = "localhost";
-	String dbName = "carInfo";
+	String dbName = "mechanic_project";
 	String user = null;
 	String password = null;
 	String dburl = null;
