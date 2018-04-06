@@ -29,10 +29,7 @@ public class VehicleSelectW extends JFrame {
 	String model;
 	int year;
 	String misc;
-	
 	int cusNum;
-	
-	String vin;
 	
 
 
@@ -56,13 +53,13 @@ public class VehicleSelectW extends JFrame {
 		
 		//Manufacturer label
 		JLabel lblMake = new JLabel("Manufacturer:");
-		lblMake.setBounds(64, 34, 79, 14);
+		lblMake.setBounds(64, 34, 65, 14);
 		contentPane.add(lblMake);
 		
 		//Model label
 		JLabel lblModel = new JLabel("Model:");
 		lblModel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModel.setBounds(310, 34, 46, 14);
+		lblModel.setBounds(318, 34, 28, 14);
 		contentPane.add(lblModel);
 		
 		//Year label
@@ -80,7 +77,7 @@ public class VehicleSelectW extends JFrame {
 		//VIN label
 		JLabel lblVin = new JLabel("VIN:");
 		lblVin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVin.setBounds(51, 188, 95, 14);
+		lblVin.setBounds(72, 188, 46, 14);
 		contentPane.add(lblVin);
 		
 		
@@ -153,28 +150,6 @@ public class VehicleSelectW extends JFrame {
 					myRs = myStmt.executeQuery("SELECT VCL_NUM FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + " AND VCL_MISC = \"" + misc + "\";");
 					myRs.next();
 					vclNum = myRs.getInt("VCL_NUM");
-<<<<<<< HEAD
-					vin = vinField.getText();
-					if(vin.equals("")) {
-						vin = "NULL";
-					} else { 
-						vin = "\"" + vin + "\"";
-					}	
-					Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "n/a");
-					try {
-						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.updateString() + ");");
-						CustomerProfileW cpw = new CustomerProfileW(con, cus);
-						cpw.setVisible(true);
-						((Window) contentPane.getTopLevelAncestor()).dispose();
-					} catch (SQLException eOwnUpdate) {
-						eOwnUpdate.printStackTrace();
-						System.out.println("Error adding vehicle");
-						lblVin.setText("*VIN Required*");
-					}
-				} catch (SQLException eVclNumGet) {
-					eVclNumGet.printStackTrace();
-					System.out.println("Error retrieving vehicle index");
-=======
 					try {
 						Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
 						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.insertString() + ");");
@@ -187,7 +162,6 @@ public class VehicleSelectW extends JFrame {
 				} catch (SQLException e10) {
 					e10.printStackTrace();
 					System.out.println("Error retrieving vehicle number");
->>>>>>> origin/master
 				}
 			}
 		});

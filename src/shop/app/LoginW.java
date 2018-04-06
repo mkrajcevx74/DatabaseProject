@@ -93,8 +93,8 @@ public class LoginW extends JFrame{
 					AppHomeW ahw= new AppHomeW(con);
 					ahw.setVisible(true);
 					frame.dispose();
-				} catch (SQLException eLoginFail) {
-					eLoginFail.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 					lblInvalidUsernameOr.setVisible(true);
 					System.out.println("Login failure");
 				}
