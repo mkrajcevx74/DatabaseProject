@@ -27,23 +27,23 @@ public class OwnerViewW extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblCustomer = new JLabel("Customer:");
-		lblCustomer.setBounds(52, 5, 72, 16);
+		lblCustomer.setBounds(24, 5, 72, 16);
 		contentPane.add(lblCustomer);
 		
 		JLabel lblVehicle = new JLabel("Vehicle:");
-		lblVehicle.setBounds(52, 34, 56, 16);
+		lblVehicle.setBounds(24, 34, 56, 16);
 		contentPane.add(lblVehicle);
 		
 		JLabel lblNewLabel = new JLabel("Vehicle Number:");
-		lblNewLabel.setBounds(52, 63, 108, 16);
+		lblNewLabel.setBounds(24, 63, 108, 16);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Mileage:");
-		lblNewLabel_1.setBounds(52, 92, 56, 16);
+		lblNewLabel_1.setBounds(24, 92, 56, 16);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblCarHistory = new JLabel("Car History:");
-		lblCarHistory.setBounds(52, 121, 72, 16);
+		lblCarHistory.setBounds(24, 121, 72, 16);
 		contentPane.add(lblCarHistory);
 		
 		JButton btnNewButton = new JButton("Update");
@@ -51,27 +51,27 @@ public class OwnerViewW extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnRecommendations = new JButton("Recommendations");
-		btnRecommendations.setBounds(270, 181, 137, 25);
+		btnRecommendations.setBounds(270, 13, 137, 25);
 		contentPane.add(btnRecommendations);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(125, 5, 56, 16);
+		JLabel lblNewLabel_2 = new JLabel(cusName);
+		lblNewLabel_2.setBounds(108, 5, 56, 16);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(120, 34, 56, 16);
+		lblNewLabel_3.setBounds(92, 34, 56, 16);
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("New label");
-		lblNewLabel_4.setBounds(166, 63, 56, 16);
+		lblNewLabel_4.setBounds(144, 63, 56, 16);
 		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("New label");
-		lblNewLabel_5.setBounds(120, 92, 56, 16);
+		lblNewLabel_5.setBounds(92, 92, 56, 16);
 		contentPane.add(lblNewLabel_5);
 		
-		JLabel lblNewLabel_6 = new JLabel("New label");
-		lblNewLabel_6.setBounds(12, 150, 236, 90);
-		contentPane.add(lblNewLabel_6);
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(24, 154, 207, 86);
+		contentPane.add(textArea);
 	}
 }
