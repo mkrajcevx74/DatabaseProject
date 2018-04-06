@@ -113,7 +113,7 @@ public class VehicleSelectW extends JFrame {
 		contentPane.add(comboBox_Models);
 		
 		//Manufacturer box
-		JComboBox<String> comboBox_Makes = new JComboBox<String>(getMakes());
+		JComboBox<String> comboBox_Makes = new JComboBox<String>();
 		comboBox_Makes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				make = comboBox_Makes.getSelectedItem().toString();
@@ -124,6 +124,13 @@ public class VehicleSelectW extends JFrame {
 		});
 		comboBox_Makes.setBounds(10, 59, 180, 20);
 		contentPane.add(comboBox_Makes);
+		
+		//Initialize boxes
+		setMakesBox(comboBox_Makes);
+		setModelsBox(comboBox_Models);
+		setYearsBox(comboBox_Years);
+		setMiscBox(comboBox_Misc);
+		
 		
 		//VIN field
 		vinField = new JTextField();
@@ -181,6 +188,13 @@ public class VehicleSelectW extends JFrame {
 			eMakesGet.printStackTrace();
 		}
 		return makesList;
+	}
+	
+	//Populate makes box
+	public void setMakesBox(JComboBox<String> makesBox) {
+		makesBox.setModel(getMakes());
+		makesBox.setSelectedIndex(0);
+		make = makesBox.getSelectedItem().toString();
 	}
 	
 	//Return models

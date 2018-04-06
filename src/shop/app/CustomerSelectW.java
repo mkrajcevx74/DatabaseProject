@@ -74,11 +74,10 @@ public class CustomerSelectW extends JFrame {
 		btnAddACustomer.setBounds(159, 168, 107, 23);
 		contentPane.add(btnAddACustomer);
 		
-		//Home button
 		JButton btnHome = new JButton("Home");
 		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppHomeW ahw= new AppHomeW(con);
+				AppHomeW ahw = new AppHomeW(con);
 				ahw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}

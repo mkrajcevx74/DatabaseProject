@@ -42,7 +42,7 @@ public class CustomerProfileW extends JFrame {
 		contentPane.add(lblSelectAVehicle);
 		
 		//Vehicle box
-		JComboBox comboBox = new JComboBox();
+		JComboBox<Vehicle> comboBox = new JComboBox<Vehicle>();
 		comboBox.setBounds(217, 69, 143, 20);
 		contentPane.add(comboBox);
 		comboBox.setModel(getVehicles(cusNum));
@@ -55,7 +55,7 @@ public class CustomerProfileW extends JFrame {
 					myStmt = con.createStatement();
 					myRs = myStmt.executeQuery("SELECT VIN FROM OWNER WHERE CUS_NUM = " + cusNum + " AND VCL_NUM = " + ((Vehicle) comboBox.getSelectedItem()).getNum());
 					String vin = myRs.getString("VIN");
-					OwnerViewW ovw = new OwnerViewW(con, vin);
+					OwnerViewW ovw = new OwnerViewW(con, vin, ((Vehicle) comboBox.getSelectedItem()));
 					ovw.setVisible(true);
 					((Window) contentPane.getTopLevelAncestor()).dispose();
 				} catch (SQLException e4) {

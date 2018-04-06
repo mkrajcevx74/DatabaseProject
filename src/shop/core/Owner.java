@@ -1,67 +1,80 @@
 package shop.core;
 
 public class Owner {
-	public String vin;
-	public int cNum;
-	public int vNum;
-	public int miles;
-	public String record;
+	//Specific vehicle/ownership attributes
+	private String vin;
+	private int cNum;
+	private int vNum;
+	private int miles;
+	private String record;
 	
-	public Owner(String vin, int cNum, int vNum, int miles, String record) {
-		super();
-		this.vin = vin;
-		this.cNum = cNum;
-		this.vNum = vNum;
-		this.miles = miles;
-		this.record = record;
+	//Owner entity constructor
+	public Owner(String newVin, int newCNum, int newVNum, int newMiles, String newRecord) {
+		vin = newVin;
+		cNum = newCNum;
+		vNum = newVNum;
+		miles = newMiles;
+		record = newRecord;
 	}
 	
+	//Return VIN
 	public String getVin() {
 		return vin;
 	}
 	
-	public void setVin(String vin) {
-		this.vin = vin;
+	//Set VIN
+	public void setVin(String newVin) {
+		vin = newVin;
 	}
 	
+	//Return the customer's index
 	public int getCNum() {
 		return cNum;
 	}
 	
-	public void setCNum(int cNum) {
-		this.cNum = cNum;
+	//Set the customer's index
+	public void setCNum(int newCNum) {
+		cNum = newCNum;
 	}
 	
+	//Return the vehicle's index
 	public int getVNum() {
 		return vNum;
 	}
 	
-	public void setVNum(int vNum) {
-		this.vNum = vNum;
+	//Set the vehicle's index
+	public void setVNum(int newVNum) {
+		vNum = newVNum;
 	}
 	
+	//Return the specific vehicle's mileage
 	public int getMiles() {
 		return miles;
 	}
 	
-	public void setMiles(int miles) {
-		this.miles = miles;
+	//Set the specific vehicle's mileage
+	public void setMiles(int newMiles) {
+		miles = newMiles;
 	}
 	
+	//Return the specific vehicle's record
 	public String getRecord() {
 		return record;
 	}
 	
-	public void setRecord(String record) {
-		this.record = record;
+	//Set the specific vehicle's record
+	public void setRecord(String newRecord) {
+		record = newRecord;
 	}
+	
 	
 	@Override
 	public String toString() {
 		return String.format("Owner [vin=%s, cNum=%s, vNum=%s, miles=%s,record=%s]", vin, cNum, vNum, miles, record);
 	}
 	
+	//Vehicle search query builder
 	public String updateString() {
-		return "\"" + getVin() + "\", " + getCNum() + ", " + getVNum() + ", " + getMiles() + ", \"" + getRecord() + "\"";
+		return "\"" + vin + "\", " + cNum + ", " + vNum + ", " + miles + ", \"" + record + "\"";
 	}
 }

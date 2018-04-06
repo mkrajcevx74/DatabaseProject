@@ -1,58 +1,69 @@
 package shop.core;
 
 public class Customer {
-	public int num;
-	public String lName;
-	public String fName;
-	public String contact;
+	//Customer attributes
+	private int num;
+	private String lName;
+	private String fName;
+	private String contact;
 	
-	public Customer(int num, String fName, String lName, String contact) {
-		super();
-		this.num = num;
-		this.fName = fName;
-		this.lName = lName;
-		this.contact = contact;
+	//Customer entity constructor
+	public Customer(int newNum, String newFName, String newLName, String newContact) {
+		num = newNum;
+		fName = newFName;
+		lName = newLName;
+		contact = newContact;
 	}
 	
+	//Return customer's index
 	public int getNum() {
 		return num;
 	}
 	
-	public void setNum(int num) {
-		this.num = num;
+	//Set customer's index
+	public void setNum(int newNum) {
+		num = newNum;
 	}
 	
+	//Return customer's first name
 	public String getFName() {
 		return fName;
 	}
 	
-	public void setFName(String fName) {
-		this.fName = fName;
+	//Set customer's first name
+	public void setFName(String newFName) {
+		fName = newFName;
 	}
 	
+	//Return customer's last name
 	public String getLName() {
 		return lName;
 	}
 	
-	public void setLName(String lName) {
-		this.lName = lName;
+	//Set customer's last name
+	public void setLName(String newLName) {
+		lName = newLName;
 	}
 	
+	//Return customer's contact info
 	public String getContact() {
 		return contact;
 	}
 	
-	public void setContact(String contact) {
-		this.contact = contact;
+	//Set customer's contact info
+	public void setContact(String newContact) {
+		contact = newContact;
 	}
 	
+	//Get customer's name as string
 	@Override
 	public String toString() {
 		//return String.format("Customer [num=%s, fName=%s, lName=%s, contact=%s]", num, fName, lName, contact);
-		return getFName() + " " + getLName();
+		return fName + " " + fName;
 	}
 	
+	//Customer search query builder
 	public String updateString() {
-		return getNum() + ", " + getFName() + ", " + getLName() + ", " + getContact();
+		return num + ", " + fName + ", " + lName + ", " + contact;
 	}
 }
