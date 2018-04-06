@@ -18,6 +18,7 @@ public class OwnerViewW extends JFrame {
 	Connection con;
 
 	private JPanel contentPane;
+	private JTextField mileageText;
 
 	public OwnerViewW(Connection c, String vin, Customer cus, Vehicle vcl) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,22 +61,24 @@ public class OwnerViewW extends JFrame {
 		lblNewLabel_2.setBounds(108, 5, 108, 16);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(108, 34, 120, 16);
+		JLabel lblNewLabel_3 = new JLabel(vcl.toString());
+		lblNewLabel_3.setBounds(108, 34, 123, 16);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("New label");
-		lblNewLabel_4.setBounds(108, 63, 120, 16);
+		JLabel lblNewLabel_4 = new JLabel(vin);
+		lblNewLabel_4.setBounds(108, 63, 116, 16);
 		contentPane.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_5 = new JLabel("New label");
-		lblNewLabel_5.setBounds(108, 92, 120, 16);
-		contentPane.add(lblNewLabel_5);
+
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(24, 154, 207, 86);
 		contentPane.add(textArea);
+		
+		mileageText = new JTextField();
+		mileageText.setBounds(108, 89, 123, 22);
+		contentPane.add(mileageText);
+		mileageText.setColumns(10);
+
 
 	}
-
 }
