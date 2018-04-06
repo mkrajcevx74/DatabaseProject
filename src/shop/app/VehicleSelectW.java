@@ -50,13 +50,13 @@ public class VehicleSelectW extends JFrame {
 		
 		//Manufacturer label
 		JLabel lblMake = new JLabel("Manufacturer:");
-		lblMake.setBounds(64, 34, 65, 14);
+		lblMake.setBounds(56, 34, 111, 14);
 		contentPane.add(lblMake);
 		
 		//Model label
 		JLabel lblModel = new JLabel("Model:");
 		lblModel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModel.setBounds(318, 34, 28, 14);
+		lblModel.setBounds(300, 34, 74, 14);
 		contentPane.add(lblModel);
 		
 		//Year label
@@ -68,7 +68,7 @@ public class VehicleSelectW extends JFrame {
 		//Package label
 		JLabel lblPackage = new JLabel("Package:");
 		lblPackage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPackage.setBounds(310, 119, 46, 14);
+		lblPackage.setBounds(300, 116, 74, 20);
 		contentPane.add(lblPackage);
 		
 		//VIN label
