@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 
 import java.sql.*;
 
+import shop.core.Customer;
 import shop.core.Owner;
 
 public class VehicleSelectW extends JFrame {
@@ -28,10 +29,12 @@ public class VehicleSelectW extends JFrame {
 	String model;
 	int year;
 	String misc;
+	int cusNum;
 	
 
 
-	public VehicleSelectW(Connection c, int cusNum) {
+	public VehicleSelectW(Connection c, Customer cus) {
+		cusNum = cus.getNum();
 		con = c;
 		
 		//Panel vars
@@ -50,13 +53,13 @@ public class VehicleSelectW extends JFrame {
 		
 		//Manufacturer label
 		JLabel lblMake = new JLabel("Manufacturer:");
-		lblMake.setBounds(56, 34, 111, 14);
+		lblMake.setBounds(64, 34, 65, 14);
 		contentPane.add(lblMake);
 		
 		//Model label
 		JLabel lblModel = new JLabel("Model:");
 		lblModel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModel.setBounds(300, 34, 74, 14);
+		lblModel.setBounds(318, 34, 28, 14);
 		contentPane.add(lblModel);
 		
 		//Year label
@@ -68,7 +71,7 @@ public class VehicleSelectW extends JFrame {
 		//Package label
 		JLabel lblPackage = new JLabel("Package:");
 		lblPackage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPackage.setBounds(300, 116, 74, 20);
+		lblPackage.setBounds(310, 119, 46, 14);
 		contentPane.add(lblPackage);
 		
 		//VIN label
@@ -113,7 +116,7 @@ public class VehicleSelectW extends JFrame {
 		contentPane.add(comboBox_Models);
 		
 		//Manufacturer box
-		JComboBox<String> comboBox_Makes = new JComboBox<String>(getMakes());
+		JComboBox<String> comboBox_Makes = new JComboBox<String>();
 		comboBox_Makes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				make = comboBox_Makes.getSelectedItem().toString();
@@ -124,6 +127,13 @@ public class VehicleSelectW extends JFrame {
 		});
 		comboBox_Makes.setBounds(10, 59, 180, 20);
 		contentPane.add(comboBox_Makes);
+		
+		//Initialize boxes
+		setMakesBox(comboBox_Makes);
+		setModelsBox(comboBox_Models);
+		setYearsBox(comboBox_Years);
+		setMiscBox(comboBox_Misc);
+		
 		
 		//VIN field
 		vinField = new JTextField();
@@ -159,7 +169,7 @@ public class VehicleSelectW extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CustomerProfileW cpw = new CustomerProfileW(con, cusNum);
+				CustomerProfileW cpw = new CustomerProfileW(con, cus);
 				cpw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
@@ -181,6 +191,13 @@ public class VehicleSelectW extends JFrame {
 			eMakesGet.printStackTrace();
 		}
 		return makesList;
+	}
+	
+	//Populate makes box
+	public void setMakesBox(JComboBox<String> makesBox) {
+		makesBox.setModel(getMakes());
+		makesBox.setSelectedIndex(0);
+		make = makesBox.getSelectedItem().toString();
 	}
 	
 	//Return models

@@ -1,60 +1,76 @@
 package shop.core;
 
 public class Vehicle {
-	public int num;
-	public String make;
-	public String model;
-	public int year;
-	public String misc;
+	//Vehicle attributes
+	private int num;
+	private String make;
+	private String model;
+	private int year;
+	private String misc;
 	
-	public Vehicle(int num, String make, String model, int year, String misc) {
-		super();
-		this.num = num;
-		this.make = make;
-		this.model = model;
-		this.year = year;
-		this.misc = misc;
+	//Vehicle entity constructor
+	public Vehicle(int newNum, String newMake, String newModel, int newYear, String newMisc) {
+		num = newNum;
+		make = newMake;
+		model = newModel;
+		year = newYear;
+		misc = newMisc;
 	}
 	
+	//Return vehicle's index
 	public int getNum() {
 		return num;
 	}
 	
-	public void setNum(int num) {
-		this.num = num;
+	//Set vehicle's index
+	public void setNum(int newNum) {
+		num = newNum;
 	}
 	
+	//Return vehicle's manufacturer
 	public String getMake() {
 		return make;
 	}
 	
-	public void setMake(String make) {
-		this.make = make;
+	//Set vehicle's manufacturer
+	public void setMake(String newMake) {
+		make = newMake;
 	}
 	
+	//Return vehicle's model
 	public String getModel() {
 		return model;
 	}
 	
-	public void setModel(String model) {
-		this.model = model;
+	//Set vehicle's model
+	public void setModel(String newModel) {
+		model = newModel;
 	}
 	
+	//Return vehicle's year
 	public int getYear() {
 		return year;
 	}
 	
-	public void getYear(int year) {
-		this.year = year;
+	//Set vehicle's year
+	public void getYear(int newYear) {
+		year = newYear;
 	}
 	
-	public String misc() {
+	//Return vehicle's package
+	public String getMisc() {
 		return misc;
 	}
 	
+	//Set vehicle's package
+	public void setMisc(String newMisc) {
+		misc = newMisc;
+	}
+	
+	//Get vehicle as a string
 	@Override
 	public String toString() {
 		//return String.format("Vehicle [num=%s, make=%s, model=%s, year=%s, misc=%s]", num, make, model, year, misc);
-		return getYear() + " " + getMake() + " " + getModel();
+		return year + " " + make + " " + model;
 	}
 }

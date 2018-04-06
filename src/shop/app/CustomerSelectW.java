@@ -54,7 +54,7 @@ public class CustomerSelectW extends JFrame {
 		btnSelectCustomer = new JButton("Select customer");
 		btnSelectCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CustomerProfileW cpw = new CustomerProfileW(con, comboBox_Cus.getSelectedIndex()+1);
+				CustomerProfileW cpw = new CustomerProfileW(con, ((Customer) comboBox_Cus.getSelectedItem()));
 				cpw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
@@ -74,11 +74,10 @@ public class CustomerSelectW extends JFrame {
 		btnAddACustomer.setBounds(159, 168, 107, 23);
 		contentPane.add(btnAddACustomer);
 		
-		//Home button
 		JButton btnHome = new JButton("Home");
 		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppHomeW ahw= new AppHomeW(con);
+				AppHomeW ahw = new AppHomeW(con);
 				ahw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}

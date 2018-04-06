@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 
 import java.sql.*;
 
+import shop.core.Customer;
 import shop.core.Vehicle;
 
 public class CustomerProfileW extends JFrame {
@@ -19,8 +20,10 @@ public class CustomerProfileW extends JFrame {
 	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
+	
+	String vin;
 
-	public CustomerProfileW(Connection c, int cusNum) {
+	public CustomerProfileW(Connection c, Customer cus) {
 		//Panel ini
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -42,10 +45,10 @@ public class CustomerProfileW extends JFrame {
 		contentPane.add(lblSelectAVehicle);
 		
 		//Vehicle box
-		JComboBox comboBox = new JComboBox();
+		JComboBox<Vehicle> comboBox = new JComboBox<Vehicle>();
 		comboBox.setBounds(217, 69, 143, 20);
 		contentPane.add(comboBox);
-		comboBox.setModel(getVehicles(cusNum));
+		comboBox.setModel(getVehicles(cus.getNum()));
 		
 		//Select owned vehicle button
 		JButton btnSelectVehicle = new JButton("Select Vehicle");
@@ -53,9 +56,11 @@ public class CustomerProfileW extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					myStmt = con.createStatement();
-					myRs = myStmt.executeQuery("SELECT VIN FROM OWNER WHERE CUS_NUM = " + cusNum + " AND VCL_NUM = " + ((Vehicle) comboBox.getSelectedItem()).getNum());
-					String vin = myRs.getString("VIN");
-					OwnerViewW ovw = new OwnerViewW(con, vin);
+					myRs = myStmt.executeQuery("SELECT VIN FROM OWNER WHERE CUS_NUM = " + cus.getNum() + " AND VCL_NUM = " + ((Vehicle) comboBox.getSelectedItem()).getNum());
+					while (myRs.next()) {
+						vin = myRs.getString("VIN");
+					}	
+					OwnerViewW ovw = new OwnerViewW(con, vin, cus, ((Vehicle) comboBox.getSelectedItem()));
 					ovw.setVisible(true);
 					((Window) contentPane.getTopLevelAncestor()).dispose();
 				} catch (SQLException e4) {
@@ -71,7 +76,7 @@ public class CustomerProfileW extends JFrame {
 		JButton btnAddAVehicle = new JButton("Add a Vehicle");
 		btnAddAVehicle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VehicleSelectW vsw = new VehicleSelectW(con, cusNum);
+				VehicleSelectW vsw = new VehicleSelectW(con, cus);
 				vsw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
