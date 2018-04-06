@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.sql.*;
+import java.util.*;
 
 public class OwnerViewW extends JFrame {
 	//from this view you want to be able to see all of the information for the owners vehicles
@@ -26,15 +27,31 @@ public class OwnerViewW extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblCustomer = new JLabel("Customer:");
-		lblCustomer.setBounds(52, 5, 65, 16);
+		lblCustomer.setBounds(52, 5, 72, 16);
 		contentPane.add(lblCustomer);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(121, 41, 163, 22);
-		contentPane.add(comboBox);
-		
 		JLabel lblVehicle = new JLabel("Vehicle:");
-		lblVehicle.setBounds(53, 44, 56, 16);
+		lblVehicle.setBounds(52, 50, 56, 16);
 		contentPane.add(lblVehicle);
+		
+		JLabel lblNewLabel = new JLabel("Vehicle Number:");
+		lblNewLabel.setBounds(52, 95, 108, 16);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Mileage:");
+		lblNewLabel_1.setBounds(52, 140, 56, 16);
+		contentPane.add(lblNewLabel_1);
+		
+		JButton btnNewButton = new JButton("Update");
+		btnNewButton.setBounds(270, 215, 137, 25);
+		contentPane.add(btnNewButton);
+		
+		JLabel lblCarHistory = new JLabel("Car History:");
+		lblCarHistory.setBounds(52, 185, 72, 16);
+		contentPane.add(lblCarHistory);
+		
+		JButton btnRecommendations = new JButton("Recommendations");
+		btnRecommendations.setBounds(270, 181, 137, 25);
+		contentPane.add(btnRecommendations);
 	}
 }
