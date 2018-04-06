@@ -152,7 +152,7 @@ public class VehicleSelectW extends JFrame {
 					vclNum = myRs.getInt("VCL_NUM");
 					try {
 						Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
-						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.updateString() + ");");
+						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.insertString() + ");");
 						CustomerProfileW cpw = new CustomerProfileW(con, cus);
 						cpw.setVisible(true);
 						((Window) contentPane.getTopLevelAncestor()).dispose();

@@ -63,7 +63,7 @@ public class Customer {
 	}
 	
 	//Customer search query builder
-	public String updateString() {
+	public String insertString() {
 		return num + ", " + fName + ", " + lName + ", " + contact;
 	}
 }

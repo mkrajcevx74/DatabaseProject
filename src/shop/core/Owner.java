@@ -73,8 +73,14 @@ public class Owner {
 		return String.format("Owner [vin=%s, cNum=%s, vNum=%s, miles=%s,record=%s]", vin, cNum, vNum, miles, record);
 	}
 	
-	//Vehicle search query builder
-	public String updateString() {
+	//Owner insert builder
+	public String insertString() {
 		return "\"" + vin + "\", " + cNum + ", " + vNum + ", " + miles + ", \"" + record + "\"";
+	}
+	
+	//Owner update builder
+	public String updateString() {
+		return "VIN = \"" + vin + "\", CUS_NUM = \"" + cNum + "\", VCL_NUM = \"" + vNum + 
+				"\", OWN_MILES = \"" + "\", OWN_RECORD = \"" + record + "\"";
 	}
 }
