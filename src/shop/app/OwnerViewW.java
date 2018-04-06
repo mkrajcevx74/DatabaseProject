@@ -26,6 +26,8 @@ public class OwnerViewW extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField mileageText;
+	private JButton commitButton;
+	private JButton editButton;
 
 	public OwnerViewW(Connection c, String vin, Customer cus, Vehicle vcl) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,6 +72,10 @@ public class OwnerViewW extends JFrame {
 		vinField.setBounds(108, 63, 116, 16);
 		contentPane.add(vinField);
 		
+		JLabel lblNewLabel_2 = new JLabel("Recommendations:");
+		lblNewLabel_2.setBounds(270, 13, 137, 16);
+		contentPane.add(lblNewLabel_2);
+		
 		mileageText = new JTextField(Integer.toString(owner.getMiles()));
 		mileageText.setBounds(108, 89, 123, 22);
 		contentPane.add(mileageText);
@@ -77,36 +83,54 @@ public class OwnerViewW extends JFrame {
 		mileageText.setEditable(false);
 		
 		JTextArea carRecord = new JTextArea(owner.getRecord());
-		carRecord.setBounds(24, 154, 207, 86);
+		carRecord.setBounds(24, 154, 238, 46);
 		carRecord.setEditable(false);
 		contentPane.add(carRecord);
 		
-		JButton commitButton = new JButton("Commit");
+		commitButton = new JButton("Commit");
 		commitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mileageText.setEditable(false);
 				carRecord.setEditable(false);
-				System.out.println(Integer.parseInt(mileageText.getText()));
+				//System.out.println(Integer.parseInt(mileageText.getText()));
 				updateInfo( vin, cus.getNum(), vcl.getNum(), (int) Integer.parseInt(mileageText.getText()), carRecord.getText());
+				commitButton.setVisible(false);
+				editButton.setVisible(true);
 			}
 		});
-		commitButton.setBounds(270, 215, 137, 25);
-		contentPane.add(commitButton);
 		
-		JButton editButton = new JButton("Edit");
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(270, 42, 137, 66);
+		contentPane.add(textArea);
+		
+		editButton = new JButton("Edit");
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mileageText.setEditable(true);
 				carRecord.setEditable(true);
+				commitButton.setVisible(true);
+				editButton.setVisible(false);
 			}
 		});
-		editButton.setBounds(270, 177, 137, 25);
+		editButton.setBounds(270, 153, 137, 25);
 		contentPane.add(editButton);
+		commitButton.setBounds(270, 153, 137, 25);
+		contentPane.add(commitButton);
+		commitButton.setVisible(false);
 		
+		JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CustomerProfileW cpw = new CustomerProfileW(con, cus);
+				//cpw.setVisible()
+			}
+		});
+		backButton.setBounds(24, 215, 137, 25);
+		contentPane.add(backButton);
 		
-		JButton btnRecommendations = new JButton("Recommendations");
-		btnRecommendations.setBounds(270, 13, 137, 25);
-		contentPane.add(btnRecommendations);
+		JButton btnSchedule = new JButton("Schedule");
+		btnSchedule.setBounds(270, 215, 137, 25);
+		contentPane.add(btnSchedule);
 		
 		
 		
