@@ -26,6 +26,7 @@ public class OwnerViewW extends JFrame {
 	private JPanel contentPane;
 	private JTextField mileageText;
 	private JTextArea carRecord;
+	private JTextArea recArea;
 	private JButton commitButton;
 	private JButton editButton;
 	
@@ -89,6 +90,11 @@ public class OwnerViewW extends JFrame {
 		carRecord.setEditable(false);
 		contentPane.add(carRecord);
 		
+		recArea = new JTextArea();
+		recArea.setBounds(270, 42, 137, 66);
+		recArea.setEditable(false);
+		contentPane.add(recArea);
+		
 		commitButton = new JButton("Commit");
 		commitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,10 +106,6 @@ public class OwnerViewW extends JFrame {
 			}
 		});
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(270, 42, 137, 66);
-		contentPane.add(textArea);
-		
 		editButton = new JButton("Edit");
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,6 +115,7 @@ public class OwnerViewW extends JFrame {
 				editButton.setVisible(false);
 			}
 		});
+		
 		editButton.setBounds(270, 153, 137, 25);
 		contentPane.add(editButton);
 		commitButton.setBounds(270, 153, 137, 25);
