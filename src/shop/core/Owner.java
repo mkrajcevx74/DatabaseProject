@@ -75,6 +75,6 @@ public class Owner {
 	
 	//Vehicle search query builder
 	public String updateString() {
-		return "\"" + vin + "\", " + cNum + ", " + vNum + ", " + miles + ", \"" + record + "\"";
+		return "" + vin + ", " + cNum + ", " + vNum + ", " + miles + ", \"" + record + "\"";
 	}
 }

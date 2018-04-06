@@ -63,9 +63,9 @@ public class CustomerProfileW extends JFrame {
 					OwnerViewW ovw = new OwnerViewW(con, vin, cus, ((Vehicle) comboBox.getSelectedItem()));
 					ovw.setVisible(true);
 					((Window) contentPane.getTopLevelAncestor()).dispose();
-				} catch (SQLException e4) {
-					e4.printStackTrace();
-					System.out.println(4);
+				} catch (SQLException eVclNumGet) {
+					eVclNumGet.printStackTrace();
+					System.out.println("Error retrieving vehicle number");
 				}
 			}
 		});
