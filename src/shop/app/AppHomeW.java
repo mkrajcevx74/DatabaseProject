@@ -9,13 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.sql.*;
-import java.util.*;
 
 public class AppHomeW extends JFrame {
-
+	//Component vars
 	private JPanel contentPane;
-
-	public AppHomeW(Connection c) {
+	
+	//Create home screen
+	public AppHomeW(Connection con) {
+		//Panel ini
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -23,15 +24,17 @@ public class AppHomeW extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//Head label
 		JLabel lblAppHome = new JLabel("App Home");
 		lblAppHome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAppHome.setBounds(178, 0, 66, 14);
 		contentPane.add(lblAppHome);
 		
+		//Customer select button
 		JButton btnSelectACustomer = new JButton("Select a Customer");
 		btnSelectACustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CustomerSelectW csw = new CustomerSelectW(c);
+				CustomerSelectW csw = new CustomerSelectW(con);
 				csw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
@@ -39,6 +42,7 @@ public class AppHomeW extends JFrame {
 		btnSelectACustomer.setBounds(149, 81, 127, 23);
 		contentPane.add(btnSelectACustomer);
 		
+		//Employee select button
 		JButton btnSelectAnEmployee = new JButton("Select an Employee");
 		btnSelectAnEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -47,6 +51,7 @@ public class AppHomeW extends JFrame {
 		btnSelectAnEmployee.setBounds(149, 142, 127, 23);
 		contentPane.add(btnSelectAnEmployee);
 		
+		//View schedule button
 		JButton btnViewSchedule = new JButton("View Schedule");
 		btnViewSchedule.setBounds(159, 203, 101, 23);
 		contentPane.add(btnViewSchedule);
