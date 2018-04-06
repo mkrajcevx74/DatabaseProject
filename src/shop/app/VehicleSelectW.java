@@ -150,18 +150,18 @@ public class VehicleSelectW extends JFrame {
 					myRs = myStmt.executeQuery("SELECT VCL_NUM FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + " AND VCL_MISC = \"" + misc + "\";");
 					myRs.next();
 					vclNum = myRs.getInt("VCL_NUM");
+					try {
+						Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
+						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.updateString() + ");");
+						CustomerProfileW cpw = new CustomerProfileW(con, cus);
+						cpw.setVisible(true);
+						((Window) contentPane.getTopLevelAncestor()).dispose();
+					} catch (SQLException e9) {
+						e9.printStackTrace();
+					}
 				} catch (SQLException e10) {
 					e10.printStackTrace();
 					System.out.println("Error retrieving vehicle number");
-				}
-				try {
-					Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
-					myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.updateString() + ");");
-					CustomerProfileW cpw = new CustomerProfileW(con, cus);
-					cpw.setVisible(true);
-					((Window) contentPane.getTopLevelAncestor()).dispose();
-				} catch (SQLException e9) {
-					e9.printStackTrace();
 				}
 			}
 		});
