@@ -44,22 +44,11 @@ public class CustomerProfileW extends JFrame {
 		lblSelectAVehicle.setBounds(65, 71, 84, 17);
 		contentPane.add(lblSelectAVehicle);
 		
-		//No vehicle label
-		JLabel lblNoOwnerships = new JLabel("*No vehicles registered*");
-		lblNoOwnerships.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNoOwnerships.setBounds(231, 44, 122, 14);
-		contentPane.add(lblNoOwnerships);
-		lblNoOwnerships.setVisible(false);
-		
 		//Vehicle box
 		JComboBox<Vehicle> comboBox = new JComboBox<Vehicle>();
 		comboBox.setBounds(217, 69, 143, 20);
 		contentPane.add(comboBox);
 		comboBox.setModel(getVehicles(cus.getNum()));
-		
-		if (comboBox.getItemCount() == 0){
-			lblNoOwnerships.setVisible(true);
-		}
 		
 		//Select owned vehicle button
 		JButton btnSelectVehicle = new JButton("Select Vehicle");
@@ -94,17 +83,6 @@ public class CustomerProfileW extends JFrame {
 		});
 		btnAddAVehicle.setBounds(151, 197, 105, 23);
 		contentPane.add(btnAddAVehicle);
-		
-		JButton btnHome = new JButton("Home");
-		btnHome.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AppHomeW ahw = new AppHomeW(con);
-				ahw.setVisible(true);
-				((Window) contentPane.getTopLevelAncestor()).dispose();
-			}
-		});
-		btnHome.setBounds(161, 238, 89, 23);
-		contentPane.add(btnHome);
 	}
 	
 	//Return owned vehicles
