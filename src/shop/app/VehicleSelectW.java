@@ -153,6 +153,7 @@ public class VehicleSelectW extends JFrame {
 					myRs = myStmt.executeQuery("SELECT VCL_NUM FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + " AND VCL_MISC = \"" + misc + "\";");
 					myRs.next();
 					vclNum = myRs.getInt("VCL_NUM");
+<<<<<<< HEAD
 					vin = vinField.getText();
 					if(vin.equals("")) {
 						vin = "NULL";
@@ -173,6 +174,20 @@ public class VehicleSelectW extends JFrame {
 				} catch (SQLException eVclNumGet) {
 					eVclNumGet.printStackTrace();
 					System.out.println("Error retrieving vehicle index");
+=======
+					try {
+						Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
+						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.insertString() + ");");
+						CustomerProfileW cpw = new CustomerProfileW(con, cus);
+						cpw.setVisible(true);
+						((Window) contentPane.getTopLevelAncestor()).dispose();
+					} catch (SQLException e9) {
+						e9.printStackTrace();
+					}
+				} catch (SQLException e10) {
+					e10.printStackTrace();
+					System.out.println("Error retrieving vehicle number");
+>>>>>>> origin/master
 				}
 			}
 		});

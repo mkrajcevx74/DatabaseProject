@@ -102,7 +102,7 @@ public class CustomerAddW extends JFrame {
 						cus.setContact("\"" + contactField.getText() + "\"");
 					}
 					myStmt = con.createStatement();
-					myStmt.executeUpdate("INSERT INTO CUSTOMER VALUES(" + cus.updateString()+ ");");
+					myStmt.executeUpdate("INSERT INTO CUSTOMER VALUES(" + cus.insertString()+ ");");
 					CustomerSelectW w = new CustomerSelectW(con);
 					w.setVisible(true);
 					((Window) pane.getTopLevelAncestor()).dispose();
