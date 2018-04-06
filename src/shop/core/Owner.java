@@ -81,6 +81,6 @@ public class Owner {
 	//Owner update builder
 	public String updateString() {
 		return "VIN = \"" + vin + "\", CUS_NUM = \"" + cNum + "\", VCL_NUM = \"" + vNum + 
-				"\", OWN_MILES = \"" + "\", OWN_RECORD = \"" + record + "\"";
+				"\", OWN_MILES = \"" + miles + "\", OWN_RECORD = \"" + record + "\"";
 	}
 }
