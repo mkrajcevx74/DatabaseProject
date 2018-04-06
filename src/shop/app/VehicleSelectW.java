@@ -142,28 +142,31 @@ public class VehicleSelectW extends JFrame {
 		vinField.setColumns(10);
 		
 		//Add vehicle button
-			JButton btnAddVehicle = new JButton("Add Vehicle");
-			btnAddVehicle.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						myStmt = con.createStatement();
-						myRs = myStmt.executeQuery("SELECT VCL_NUM FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + " AND VCL_MISC = \"" + misc + "\";");
-						myRs.next();
-						vclNum = myRs.getInt("VCL_NUM");
-					} catch (SQLException e10) {
-						e10.printStackTrace();
-						System.out.println("Error retrieving vehicle number");
-					}
-					try {
-						Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
-						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.updateString() + ");");
-					} catch (SQLException e9) {
-						e9.printStackTrace();
-					}
+		JButton btnAddVehicle = new JButton("Add Vehicle");
+		btnAddVehicle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					myStmt = con.createStatement();
+					myRs = myStmt.executeQuery("SELECT VCL_NUM FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + " AND VCL_MISC = \"" + misc + "\";");
+					myRs.next();
+					vclNum = myRs.getInt("VCL_NUM");
+				} catch (SQLException e10) {
+					e10.printStackTrace();
+					System.out.println("Error retrieving vehicle number");
 				}
-			});
-			btnAddVehicle.setBounds(285, 199, 89, 23);
-			contentPane.add(btnAddVehicle);
+				try {
+					Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
+					myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.updateString() + ");");
+					CustomerProfileW cpw = new CustomerProfileW(con, cus);
+					cpw.setVisible(true);
+					((Window) contentPane.getTopLevelAncestor()).dispose();
+				} catch (SQLException e9) {
+					e9.printStackTrace();
+				}
+			}
+		});
+		btnAddVehicle.setBounds(285, 199, 89, 23);
+		contentPane.add(btnAddVehicle);
 		
 		//Cancel button
 		JButton btnCancel = new JButton("Cancel");
