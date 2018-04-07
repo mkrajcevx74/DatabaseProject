@@ -35,18 +35,18 @@ public class CustomerProfileW extends JFrame {
 		con = c;
 		
 		//Title label
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(186, 11, 46, 14);
+		JLabel lblNewLabel = new JLabel("Customer Profile:");
+		lblNewLabel.setBounds(12, 13, 131, 14);
 		contentPane.add(lblNewLabel);
 		
 		//Vehicle label
 		JLabel lblSelectAVehicle = new JLabel("Owned vehicle:");
-		lblSelectAVehicle.setBounds(65, 71, 84, 17);
+		lblSelectAVehicle.setBounds(12, 71, 105, 17);
 		contentPane.add(lblSelectAVehicle);
 		
 		//Vehicle box
 		JComboBox<Vehicle> comboBox = new JComboBox<Vehicle>();
-		comboBox.setBounds(217, 69, 143, 20);
+		comboBox.setBounds(129, 69, 143, 20);
 		contentPane.add(comboBox);
 		comboBox.setModel(getVehicles(cus.getNum()));
 		
@@ -69,7 +69,7 @@ public class CustomerProfileW extends JFrame {
 				}
 			}
 		});
-		btnSelectVehicle.setBounds(151, 139, 115, 23);
+		btnSelectVehicle.setBounds(149, 191, 123, 23);
 		contentPane.add(btnSelectVehicle);
 		
 		//Add vehicle button
@@ -81,8 +81,19 @@ public class CustomerProfileW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnAddAVehicle.setBounds(151, 197, 105, 23);
+		btnAddAVehicle.setBounds(289, 191, 131, 23);
 		contentPane.add(btnAddAVehicle);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CustomerSelectW w = new CustomerSelectW(con);
+				w.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
+		btnBack.setBounds(12, 190, 123, 25);
+		contentPane.add(btnBack);
 	}
 	
 	//Return owned vehicles
