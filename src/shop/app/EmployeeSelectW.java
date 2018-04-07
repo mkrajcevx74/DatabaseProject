@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 
 import java.sql.*;
 
+import shop.core.Customer;
+import shop.core.Technician;
 
 public class EmployeeSelectW extends JFrame{
 	//Component vars
@@ -29,13 +31,11 @@ public class EmployeeSelectW extends JFrame{
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 			
+			con = c;
+			
 			JLabel lblNewLabel = new JLabel("Technician:");
 			lblNewLabel.setBounds(31, 13, 77, 16);
 			contentPane.add(lblNewLabel);
-			
-			JComboBox comboBox = new JComboBox();
-			comboBox.setBounds(120, 10, 274, 22);
-			contentPane.add(comboBox);
 			
 			JLabel lblNewLabel_1 = new JLabel("Number:");
 			lblNewLabel_1.setBounds(31, 42, 56, 16);
@@ -104,6 +104,27 @@ public class EmployeeSelectW extends JFrame{
 			btnHome.setBounds(297, 212, 97, 25);
 			contentPane.add(btnHome);
 			
-			con = c;
+			JComboBox<Technician> comboBox_Tec = new JComboBox<Technician>();
+			comboBox_Tec.setBounds(120, 10, 274, 22);
+			contentPane.add(comboBox_Tec);
+			
+			}
+		//Return customers
+		public ComboBoxModel<Technician> getTechnicians() {
+			DefaultComboBoxModel<Technician> tecList = new DefaultComboBoxModel<Technician>();
+			Technician tec;
+			try {
+				myStmt = con.createStatement();
+				myRs = myStmt.executeQuery("SELECT * FROM TECHNICIAN;");
+				while (myRs.next()) {
+					tec = new Technician(myRs.getInt("EMP_NUM"), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
+							myRs.getString("EMP_CONTACT"), myRs.getInt("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getInt("EMP_WAGE"));
+					tecList.addElement(tec);
+				}
+			} catch (SQLException eCusGet) {
+				eCusGet.printStackTrace();
+				System.out.println("Customer retrieval failure");
+			}
+			return tecList;
 		}
 }

@@ -152,10 +152,7 @@ public class OwnerViewW extends JFrame {
 		});
 		btnSchedule.setBounds(270, 215, 137, 25);
 		contentPane.add(btnSchedule);
-		
-		
-		
-		
+	
 	}
 	
 
