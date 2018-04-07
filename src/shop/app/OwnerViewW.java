@@ -17,8 +17,10 @@ import java.sql.*;
 public class OwnerViewW extends JFrame {
 	
 	//Connection vars
+	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
+	private String x = "didnt work.";
 	
 	
 	Owner owner = null;
@@ -31,7 +33,9 @@ public class OwnerViewW extends JFrame {
 	private JButton editButton;
 	
 
-	public OwnerViewW(Connection con, String vin, Customer cus, Vehicle vcl) {
+	public OwnerViewW(Connection c, String vin, Customer cus, Vehicle vcl) {
+		
+		con = c;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -41,7 +45,7 @@ public class OwnerViewW extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
 		
-		getOwner(con, vin);
+		getOwner(vin);
 		
 		JLabel lblCustomer = new JLabel("Customer:");
 		lblCustomer.setBounds(24, 5, 72, 16);
@@ -64,15 +68,15 @@ public class OwnerViewW extends JFrame {
 		contentPane.add(lblCarHistory);
 		
 		JLabel cusField = new JLabel(cus.toString());	    		  
-		cusField.setBounds(108, 5, 108, 16);
+		cusField.setBounds(108, 5, 150, 16);
 		contentPane.add(cusField);
 		
 		JLabel vclField = new JLabel(vcl.toString());
-		vclField.setBounds(108, 34, 123, 16);
+		vclField.setBounds(108, 34, 154, 16);
 		contentPane.add(vclField);
 		
 		JLabel vinField = new JLabel(vin);
-		vinField.setBounds(108, 63, 116, 16);
+		vinField.setBounds(108, 63, 150, 16);
 		contentPane.add(vinField);
 		
 		JLabel lblNewLabel_2 = new JLabel("Recommendations:");
@@ -90,7 +94,7 @@ public class OwnerViewW extends JFrame {
 		carRecord.setEditable(false);
 		contentPane.add(carRecord);
 		
-		recArea = new JTextArea();
+		recArea = new JTextArea(getRecommendations(vin));
 		recArea.setBounds(270, 42, 137, 66);
 		recArea.setEditable(false);
 		contentPane.add(recArea);
@@ -143,7 +147,7 @@ public class OwnerViewW extends JFrame {
 	}
 	
 	//set up a connection to owner class using the vin of the vehicle passed
-	public void getOwner(Connection con, String vin) {
+	public void getOwner(String vin) {
 		try {
 			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT * FROM OWNER WHERE VIN = \"" + vin + "\";");
@@ -164,5 +168,31 @@ public class OwnerViewW extends JFrame {
 			eOwnInsert.printStackTrace();
 			System.out.println("Owner Insertion Failure");
 		}
+	}
+	
+	//get recommendations for the vehicle
+	public String getRecommendations(String vin) {
+		String service = "";
+		try {
+			myStmt = con.createStatement();
+			myRs = myStmt.executeQuery("SELECT SERVICE.SERV_DESC FROM OWNER, RECOMMENDATION, SERVICE WHERE OWNER.VIN = \"" + vin + 
+					"\" AND OWNER.VIN = RECOMMENDATION.VIN AND RECOMMENDATION.SERV_NUM = SERVICE.SERV_NUM;");
+			while (myRs.next()) {
+				service = service + (myRs.getString("SERV_DESC") + "\n");
+				
+			}
+		} catch (SQLException eRecGet) {
+			eRecGet.printStackTrace();
+			System.out.println("Failed to retreive recs.");
+		}
+		if (service.equals("")) {
+			service = "No Recommendations.";
+			return service;
+		}
+		else {
+			return service;
+		}
+		
+		
 	}
 }
