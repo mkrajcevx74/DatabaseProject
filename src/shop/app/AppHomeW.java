@@ -56,7 +56,7 @@ public class AppHomeW extends JFrame {
 		
 		//View schedule button
 		JButton btnViewSchedule = new JButton("View Schedule");
-<<<<<<< HEAD
+
 		btnViewSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ViewScheduleW vsw = new ViewScheduleW(con);
@@ -65,9 +65,9 @@ public class AppHomeW extends JFrame {
 			}
 		});
 		btnViewSchedule.setBounds(159, 203, 101, 23);
-=======
+
 		btnViewSchedule.setBounds(134, 203, 160, 23);
->>>>>>> origin/master
+
 		contentPane.add(btnViewSchedule);
 	}
 

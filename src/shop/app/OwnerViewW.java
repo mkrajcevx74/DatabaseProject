@@ -15,12 +15,9 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 
 public class OwnerViewW extends JFrame {
-	
-<<<<<<< HEAD
-	//Connection vars
-=======
+
 	//Connection variables
->>>>>>> origin/master
+
 	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
@@ -32,14 +29,13 @@ public class OwnerViewW extends JFrame {
 	private JTextField mileageText;
 	private JButton commitButton;
 	private JButton editButton;
+	private JTextArea carRecord;
+	private JTextArea recArea;
 
 	public OwnerViewW(Connection c, String vin, Customer cus, Vehicle vcl) {
-<<<<<<< HEAD
-=======
-		
+
 		con = c;
-		
->>>>>>> origin/master
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -48,11 +44,9 @@ public class OwnerViewW extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
 		
-<<<<<<< HEAD
-		getOwner(c, vin);
-=======
+
 		getOwner(vin);
->>>>>>> origin/master
+
 		
 		JLabel lblCustomer = new JLabel("Customer:");
 		lblCustomer.setBounds(24, 5, 72, 16);
@@ -96,13 +90,6 @@ public class OwnerViewW extends JFrame {
 		mileageText.setColumns(10);
 		mileageText.setEditable(false);
 		
-<<<<<<< HEAD
-		JTextArea carRecord = new JTextArea(owner.getRecord());
-		carRecord.setBounds(24, 154, 238, 46);
-		carRecord.setEditable(false);
-		contentPane.add(carRecord);
-		
-=======
 		carRecord = new JTextArea(owner.getRecord());
 		carRecord.setBounds(24, 143, 238, 57);
 		carRecord.setEditable(false);
@@ -113,7 +100,7 @@ public class OwnerViewW extends JFrame {
 		recArea.setEditable(false);
 		contentPane.add(recArea);
 		
->>>>>>> origin/master
+
 		commitButton = new JButton("Commit");
 		commitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -139,12 +126,8 @@ public class OwnerViewW extends JFrame {
 				editButton.setVisible(false);
 			}
 		});
-<<<<<<< HEAD
-		editButton.setBounds(270, 153, 137, 25);
-=======
-		
 		editButton.setBounds(270, 142, 137, 25);
->>>>>>> origin/master
+
 		contentPane.add(editButton);
 		commitButton.setBounds(270, 175, 137, 25);
 		contentPane.add(commitButton);
@@ -174,12 +157,9 @@ public class OwnerViewW extends JFrame {
 		
 	}
 	
-<<<<<<< HEAD
-	public void getOwner(Connection con, String vin) {
-=======
+
 	//set up a connection to owner class using the vin of the vehicle passed
 	public void getOwner(String vin) {
->>>>>>> origin/master
 		try {
 			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT * FROM OWNER WHERE VIN = \"" + vin + "\";");
