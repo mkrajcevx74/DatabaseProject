@@ -17,6 +17,7 @@ import java.sql.*;
 public class OwnerViewW extends JFrame {
 	
 	//Connection vars
+	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
 	
@@ -25,14 +26,10 @@ public class OwnerViewW extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField mileageText;
-	private JTextArea carRecord;
-	private JTextArea recArea;
 	private JButton commitButton;
 	private JButton editButton;
-	
 
-	public OwnerViewW(Connection con, String vin, Customer cus, Vehicle vcl) {
-		
+	public OwnerViewW(Connection c, String vin, Customer cus, Vehicle vcl) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -41,7 +38,7 @@ public class OwnerViewW extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
 		
-		getOwner(con, vin);
+		getOwner(c, vin);
 		
 		JLabel lblCustomer = new JLabel("Customer:");
 		lblCustomer.setBounds(24, 5, 72, 16);
@@ -85,26 +82,26 @@ public class OwnerViewW extends JFrame {
 		mileageText.setColumns(10);
 		mileageText.setEditable(false);
 		
-		carRecord = new JTextArea(owner.getRecord());
+		JTextArea carRecord = new JTextArea(owner.getRecord());
 		carRecord.setBounds(24, 154, 238, 46);
 		carRecord.setEditable(false);
 		contentPane.add(carRecord);
-		
-		recArea = new JTextArea();
-		recArea.setBounds(270, 42, 137, 66);
-		recArea.setEditable(false);
-		contentPane.add(recArea);
 		
 		commitButton = new JButton("Commit");
 		commitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mileageText.setEditable(false);
 				carRecord.setEditable(false);
+				//System.out.println(Integer.parseInt(mileageText.getText()));
 				updateInfo( vin, cus.getNum(), vcl.getNum(), (int) Integer.parseInt(mileageText.getText()), carRecord.getText());
 				commitButton.setVisible(false);
 				editButton.setVisible(true);
 			}
 		});
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(270, 42, 137, 66);
+		contentPane.add(textArea);
 		
 		editButton = new JButton("Edit");
 		editButton.addActionListener(new ActionListener() {
@@ -115,7 +112,6 @@ public class OwnerViewW extends JFrame {
 				editButton.setVisible(false);
 			}
 		});
-		
 		editButton.setBounds(270, 153, 137, 25);
 		contentPane.add(editButton);
 		commitButton.setBounds(270, 153, 137, 25);
@@ -126,14 +122,18 @@ public class OwnerViewW extends JFrame {
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerProfileW cpw = new CustomerProfileW(con, cus);
-				cpw.setVisible(true);
-				((Window) contentPane.getTopLevelAncestor()).dispose();
+				//cpw.setVisible()
 			}
 		});
 		backButton.setBounds(24, 215, 137, 25);
 		contentPane.add(backButton);
 		
 		JButton btnSchedule = new JButton("Schedule");
+		btnSchedule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnSchedule.setBounds(270, 215, 137, 25);
 		contentPane.add(btnSchedule);
 		
@@ -142,7 +142,6 @@ public class OwnerViewW extends JFrame {
 		
 	}
 	
-	//set up a connection to owner class using the vin of the vehicle passed
 	public void getOwner(Connection con, String vin) {
 		try {
 			myStmt = con.createStatement();
@@ -155,7 +154,7 @@ public class OwnerViewW extends JFrame {
 		}
 	}
 	
-	//update information in db
+	
 	public void updateInfo(String vin, int cusN, int vclN, int vclMile, String ownRecord) {
 		try {
 			owner = new Owner(vin, cusN, vclN, vclMile, ownRecord);
