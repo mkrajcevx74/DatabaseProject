@@ -59,7 +59,7 @@ public class CustomerSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectCustomer.setBounds(148, 123, 137, 23);
+		btnSelectCustomer.setBounds(149, 133, 137, 23);
 		contentPane.add(btnSelectCustomer);
 		
 		//Add button
@@ -71,7 +71,7 @@ public class CustomerSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnAddACustomer.setBounds(159, 168, 107, 23);
+		btnAddACustomer.setBounds(149, 169, 137, 23);
 		contentPane.add(btnAddACustomer);
 		
 		JButton btnHome = new JButton("Home");
@@ -82,7 +82,7 @@ public class CustomerSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnHome.setBounds(159, 215, 89, 23);
+		btnHome.setBounds(149, 205, 137, 23);
 		contentPane.add(btnHome);
 	}
 	

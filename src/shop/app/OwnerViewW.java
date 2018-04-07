@@ -20,7 +20,6 @@ public class OwnerViewW extends JFrame {
 	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
-	private String x = "didnt work.";
 	
 	
 	Owner owner = null;
@@ -90,7 +89,7 @@ public class OwnerViewW extends JFrame {
 		mileageText.setEditable(false);
 		
 		carRecord = new JTextArea(owner.getRecord());
-		carRecord.setBounds(24, 154, 238, 46);
+		carRecord.setBounds(24, 143, 238, 57);
 		carRecord.setEditable(false);
 		contentPane.add(carRecord);
 		
@@ -120,9 +119,9 @@ public class OwnerViewW extends JFrame {
 			}
 		});
 		
-		editButton.setBounds(270, 153, 137, 25);
+		editButton.setBounds(270, 142, 137, 25);
 		contentPane.add(editButton);
-		commitButton.setBounds(270, 153, 137, 25);
+		commitButton.setBounds(270, 175, 137, 25);
 		contentPane.add(commitButton);
 		commitButton.setVisible(false);
 		
