@@ -46,6 +46,9 @@ public class AppHomeW extends JFrame {
 		JButton btnSelectAnEmployee = new JButton("Select an Employee");
 		btnSelectAnEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				EmployeeSelectW ew = new EmployeeSelectW(con);
+				ew.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
 		btnSelectAnEmployee.setBounds(134, 142, 160, 23);

@@ -29,6 +29,70 @@ public class EmployeeSelectW extends JFrame{
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 			
+			JLabel lblNewLabel = new JLabel("Technician:");
+			lblNewLabel.setBounds(31, 13, 77, 16);
+			contentPane.add(lblNewLabel);
+			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setBounds(120, 10, 274, 22);
+			contentPane.add(comboBox);
+			
+			JLabel lblNewLabel_1 = new JLabel("Number:");
+			lblNewLabel_1.setBounds(31, 42, 56, 16);
+			contentPane.add(lblNewLabel_1);
+			
+			JLabel lblNewLabel_2 = new JLabel("First Name:");
+			lblNewLabel_2.setBounds(31, 71, 77, 16);
+			contentPane.add(lblNewLabel_2);
+			
+			JLabel lblNewLabel_3 = new JLabel("Last Name:");
+			lblNewLabel_3.setBounds(31, 100, 77, 16);
+			contentPane.add(lblNewLabel_3);
+			
+			JLabel lblNewLabel_4 = new JLabel("Contact");
+			lblNewLabel_4.setBounds(31, 129, 56, 16);
+			contentPane.add(lblNewLabel_4);
+			
+			JLabel lblNewLabel_5 = new JLabel("Rating");
+			lblNewLabel_5.setBounds(31, 158, 56, 16);
+			contentPane.add(lblNewLabel_5);
+			
+			JLabel lblNewLabel_6 = new JLabel("Rating Count:");
+			lblNewLabel_6.setBounds(31, 187, 89, 16);
+			contentPane.add(lblNewLabel_6);
+			
+			JLabel lblNewLabel_7 = new JLabel("New label");
+			lblNewLabel_7.setBounds(144, 45, 89, 16);
+			contentPane.add(lblNewLabel_7);
+			
+			JLabel lblNewLabel_8 = new JLabel("New label");
+			lblNewLabel_8.setBounds(144, 71, 56, 16);
+			contentPane.add(lblNewLabel_8);
+			
+			JLabel lblNewLabel_9 = new JLabel("New label");
+			lblNewLabel_9.setBounds(144, 100, 56, 16);
+			contentPane.add(lblNewLabel_9);
+			
+			JLabel lblNewLabel_10 = new JLabel("New label");
+			lblNewLabel_10.setBounds(144, 129, 56, 16);
+			contentPane.add(lblNewLabel_10);
+			
+			JLabel lblNewLabel_11 = new JLabel("New label");
+			lblNewLabel_11.setBounds(144, 158, 56, 16);
+			contentPane.add(lblNewLabel_11);
+			
+			JLabel lblNewLabel_12 = new JLabel("Wage:");
+			lblNewLabel_12.setBounds(31, 216, 56, 16);
+			contentPane.add(lblNewLabel_12);
+			
+			JLabel lblNewLabel_13 = new JLabel("New label");
+			lblNewLabel_13.setBounds(144, 187, 56, 16);
+			contentPane.add(lblNewLabel_13);
+			
+			JLabel lblNewLabel_14 = new JLabel("New label");
+			lblNewLabel_14.setBounds(144, 216, 56, 16);
+			contentPane.add(lblNewLabel_14);
+			
 			con = c;
 		}
 }
