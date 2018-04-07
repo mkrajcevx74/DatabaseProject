@@ -93,6 +93,17 @@ public class EmployeeSelectW extends JFrame{
 			lblNewLabel_14.setBounds(144, 216, 56, 16);
 			contentPane.add(lblNewLabel_14);
 			
+			JButton btnHome = new JButton("Home");
+			btnHome.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AppHomeW ahw = new AppHomeW(con);
+					ahw.setVisible(true);
+					((Window) contentPane.getTopLevelAncestor()).dispose();
+				}
+			});
+			btnHome.setBounds(297, 212, 97, 25);
+			contentPane.add(btnHome);
+			
 			con = c;
 		}
 }
