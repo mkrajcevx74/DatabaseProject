@@ -39,20 +39,24 @@ public class AppHomeW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectACustomer.setBounds(149, 81, 127, 23);
+		btnSelectACustomer.setBounds(134, 81, 160, 23);
 		contentPane.add(btnSelectACustomer);
 		
 		//Employee select button
 		JButton btnSelectAnEmployee = new JButton("Select an Employee");
 		btnSelectAnEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				EmployeeSelectW ew = new EmployeeSelectW(con);
+				ew.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectAnEmployee.setBounds(149, 142, 127, 23);
+		btnSelectAnEmployee.setBounds(134, 142, 160, 23);
 		contentPane.add(btnSelectAnEmployee);
 		
 		//View schedule button
 		JButton btnViewSchedule = new JButton("View Schedule");
+<<<<<<< HEAD
 		btnViewSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ViewScheduleW vsw = new ViewScheduleW(con);
@@ -61,6 +65,9 @@ public class AppHomeW extends JFrame {
 			}
 		});
 		btnViewSchedule.setBounds(159, 203, 101, 23);
+=======
+		btnViewSchedule.setBounds(134, 203, 160, 23);
+>>>>>>> origin/master
 		contentPane.add(btnViewSchedule);
 	}
 

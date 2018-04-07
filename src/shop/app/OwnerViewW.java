@@ -16,7 +16,11 @@ import java.sql.*;
 
 public class OwnerViewW extends JFrame {
 	
+<<<<<<< HEAD
 	//Connection vars
+=======
+	//Connection variables
+>>>>>>> origin/master
 	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
@@ -30,6 +34,12 @@ public class OwnerViewW extends JFrame {
 	private JButton editButton;
 
 	public OwnerViewW(Connection c, String vin, Customer cus, Vehicle vcl) {
+<<<<<<< HEAD
+=======
+		
+		con = c;
+		
+>>>>>>> origin/master
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -38,7 +48,11 @@ public class OwnerViewW extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
 		
+<<<<<<< HEAD
 		getOwner(c, vin);
+=======
+		getOwner(vin);
+>>>>>>> origin/master
 		
 		JLabel lblCustomer = new JLabel("Customer:");
 		lblCustomer.setBounds(24, 5, 72, 16);
@@ -61,15 +75,15 @@ public class OwnerViewW extends JFrame {
 		contentPane.add(lblCarHistory);
 		
 		JLabel cusField = new JLabel(cus.toString());	    		  
-		cusField.setBounds(108, 5, 108, 16);
+		cusField.setBounds(108, 5, 150, 16);
 		contentPane.add(cusField);
 		
 		JLabel vclField = new JLabel(vcl.toString());
-		vclField.setBounds(108, 34, 123, 16);
+		vclField.setBounds(108, 34, 154, 16);
 		contentPane.add(vclField);
 		
 		JLabel vinField = new JLabel(vin);
-		vinField.setBounds(108, 63, 116, 16);
+		vinField.setBounds(108, 63, 150, 16);
 		contentPane.add(vinField);
 		
 		JLabel lblNewLabel_2 = new JLabel("Recommendations:");
@@ -82,11 +96,24 @@ public class OwnerViewW extends JFrame {
 		mileageText.setColumns(10);
 		mileageText.setEditable(false);
 		
+<<<<<<< HEAD
 		JTextArea carRecord = new JTextArea(owner.getRecord());
 		carRecord.setBounds(24, 154, 238, 46);
 		carRecord.setEditable(false);
 		contentPane.add(carRecord);
 		
+=======
+		carRecord = new JTextArea(owner.getRecord());
+		carRecord.setBounds(24, 143, 238, 57);
+		carRecord.setEditable(false);
+		contentPane.add(carRecord);
+		
+		recArea = new JTextArea(getRecommendations(vin));
+		recArea.setBounds(270, 42, 137, 66);
+		recArea.setEditable(false);
+		contentPane.add(recArea);
+		
+>>>>>>> origin/master
 		commitButton = new JButton("Commit");
 		commitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -112,9 +139,14 @@ public class OwnerViewW extends JFrame {
 				editButton.setVisible(false);
 			}
 		});
+<<<<<<< HEAD
 		editButton.setBounds(270, 153, 137, 25);
+=======
+		
+		editButton.setBounds(270, 142, 137, 25);
+>>>>>>> origin/master
 		contentPane.add(editButton);
-		commitButton.setBounds(270, 153, 137, 25);
+		commitButton.setBounds(270, 175, 137, 25);
 		contentPane.add(commitButton);
 		commitButton.setVisible(false);
 		
@@ -142,7 +174,12 @@ public class OwnerViewW extends JFrame {
 		
 	}
 	
+<<<<<<< HEAD
 	public void getOwner(Connection con, String vin) {
+=======
+	//set up a connection to owner class using the vin of the vehicle passed
+	public void getOwner(String vin) {
+>>>>>>> origin/master
 		try {
 			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT * FROM OWNER WHERE VIN = \"" + vin + "\";");
@@ -163,5 +200,31 @@ public class OwnerViewW extends JFrame {
 			eOwnInsert.printStackTrace();
 			System.out.println("Owner Insertion Failure");
 		}
+	}
+	
+	//get recommendations for the vehicle
+	public String getRecommendations(String vin) {
+		String service = "";
+		try {
+			myStmt = con.createStatement();
+			myRs = myStmt.executeQuery("SELECT SERVICE.SERV_DESC FROM OWNER, RECOMMENDATION, SERVICE WHERE OWNER.VIN = \"" + vin + 
+					"\" AND OWNER.VIN = RECOMMENDATION.VIN AND RECOMMENDATION.SERV_NUM = SERVICE.SERV_NUM;");
+			while (myRs.next()) {
+				service = service + (myRs.getString("SERV_DESC") + "\n");
+				
+			}
+		} catch (SQLException eRecGet) {
+			eRecGet.printStackTrace();
+			System.out.println("Failed to retreive recs.");
+		}
+		if (service.equals("")) {
+			service = "No Recommendations.";
+			return service;
+		}
+		else {
+			return service;
+		}
+		
+		
 	}
 }
