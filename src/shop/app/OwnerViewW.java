@@ -137,7 +137,8 @@ public class OwnerViewW extends JFrame {
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerProfileW cpw = new CustomerProfileW(con, cus);
-				//cpw.setVisible()
+				cpw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
 		backButton.setBounds(24, 215, 137, 25);
@@ -151,10 +152,7 @@ public class OwnerViewW extends JFrame {
 		});
 		btnSchedule.setBounds(270, 215, 137, 25);
 		contentPane.add(btnSchedule);
-		
-		
-		
-		
+	
 	}
 	
 

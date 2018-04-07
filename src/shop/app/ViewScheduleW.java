@@ -19,7 +19,7 @@ import shop.core.Schedule;
 
 public class ViewScheduleW extends JFrame {
 	//Component vars
-	//JLabel lblTechnician;
+	JLabel lblTechnician;
 	
 	//Connection vars
 	Connection con;
@@ -29,7 +29,6 @@ public class ViewScheduleW extends JFrame {
 	int shiftNum;
 	String date;
 	String timeRange;
-	Technician tech;
 
 	private JPanel contentPane;
 
@@ -52,12 +51,7 @@ public class ViewScheduleW extends JFrame {
 		lblTime.setBounds(31, 82, 120, 14);
 		contentPane.add(lblTime);
 		
-		JLabel lblTechnician = new JLabel("Technician");
-		lblTechnician.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTechnician.setBounds(190, 127, 180, 14);
-		contentPane.add(lblTechnician);
-		
-		JComboBox<String> comboBox_Times = new JComboBox<String>();
+		JComboBox comboBox_Times = new JComboBox();
 		comboBox_Times.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				timeRange = comboBox_Times.getSelectedItem().toString();
@@ -68,7 +62,7 @@ public class ViewScheduleW extends JFrame {
 		comboBox_Times.setBounds(190, 79, 180, 20);
 		contentPane.add(comboBox_Times);
 		
-		JComboBox<String> comboBox_Dates = new JComboBox<String>();
+		JComboBox comboBox_Dates = new JComboBox();
 		comboBox_Dates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				date = comboBox_Dates.getSelectedItem().toString();
@@ -87,7 +81,10 @@ public class ViewScheduleW extends JFrame {
 		lblOnStaff.setBounds(31, 127, 120, 14);
 		contentPane.add(lblOnStaff);
 		
-		
+		lblTechnician = new JLabel("Technician");
+		lblTechnician.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTechnician.setBounds(190, 127, 180, 14);
+		contentPane.add(lblTechnician);
 		
 		JLabel lblAppointmentSchd = new JLabel("Appointment Scheduled: ");
 		lblAppointmentSchd.setHorizontalAlignment(SwingConstants.CENTER);
@@ -147,24 +144,22 @@ public class ViewScheduleW extends JFrame {
 		return timesList;
 	}
 	
-	public void setTimesBox(JComboBox<String> TimesBox, JLabel techLbl) {
+	public void setTimesBox(JComboBox<String> TimesBox, JLabel tech) {
 		TimesBox.setModel(getTimes(date));
 		TimesBox.setSelectedIndex(0);
 		timeRange = TimesBox.getSelectedItem().toString();
-		getTechnician();
-		techLbl.setText(tech.toString());
+		tech.setText(getTechnician().toString());
 	}
 	
 	
-	public void getTechnician() {
+	public Technician getTechnician() {
+		Technician tech = null;
 		try{
 			myStmt = con.createStatement();
-			myRs = myStmt.executeQuery("SELECT SHIFT_NUM FROM SCHEDULE WHERE SHIFT_DAY = \"" + date + "\" AND SHIFT_TIME = \"" + timeRange.substring(0, 8) + "\";");
-			myRs.next();
+			myRs = myStmt.executeQuery("SELECT SHIFT_NUM WHERE SHIFT_DAY = \"" + date + "\" AND SHIFT_TIME = \"" + timeRange.substring(0, 7) + "\";");
 			shiftNum = myRs.getInt("SHIFT_NUM");
 			try {
 				myRs = myStmt.executeQuery("SELECT TECHNICIAN.* FROM TECHNICIAN, SCHEDULE WHERE SHIFT_NUM = " + shiftNum + " AND TECHNICIAN.EMP_NUM = SCHEDULE.EMP_NUM");
-				myRs.next();
 				tech = new Technician(shiftNum, myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
 						myRs.getString("EMP_CONTACT"), myRs.getFloat("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getFloat("EMP_WAGE"));
 			} catch (SQLException eTechGet) {
@@ -175,6 +170,6 @@ public class ViewScheduleW extends JFrame {
 			eShiftGet.printStackTrace();
 			System.out.println("Error retrieving shift index");
 		}
-		System.out.println(tech.toString());
+		return tech;
 	}
 }
