@@ -16,7 +16,7 @@ import java.sql.*;
 
 public class OwnerViewW extends JFrame {
 	
-	//Connection vars
+	//Connection variables
 	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;

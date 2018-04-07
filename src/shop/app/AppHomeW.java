@@ -39,7 +39,7 @@ public class AppHomeW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectACustomer.setBounds(149, 81, 127, 23);
+		btnSelectACustomer.setBounds(134, 81, 160, 23);
 		contentPane.add(btnSelectACustomer);
 		
 		//Employee select button
@@ -48,12 +48,12 @@ public class AppHomeW extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnSelectAnEmployee.setBounds(149, 142, 127, 23);
+		btnSelectAnEmployee.setBounds(134, 142, 160, 23);
 		contentPane.add(btnSelectAnEmployee);
 		
 		//View schedule button
 		JButton btnViewSchedule = new JButton("View Schedule");
-		btnViewSchedule.setBounds(159, 203, 101, 23);
+		btnViewSchedule.setBounds(134, 203, 160, 23);
 		contentPane.add(btnViewSchedule);
 	}
 
