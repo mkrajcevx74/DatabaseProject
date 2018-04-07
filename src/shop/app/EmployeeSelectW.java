@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 
 import shop.core.Customer;
+import shop.core.Owner;
 import shop.core.Technician;
 
 public class EmployeeSelectW extends JFrame{
@@ -20,6 +21,7 @@ public class EmployeeSelectW extends JFrame{
 		Connection con;
 		Statement myStmt = null;
 		ResultSet myRs = null;
+		Technician tec2 = null;
 
 		//Employee selection screen constructor
 		public EmployeeSelectW(Connection c) {
@@ -127,5 +129,19 @@ public class EmployeeSelectW extends JFrame{
 				System.out.println("Customer retrieval failure");
 			}
 			return tecList;
+		}
+		
+		
+		public void getTec() {
+			try {
+				myStmt = con.createStatement();
+				myRs = myStmt.executeQuery("SELECT * FROM TECHNICIAN WHERE EMP_NUM = ");
+				myRs.next();
+				tec2 = new Technician(myRs.getInt("EMP_NUM"), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
+						myRs.getString("EMP_CONTACT"), myRs.getInt("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getInt("EMP_WAGE"));
+			} catch (SQLException eOwn) {
+				eOwn.printStackTrace();
+				System.out.println("Owner Failure");
+			}
 		}
 }
