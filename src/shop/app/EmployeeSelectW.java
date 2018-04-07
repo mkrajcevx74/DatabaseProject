@@ -3,8 +3,6 @@ package shop.app;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import shop.core.Customer;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -35,6 +33,10 @@ public class EmployeeSelectW extends JFrame{
 			lblNewLabel.setBounds(31, 13, 77, 16);
 			contentPane.add(lblNewLabel);
 			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setBounds(120, 10, 274, 22);
+			contentPane.add(comboBox);
+			
 			JLabel lblNewLabel_1 = new JLabel("Number:");
 			lblNewLabel_1.setBounds(31, 42, 56, 16);
 			contentPane.add(lblNewLabel_1);
@@ -59,13 +61,9 @@ public class EmployeeSelectW extends JFrame{
 			lblNewLabel_6.setBounds(31, 187, 89, 16);
 			contentPane.add(lblNewLabel_6);
 			
-			JLabel lblNewLabel_12 = new JLabel("Wage:");
-			lblNewLabel_12.setBounds(31, 216, 56, 16);
-			contentPane.add(lblNewLabel_12);
-			
-			JLabel lblEmpNum = new JLabel("New label");
-			lblEmpNum.setBounds(144, 45, 89, 16);
-			contentPane.add(lblEmpNum);
+			JLabel lblNewLabel_7 = new JLabel("New label");
+			lblNewLabel_7.setBounds(144, 45, 89, 16);
+			contentPane.add(lblNewLabel_7);
 			
 			JLabel lblNewLabel_8 = new JLabel("New label");
 			lblNewLabel_8.setBounds(144, 71, 56, 16);
@@ -83,6 +81,10 @@ public class EmployeeSelectW extends JFrame{
 			lblNewLabel_11.setBounds(144, 158, 56, 16);
 			contentPane.add(lblNewLabel_11);
 			
+			JLabel lblNewLabel_12 = new JLabel("Wage:");
+			lblNewLabel_12.setBounds(31, 216, 56, 16);
+			contentPane.add(lblNewLabel_12);
+			
 			JLabel lblNewLabel_13 = new JLabel("New label");
 			lblNewLabel_13.setBounds(144, 187, 56, 16);
 			contentPane.add(lblNewLabel_13);
@@ -91,29 +93,6 @@ public class EmployeeSelectW extends JFrame{
 			lblNewLabel_14.setBounds(144, 216, 56, 16);
 			contentPane.add(lblNewLabel_14);
 			
-			JComboBox comboBox_Tec = new JComboBox();
-			comboBox_Tec.setBounds(120, 10, 274, 22);
-			contentPane.add(comboBox_Tec);
-			comboBox_Tec.setModel(getTechnicians());
-			
 			con = c;
-			
-			public ComboBoxModel<Techinician> getTechnicians() {
-				DefaultComboBoxModel<Techinician> tecList = new DefaultComboBoxModel<Techinician>();
-				Techinician tec;
-				try {
-					myStmt = con.createStatement();
-					myRs = myStmt.executeQuery("SELECT * FROM TECHNICIAN;");
-					while (myRs.next()) {
-						tec = new Technician(myRs.getInt("EMP_NUM"), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"), myRs.getString("EMP_CONTACT"));
-						tecList.addElement(tec);
-					}
-				} catch (SQLException eTecGet) {
-					eTecGet.printStackTrace();
-					System.out.println("Technician retrieval failure");
-				}
-				return tecList;
-				
-			}
 		}
 }
