@@ -1,6 +1,7 @@
 package shop.core;
 
 public class Technician {
+	//Technician attributes
 	private int num;
 	private String fName;
 	private String lName;
@@ -9,6 +10,7 @@ public class Technician {
 	private int rCount;
 	private float wage;
 	
+	//Employee entity constructor
 	public Technician(int newNum, String newFName, String newLName, String newContact, float newRating, int newRCount, float newWage) {
 		num = newNum;
 		fName = newFName;
@@ -94,5 +96,10 @@ public class Technician {
 	//Set employee's wage
 	public void setWage(float newWage) {
 		wage = newWage;
+	}
+	
+	@Override
+	public String toString() {
+		return fName + " " + lName;
 	}
 }

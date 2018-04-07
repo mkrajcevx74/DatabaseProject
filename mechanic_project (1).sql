@@ -2,8 +2,8 @@
 -- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 06, 2018 at 08:50 PM
+-- Host: 127.0.0.1
+-- Generation Time: Apr 07, 2018 at 04:27 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -29,10 +29,10 @@ CREATE DATABASE mechanic_project;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Appointment`
+-- Table structure for table `appointment`
 --
 
-CREATE TABLE `Appointment` (
+CREATE TABLE `appointment` (
   `APT_NUM` int(11) NOT NULL,
   `VIN` varchar(17) NOT NULL,
   `CUS_NUM` int(11) NOT NULL,
@@ -41,10 +41,10 @@ CREATE TABLE `Appointment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Appointment`
+-- Dumping data for table `appointment`
 --
 
-INSERT INTO `Appointment` (`APT_NUM`, `VIN`, `CUS_NUM`, `SHIFT_NUM`, `SERV_NUM`) VALUES
+INSERT INTO `appointment` (`APT_NUM`, `VIN`, `CUS_NUM`, `SHIFT_NUM`, `SERV_NUM`) VALUES
 (1, 'YS3FA4CY1B1306923', 1, 1, 1),
 (2, 'JAC12345678900990', 2, 2, 2),
 (3, '1G1YY12S745106110', 5, 5, 2),
@@ -56,10 +56,10 @@ INSERT INTO `Appointment` (`APT_NUM`, `VIN`, `CUS_NUM`, `SHIFT_NUM`, `SERV_NUM`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Customer`
+-- Table structure for table `customer`
 --
 
-CREATE TABLE `Customer` (
+CREATE TABLE `customer` (
   `CUS_NUM` int(5) NOT NULL,
   `CUS_FNAME` varchar(30) NOT NULL,
   `CUS_LNAME` varchar(20) NOT NULL,
@@ -67,10 +67,10 @@ CREATE TABLE `Customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Customer`
+-- Dumping data for table `customer`
 --
 
-INSERT INTO `Customer` (`CUS_NUM`, `CUS_FNAME`, `CUS_LNAME`, `CUS_CONTACT`) VALUES
+INSERT INTO `customer` (`CUS_NUM`, `CUS_FNAME`, `CUS_LNAME`, `CUS_CONTACT`) VALUES
 (1, 'Daniel', 'Yu', '248-213-4356'),
 (2, 'Michael', 'Krajcev', '248-456-7890'),
 (3, 'Jason', 'Yang', '248-248-2248'),
@@ -88,10 +88,10 @@ INSERT INTO `Customer` (`CUS_NUM`, `CUS_FNAME`, `CUS_LNAME`, `CUS_CONTACT`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Owner`
+-- Table structure for table `owner`
 --
 
-CREATE TABLE `Owner` (
+CREATE TABLE `owner` (
   `VIN` varchar(17) NOT NULL,
   `CUS_NUM` int(5) NOT NULL,
   `VCL_NUM` int(5) NOT NULL,
@@ -100,13 +100,13 @@ CREATE TABLE `Owner` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Owner`
+-- Dumping data for table `owner`
 --
 
-INSERT INTO `Owner` (`VIN`, `CUS_NUM`, `VCL_NUM`, `OWN_MILES`, `OWN_RECORD`) VALUES
+INSERT INTO `owner` (`VIN`, `CUS_NUM`, `VCL_NUM`, `OWN_MILES`, `OWN_RECORD`) VALUES
 ('1FBHS31Y3GHA42455', 6, 12, 30980, 'n/a'),
 ('1FUPBLYB0RL458593', 10, 11, 76687, 'n/a'),
-('1G1YY12S745106110', 1, 13, 10000, 'Slight water damage'),
+('1G1YY12S745106110', 1, 13, 1234, 'Slight water damage'),
 ('1GBHK74629F106761', 6, 6, 45565, 'n/a'),
 ('2GTEC19Z671122185', 12, 7, 56789, 'n/a'),
 ('3GCPCPEH9EG334737', 4, 4, 23880, 'n/a'),
@@ -121,20 +121,20 @@ INSERT INTO `Owner` (`VIN`, `CUS_NUM`, `VCL_NUM`, `OWN_MILES`, `OWN_RECORD`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Recommendation`
+-- Table structure for table `recommendation`
 --
 
-CREATE TABLE `Recommendation` (
+CREATE TABLE `recommendation` (
   `REC_NUM` int(255) NOT NULL,
   `VIN` varchar(255) NOT NULL,
   `SERV_NUM` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Recommendation`
+-- Dumping data for table `recommendation`
 --
 
-INSERT INTO `Recommendation` (`REC_NUM`, `VIN`, `SERV_NUM`) VALUES
+INSERT INTO `recommendation` (`REC_NUM`, `VIN`, `SERV_NUM`) VALUES
 (1, 'YS3FA4CY1B1306923', 7),
 (2, 'JHS28390173284938', 6),
 (3, 'JHS28390173284938', 1),
@@ -143,10 +143,10 @@ INSERT INTO `Recommendation` (`REC_NUM`, `VIN`, `SERV_NUM`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Schedule`
+-- Table structure for table `schedule`
 --
 
-CREATE TABLE `Schedule` (
+CREATE TABLE `schedule` (
   `SHIFT_NUM` int(11) NOT NULL,
   `SHIFT_DAY` date NOT NULL,
   `SHIFT_TIME` time NOT NULL,
@@ -155,10 +155,10 @@ CREATE TABLE `Schedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Schedule`
+-- Dumping data for table `schedule`
 --
 
-INSERT INTO `Schedule` (`SHIFT_NUM`, `SHIFT_DAY`, `SHIFT_TIME`, `SHIFT_TIME_END`, `EMP_NUM`) VALUES
+INSERT INTO `schedule` (`SHIFT_NUM`, `SHIFT_DAY`, `SHIFT_TIME`, `SHIFT_TIME_END`, `EMP_NUM`) VALUES
 (1, '2018-04-09', '08:30:00', '12:00:00', 1),
 (2, '2018-04-07', '09:00:00', '14:00:00', 2),
 (3, '2018-04-09', '12:00:00', '16:00:00', 4),
@@ -183,19 +183,19 @@ INSERT INTO `Schedule` (`SHIFT_NUM`, `SHIFT_DAY`, `SHIFT_TIME`, `SHIFT_TIME_END`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Service`
+-- Table structure for table `service`
 --
 
-CREATE TABLE `Service` (
+CREATE TABLE `service` (
   `SERV_NUM` int(255) NOT NULL,
   `SERV_DESC` varchar(400) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Service`
+-- Dumping data for table `service`
 --
 
-INSERT INTO `Service` (`SERV_NUM`, `SERV_DESC`) VALUES
+INSERT INTO `service` (`SERV_NUM`, `SERV_DESC`) VALUES
 (1, 'Scheduled maintenance'),
 (2, '15-point inspection'),
 (3, 'Oil Change'),
@@ -207,39 +207,39 @@ INSERT INTO `Service` (`SERV_NUM`, `SERV_DESC`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Technician`
+-- Table structure for table `technician`
 --
 
-CREATE TABLE `Technician` (
+CREATE TABLE `technician` (
   `EMP_NUM` int(255) NOT NULL,
   `EMP_FNAME` varchar(10) NOT NULL,
   `EMP_LNAME` varchar(10) NOT NULL,
-  `EMP_PHONE` varchar(11) NOT NULL,
-  `EMP_RATING` int(50) NOT NULL,
+  `EMP_CONTACT` varchar(11) NOT NULL,
+  `EMP_RATING` double NOT NULL,
   `EMP_RATING_COUNT` int(4) NOT NULL,
   `EMP_WAGE` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Technician`
+-- Dumping data for table `technician`
 --
 
-INSERT INTO `Technician` (`EMP_NUM`, `EMP_FNAME`, `EMP_LNAME`, `EMP_PHONE`, `EMP_RATING`, `EMP_RATING_COUNT`, `EMP_WAGE`) VALUES
-(1, 'Sean', 'Dallas', '248-000-0000', 8, 1, 15.8),
-(2, 'Jenny', 'Jenny', '800-867-5309', 9, 5, 15),
-(3, 'John', 'Doe', '248-000-0001', 6, 3, 10.6),
-(4, 'Gordon', 'Freeman', '248-000-0002', 10, 8, 15.9),
-(5, 'Cid', 'Highwind', '248-000-0003', 9, 5, 15.5),
-(6, 'Hal', 'Emmerich', '248-000-0004', 8, 4, 14.5),
-(7, 'Isaac', 'Clarke', '248-000-0005', 8, 6, 13.5);
+INSERT INTO `technician` (`EMP_NUM`, `EMP_FNAME`, `EMP_LNAME`, `EMP_CONTACT`, `EMP_RATING`, `EMP_RATING_COUNT`, `EMP_WAGE`) VALUES
+(1, 'Sean', 'Dallas', '248-000-000', 8, 1, 15.8),
+(2, 'Jenny', 'Jenny', '800-867-530', 9, 5, 15),
+(3, 'John', 'Doe', '248-000-000', 6, 3, 10.6),
+(4, 'Gordon', 'Freeman', '248-000-000', 10, 8, 15.9),
+(5, 'Cid', 'Highwind', '248-000-000', 9, 5, 15.5),
+(6, 'Hal', 'Emmerich', '248-000-000', 8, 4, 14.5),
+(7, 'Isaac', 'Clarke', '248-000-000', 8, 6, 13.5);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Vehicle`
+-- Table structure for table `vehicle`
 --
 
-CREATE TABLE `Vehicle` (
+CREATE TABLE `vehicle` (
   `VCL_NUM` int(5) NOT NULL,
   `VCL_MAKE` varchar(20) NOT NULL,
   `VCL_MODEL` varchar(10) NOT NULL,
@@ -248,10 +248,10 @@ CREATE TABLE `Vehicle` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Vehicle`
+-- Dumping data for table `vehicle`
 --
 
-INSERT INTO `Vehicle` (`VCL_NUM`, `VCL_MAKE`, `VCL_MODEL`, `VCL_YEAR`, `VCL_MISC`) VALUES
+INSERT INTO `vehicle` (`VCL_NUM`, `VCL_MAKE`, `VCL_MODEL`, `VCL_YEAR`, `VCL_MISC`) VALUES
 (1, 'SAAB', '9-3', 2011, 'Turbo4'),
 (2, 'Acura', 'MDX', 2004, '3.5L'),
 (3, 'Honda', 'S2000', 2007, 'AP1'),
@@ -271,9 +271,9 @@ INSERT INTO `Vehicle` (`VCL_NUM`, `VCL_MAKE`, `VCL_MODEL`, `VCL_YEAR`, `VCL_MISC
 --
 
 --
--- Indexes for table `Appointment`
+-- Indexes for table `appointment`
 --
-ALTER TABLE `Appointment`
+ALTER TABLE `appointment`
   ADD PRIMARY KEY (`APT_NUM`),
   ADD KEY `VIN` (`VIN`),
   ADD KEY `SERV_NUM` (`SERV_NUM`),
@@ -281,50 +281,50 @@ ALTER TABLE `Appointment`
   ADD KEY `SHIFT_NUM` (`SHIFT_NUM`);
 
 --
--- Indexes for table `Customer`
+-- Indexes for table `customer`
 --
-ALTER TABLE `Customer`
+ALTER TABLE `customer`
   ADD PRIMARY KEY (`CUS_NUM`);
 
 --
--- Indexes for table `Owner`
+-- Indexes for table `owner`
 --
-ALTER TABLE `Owner`
+ALTER TABLE `owner`
   ADD PRIMARY KEY (`VIN`),
   ADD KEY `CUS_NUM` (`CUS_NUM`),
   ADD KEY `VCL_NUM` (`VCL_NUM`);
 
 --
--- Indexes for table `Recommendation`
+-- Indexes for table `recommendation`
 --
-ALTER TABLE `Recommendation`
+ALTER TABLE `recommendation`
   ADD PRIMARY KEY (`REC_NUM`),
   ADD KEY `VIN` (`VIN`),
   ADD KEY `SER_NUM` (`SERV_NUM`);
 
 --
--- Indexes for table `Schedule`
+-- Indexes for table `schedule`
 --
-ALTER TABLE `Schedule`
+ALTER TABLE `schedule`
   ADD PRIMARY KEY (`SHIFT_NUM`),
   ADD KEY `EMP_NUM` (`EMP_NUM`);
 
 --
--- Indexes for table `Service`
+-- Indexes for table `service`
 --
-ALTER TABLE `Service`
+ALTER TABLE `service`
   ADD PRIMARY KEY (`SERV_NUM`);
 
 --
--- Indexes for table `Technician`
+-- Indexes for table `technician`
 --
-ALTER TABLE `Technician`
+ALTER TABLE `technician`
   ADD PRIMARY KEY (`EMP_NUM`);
 
 --
--- Indexes for table `Vehicle`
+-- Indexes for table `vehicle`
 --
-ALTER TABLE `Vehicle`
+ALTER TABLE `vehicle`
   ADD PRIMARY KEY (`VCL_NUM`);
 
 --
@@ -332,79 +332,79 @@ ALTER TABLE `Vehicle`
 --
 
 --
--- AUTO_INCREMENT for table `Appointment`
+-- AUTO_INCREMENT for table `appointment`
 --
-ALTER TABLE `Appointment`
-  MODIFY `APT_NUM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `appointment`
+  MODIFY `APT_NUM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `Customer`
+-- AUTO_INCREMENT for table `customer`
 --
-ALTER TABLE `Customer`
-  MODIFY `CUS_NUM` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `customer`
+  MODIFY `CUS_NUM` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `Recommendation`
+-- AUTO_INCREMENT for table `recommendation`
 --
-ALTER TABLE `Recommendation`
-  MODIFY `REC_NUM` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `recommendation`
+  MODIFY `REC_NUM` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `Schedule`
+-- AUTO_INCREMENT for table `schedule`
 --
-ALTER TABLE `Schedule`
-  MODIFY `SHIFT_NUM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `schedule`
+  MODIFY `SHIFT_NUM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `Service`
+-- AUTO_INCREMENT for table `service`
 --
-ALTER TABLE `Service`
-  MODIFY `SERV_NUM` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `service`
+  MODIFY `SERV_NUM` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `Technician`
+-- AUTO_INCREMENT for table `technician`
 --
-ALTER TABLE `Technician`
-  MODIFY `EMP_NUM` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `technician`
+  MODIFY `EMP_NUM` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `Vehicle`
+-- AUTO_INCREMENT for table `vehicle`
 --
-ALTER TABLE `Vehicle`
-  MODIFY `VCL_NUM` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `vehicle`
+  MODIFY `VCL_NUM` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `Appointment`
+-- Constraints for table `appointment`
 --
-ALTER TABLE `Appointment`
-  ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`VIN`) REFERENCES `Owner` (`VIN`),
-  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`SERV_NUM`) REFERENCES `Service` (`SERV_NUM`),
-  ADD CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`CUS_NUM`) REFERENCES `Customer` (`CUS_NUM`),
-  ADD CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`SHIFT_NUM`) REFERENCES `Schedule` (`SHIFT_NUM`);
+ALTER TABLE `appointment`
+  ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`VIN`) REFERENCES `owner` (`VIN`),
+  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`SERV_NUM`) REFERENCES `service` (`SERV_NUM`),
+  ADD CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`CUS_NUM`) REFERENCES `customer` (`CUS_NUM`),
+  ADD CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`SHIFT_NUM`) REFERENCES `schedule` (`SHIFT_NUM`);
 
 --
--- Constraints for table `Owner`
+-- Constraints for table `owner`
 --
-ALTER TABLE `Owner`
-  ADD CONSTRAINT `owner_ibfk_1` FOREIGN KEY (`CUS_NUM`) REFERENCES `Customer` (`CUS_NUM`),
-  ADD CONSTRAINT `owner_ibfk_2` FOREIGN KEY (`VCL_NUM`) REFERENCES `Vehicle` (`VCL_NUM`);
+ALTER TABLE `owner`
+  ADD CONSTRAINT `owner_ibfk_1` FOREIGN KEY (`CUS_NUM`) REFERENCES `customer` (`CUS_NUM`),
+  ADD CONSTRAINT `owner_ibfk_2` FOREIGN KEY (`VCL_NUM`) REFERENCES `vehicle` (`VCL_NUM`);
 
 --
--- Constraints for table `Recommendation`
+-- Constraints for table `recommendation`
 --
-ALTER TABLE `Recommendation`
-  ADD CONSTRAINT `recommendation_ibfk_1` FOREIGN KEY (`VIN`) REFERENCES `Owner` (`VIN`),
-  ADD CONSTRAINT `recommendation_ibfk_2` FOREIGN KEY (`SERV_NUM`) REFERENCES `Service` (`SERV_NUM`);
+ALTER TABLE `recommendation`
+  ADD CONSTRAINT `recommendation_ibfk_1` FOREIGN KEY (`VIN`) REFERENCES `owner` (`VIN`),
+  ADD CONSTRAINT `recommendation_ibfk_2` FOREIGN KEY (`SERV_NUM`) REFERENCES `service` (`SERV_NUM`);
 
 --
--- Constraints for table `Schedule`
+-- Constraints for table `schedule`
 --
-ALTER TABLE `Schedule`
-  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`EMP_NUM`) REFERENCES `Technician` (`EMP_NUM`);
+ALTER TABLE `schedule`
+  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`EMP_NUM`) REFERENCES `technician` (`EMP_NUM`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
