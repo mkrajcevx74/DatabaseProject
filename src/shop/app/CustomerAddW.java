@@ -37,8 +37,8 @@ public class CustomerAddW extends JFrame {
 		con = c;
 		
 		//Head label
-		JLabel lblAddACustomer = new JLabel("Add a customer:");
-		lblAddACustomer.setBounds(171, 35, 128, 14);
+		JLabel lblAddACustomer = new JLabel("Add a customer");
+		lblAddACustomer.setBounds(171, 35, 89, 14);
 		pane.add(lblAddACustomer);
 		
 		//FName label
@@ -58,7 +58,7 @@ public class CustomerAddW extends JFrame {
 		
 		//Invalid label
 		JLabel lblPleaseEnterValid = new JLabel("Please enter valid information.");
-		lblPleaseEnterValid.setBounds(130, 168, 199, 14);
+		lblPleaseEnterValid.setBounds(130, 168, 169, 14);
 		pane.add(lblPleaseEnterValid);
 		lblPleaseEnterValid.setVisible(false);
 		

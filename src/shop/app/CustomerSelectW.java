@@ -35,8 +35,8 @@ public class CustomerSelectW extends JFrame {
 		con = c;
 		
 		//Head label
-		JLabel lblHead = new JLabel("Select a customer to work with:");
-		lblHead.setBounds(136, 28, 200, 14);
+		JLabel lblHead = new JLabel("Select a customer to work with");
+		lblHead.setBounds(136, 28, 162, 14);
 		contentPane.add(lblHead);
 		
 		//Customer label

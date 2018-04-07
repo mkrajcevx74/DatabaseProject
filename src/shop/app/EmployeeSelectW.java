@@ -9,9 +9,6 @@ import java.awt.event.ActionEvent;
 
 import java.sql.*;
 
-import shop.core.Customer;
-import shop.core.Owner;
-import shop.core.Technician;
 
 public class EmployeeSelectW extends JFrame{
 	//Component vars
@@ -21,7 +18,6 @@ public class EmployeeSelectW extends JFrame{
 		Connection con;
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		Technician tec2 = null;
 
 		//Employee selection screen constructor
 		public EmployeeSelectW(Connection c) {
@@ -33,11 +29,13 @@ public class EmployeeSelectW extends JFrame{
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 			
-			con = c;
-			
 			JLabel lblNewLabel = new JLabel("Technician:");
 			lblNewLabel.setBounds(31, 13, 77, 16);
 			contentPane.add(lblNewLabel);
+			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setBounds(120, 10, 274, 22);
+			contentPane.add(comboBox);
 			
 			JLabel lblNewLabel_1 = new JLabel("Number:");
 			lblNewLabel_1.setBounds(31, 42, 56, 16);
@@ -95,53 +93,6 @@ public class EmployeeSelectW extends JFrame{
 			lblNewLabel_14.setBounds(144, 216, 56, 16);
 			contentPane.add(lblNewLabel_14);
 			
-			JButton btnHome = new JButton("Home");
-			btnHome.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					AppHomeW ahw = new AppHomeW(con);
-					ahw.setVisible(true);
-					((Window) contentPane.getTopLevelAncestor()).dispose();
-				}
-			});
-			btnHome.setBounds(297, 212, 97, 25);
-			contentPane.add(btnHome);
-			
-			JComboBox<Technician> comboBox_Tec = new JComboBox<Technician>();
-			comboBox_Tec.setBounds(120, 10, 274, 22);
-			contentPane.add(comboBox_Tec);
-			comboBox_Tec.setModel(getTechnicians());
-			
-			}
-		//Return customers
-		public ComboBoxModel<Technician> getTechnicians() {
-			DefaultComboBoxModel<Technician> tecList = new DefaultComboBoxModel<Technician>();
-			Technician tec;
-			try {
-				myStmt = con.createStatement();
-				myRs = myStmt.executeQuery("SELECT * FROM TECHNICIAN;");
-				while (myRs.next()) {
-					tec = new Technician(myRs.getInt("EMP_NUM"), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
-							myRs.getString("EMP_CONTACT"), myRs.getInt("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getInt("EMP_WAGE"));
-					tecList.addElement(tec);
-				}
-			} catch (SQLException eCusGet) {
-				eCusGet.printStackTrace();
-				System.out.println("Customer retrieval failure");
-			}
-			return tecList;
-		}
-		
-		
-		public void getTec() {
-			try {
-				myStmt = con.createStatement();
-				myRs = myStmt.executeQuery("SELECT * FROM TECHNICIAN WHERE EMP_NUM = ");
-				myRs.next();
-				tec2 = new Technician(myRs.getInt("EMP_NUM"), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
-						myRs.getString("EMP_CONTACT"), myRs.getInt("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getInt("EMP_WAGE"));
-			} catch (SQLException eOwn) {
-				eOwn.printStackTrace();
-				System.out.println("Owner Failure");
-			}
+			con = c;
 		}
 }

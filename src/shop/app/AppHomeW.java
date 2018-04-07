@@ -27,7 +27,7 @@ public class AppHomeW extends JFrame {
 		//Head label
 		JLabel lblAppHome = new JLabel("App Home");
 		lblAppHome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAppHome.setBounds(176, 34, 66, 14);
+		lblAppHome.setBounds(178, 0, 66, 14);
 		contentPane.add(lblAppHome);
 		
 		//Customer select button

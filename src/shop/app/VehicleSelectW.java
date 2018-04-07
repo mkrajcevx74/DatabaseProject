@@ -53,13 +53,13 @@ public class VehicleSelectW extends JFrame {
 		
 		//Manufacturer label
 		JLabel lblMake = new JLabel("Manufacturer:");
-		lblMake.setBounds(34, 34, 95, 14);
+		lblMake.setBounds(64, 34, 65, 14);
 		contentPane.add(lblMake);
 		
 		//Model label
 		JLabel lblModel = new JLabel("Model:");
 		lblModel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModel.setBounds(273, 34, 73, 14);
+		lblModel.setBounds(318, 34, 28, 14);
 		contentPane.add(lblModel);
 		
 		//Year label
@@ -71,7 +71,7 @@ public class VehicleSelectW extends JFrame {
 		//Package label
 		JLabel lblPackage = new JLabel("Package:");
 		lblPackage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPackage.setBounds(273, 119, 83, 14);
+		lblPackage.setBounds(310, 119, 46, 14);
 		contentPane.add(lblPackage);
 		
 		//VIN label
@@ -165,7 +165,7 @@ public class VehicleSelectW extends JFrame {
 				}
 			}
 		});
-		btnAddVehicle.setBounds(273, 199, 101, 23);
+		btnAddVehicle.setBounds(285, 199, 89, 23);
 		contentPane.add(btnAddVehicle);
 		
 		//Cancel button
@@ -177,7 +177,7 @@ public class VehicleSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnCancel.setBounds(273, 230, 101, 23);
+		btnCancel.setBounds(285, 233, 89, 23);
 		contentPane.add(btnCancel);
 	}
 	
