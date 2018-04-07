@@ -107,6 +107,7 @@ public class EmployeeSelectW extends JFrame{
 			JComboBox<Technician> comboBox_Tec = new JComboBox<Technician>();
 			comboBox_Tec.setBounds(120, 10, 274, 22);
 			contentPane.add(comboBox_Tec);
+			comboBox_Tec.setModel(getTechnicians());
 			
 			}
 		//Return customers
