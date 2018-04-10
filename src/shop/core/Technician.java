@@ -102,6 +102,4 @@ public class Technician {
 	public String toString() {
 		return fName + " " + lName;
 	}
-	
-	
 }

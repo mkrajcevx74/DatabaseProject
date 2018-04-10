@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
--- DROP DATABASE mechanic_project;
+DROP DATABASE mechanic_project;
 
 CREATE DATABASE mechanic_project;
 
@@ -35,7 +35,6 @@ CREATE DATABASE mechanic_project;
 CREATE TABLE `appointment` (
   `APT_NUM` int(11) NOT NULL,
   `VIN` varchar(17) NOT NULL,
-  `CUS_NUM` int(11) NOT NULL,
   `SHIFT_NUM` int(11) NOT NULL,
   `SERV_NUM` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -44,14 +43,14 @@ CREATE TABLE `appointment` (
 -- Dumping data for table `appointment`
 --
 
-INSERT INTO `appointment` (`APT_NUM`, `VIN`, `CUS_NUM`, `SHIFT_NUM`, `SERV_NUM`) VALUES
-(1, 'YS3FA4CY1B1306923', 1, 1, 1),
-(2, 'JAC12345678900990', 2, 2, 2),
-(3, '1G1YY12S745106110', 5, 5, 2),
-(4, 'JAC12345678900990', 7, 5, 1),
-(5, 'KM8JN12D78U948438', 3, 6, 3),
-(6, 'JNAMA43HXYGF09562', 2, 7, 5),
-(7, '1G1YY12S745106110', 7, 8, 1);
+INSERT INTO `appointment` (`APT_NUM`, `VIN`, `SHIFT_NUM`, `SERV_NUM`) VALUES
+(1, 'YS3FA4CY1B1306923', 1, 1),
+(2, 'JAC12345678900990', 2, 2),
+(3, '1G1YY12S745106110', 5, 2),
+(4, 'JAC12345678900990', 5, 1),
+(5, 'KM8JN12D78U948438', 6, 3),
+(6, 'JNAMA43HXYGF09562', 7, 5),
+(7, '1G1YY12S745106110', 8, 1);
 
 -- --------------------------------------------------------
 
@@ -276,9 +275,8 @@ INSERT INTO `vehicle` (`VCL_NUM`, `VCL_MAKE`, `VCL_MODEL`, `VCL_YEAR`, `VCL_MISC
 ALTER TABLE `appointment`
   ADD PRIMARY KEY (`APT_NUM`),
   ADD KEY `VIN` (`VIN`),
-  ADD KEY `SERV_NUM` (`SERV_NUM`),
-  ADD KEY `CUS_NUM` (`CUS_NUM`),
-  ADD KEY `SHIFT_NUM` (`SHIFT_NUM`);
+  ADD KEY `SHIFT_NUM` (`SHIFT_NUM`),
+  ADD KEY `SERV_NUM` (`SERV_NUM`);
 
 --
 -- Indexes for table `customer`
@@ -382,9 +380,9 @@ ALTER TABLE `vehicle`
 --
 ALTER TABLE `appointment`
   ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`VIN`) REFERENCES `owner` (`VIN`),
-  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`SERV_NUM`) REFERENCES `service` (`SERV_NUM`),
-  ADD CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`CUS_NUM`) REFERENCES `customer` (`CUS_NUM`),
-  ADD CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`SHIFT_NUM`) REFERENCES `schedule` (`SHIFT_NUM`);
+  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`SHIFT_NUM`) REFERENCES `schedule` (`SHIFT_NUM`),
+  ADD CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`SERV_NUM`) REFERENCES `service` (`SERV_NUM`);
+  
 
 --
 -- Constraints for table `owner`
