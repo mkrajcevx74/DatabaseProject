@@ -18,7 +18,7 @@ import shop.core.Service;
 public class ServiceViewW extends JFrame {
 	//Component variables
 	private JPanel contentPane;
-	JLabel lblMessage;
+	private JLabel lblMessage;
 	private ButtonGroup groop;
 	private JRadioButton rdbtnViewAll;
 	private JRadioButton rdbtnViewRecs;
@@ -35,10 +35,10 @@ public class ServiceViewW extends JFrame {
 
 	//Entity variables
 	private Ownership own;
-	private Service serv;
+	private Service serv = null;
 	
 	public ServiceViewW(Connection c, Ownership o) {
-		//Parameter assignment
+		//Variable declaration
 		con = c;
 		own = o;
 		
@@ -67,6 +67,8 @@ public class ServiceViewW extends JFrame {
 		lblMessage.setBounds(167, 59, 220, 14);
 		contentPane.add(lblMessage);
 		lblMessage.setVisible(false);
+		
+		
 		
 		//Radio button action listener
 		ActionListener listener = new ActionListener() {
@@ -115,6 +117,16 @@ public class ServiceViewW extends JFrame {
 		
 		//Schedule appointment button
 		btnSchedule = new JButton("Schedule");
+		btnSchedule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScheduleViewW svw = new ScheduleViewW(con, own, ((Service) comboBox.getSelectedItem()));
+				if (rdbtnViewRecs.isSelected()) {
+					deleteRecommendation();
+				}
+				svw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
 		btnSchedule.setBounds(294, 225, 130, 25);
 		contentPane.add(btnSchedule);
 		
@@ -186,7 +198,6 @@ public class ServiceViewW extends JFrame {
 		if (servBox.getItemCount() > 0) {
 			servBox.setSelectedIndex(0);
 		}
-		serv = (Service) servBox.getSelectedItem();
 	}
 	
 	//Update buttons

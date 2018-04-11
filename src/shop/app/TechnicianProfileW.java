@@ -25,7 +25,7 @@ public class TechnicianProfileW extends JFrame {
 	private ResultSet myRs = null;
 	
 
-	public TechnicianProfileW(Connection c, Technician tec) {
+	public TechnicianProfileW(Connection c, Technician tec, boolean isClose) {
 		con = c;
 		
 		//Panel initialization
@@ -117,6 +117,25 @@ public class TechnicianProfileW extends JFrame {
 		});
 		btnBack.setBounds(10, 225, 130, 25);
 		contentPane.add(btnBack);
+		btnBack.setVisible(false);
+		
+		JButton btnHome = new JButton("Home");
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppHomeW ahw = new AppHomeW(con);
+				ahw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
+		btnHome.setBounds(10, 225, 130, 25);
+		contentPane.add(btnHome);
+		btnHome.setVisible(false);
+		
+		if(isClose) {
+			btnHome.setVisible(true);
+		} else {
+			btnBack.setVisible(true);
+		}
 	}
 
 	//Update technician info in database

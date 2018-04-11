@@ -25,12 +25,12 @@ public class Appointment {
 		num = newNum;
 	}
 	
-	//Return appointment's vin
+	//Return appointment's VIN
 	public String getVin() {
 		return vin;
 	}
 	
-	//Set appointment's vin
+	//Set appointment's VIN
 	public void setVin(String newVin) {
 		vin = newVin;
 	}
@@ -56,12 +56,18 @@ public class Appointment {
 	}
 	
 	//Appointment display search query
-	public String aptDisplayQuery() {
+	public String displayAptQuery() {
 		return "SELECT CUSTOMER.*, VEHICLE.*, SERVICE.* FROM APPOINTMENT, OWNER, CUSTOMER, VEHICLE, SERVICE WHERE APPOINTMENT.SHIFT_Num = " + shiftNum  +
 				" AND OWNER.VIN = APPOINTMENT.VIN AND OWNER.CUS_NUM = CUSTOMER.CUS_NUM AND OWNER.VCL_NUM = VEHICLE.VCL_NUM AND SERVICE.SERV_NUM = APPOINTMENT.SERV_NUM;"; 
 	}
 	
-	public String insertQuery() {
+	//Appointment add statement
+	public String addAptStmt() {
 		return "INSERT INTO APPOINTMENT VALUES (NULL, \"" + vin + "\", " + shiftNum + ", " + servNum + ");";
+	}
+	
+	//Appointment delete statement
+	public String delAptStmt() {
+		return "DELETE FROM APPOINTMENT WHERE VIN = \"" + vin + "\" AND SHIFT_NUM = " + shiftNum + " AND SERV_NUM = " + servNum + ";";
 	}
 }

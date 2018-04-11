@@ -32,7 +32,7 @@ public class ScheduleViewW extends JFrame {
 	//Entity variables
 	private String date;
 	private String timeRange;
-	//Schedule shift = null;
+	Schedule shift = null;
 	
 	private boolean isGeneric = true;
 
@@ -84,13 +84,43 @@ public class ScheduleViewW extends JFrame {
 		lblAppointment.setBounds(20, 132, 393, 14);
 		contentPane.add(lblAppointment);
 		
+		//Add appointment button
+		btnScheduleApt = new JButton("Schedule");
+		btnScheduleApt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addApt(new Appointment(0, own.getVin(), shift.getNum(), serv.getNum()));
+				OwnerViewW ovw = new OwnerViewW(con, own);
+				ovw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
+		btnScheduleApt.setBounds(294, 225, 130, 25);
+		contentPane.add(btnScheduleApt);
+		btnScheduleApt.setVisible(false);
+		
+		//Delete appointment button
+		btnCloseApt = new JButton("Close");
+		btnCloseApt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				closeApt(getApt());
+				TechnicianProfileW tpw = new TechnicianProfileW(con, getTec(), true);
+				tpw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
+		btnCloseApt.setBounds(294, 225, 130, 25);
+		contentPane.add(btnCloseApt);
+		btnCloseApt.setVisible(false);
+		
 		//Times box
 		JComboBox<String> comboBox_Times = new JComboBox<String>();
 		comboBox_Times.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				timeRange = comboBox_Times.getSelectedItem().toString();
+				shift = getShift();
 				lblTechnician.setText(getTec().toString());
 				lblAppointment.setText(getAptDisplay());
+				setButtons();
 			}
 		});
 		comboBox_Times.setBounds(227, 48, 180, 20);
@@ -108,19 +138,7 @@ public class ScheduleViewW extends JFrame {
 		contentPane.add(comboBox_Dates);
 		setComboBox(comboBox_Dates, 1);
 		
-		//Add appointment button
-		btnScheduleApt = new JButton("Schedule");
-		btnScheduleApt.setBounds(294, 225, 130, 25);
-		contentPane.add(btnScheduleApt);
-		btnScheduleApt.setVisible(false);
-		
-		//Delete appointment button
-		btnCloseApt = new JButton("Close Appointment");
-		btnCloseApt.setBounds(294, 178, 130, 25);
-		contentPane.add(btnCloseApt);
-		btnCloseApt.setVisible(false);
-		
-		//Home button
+		//Back button
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,6 +149,26 @@ public class ScheduleViewW extends JFrame {
 		});
 		btnBack.setBounds(10, 225, 130, 25);
 		contentPane.add(btnBack);
+		btnBack.setVisible(false);
+		
+		//Cancel button
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ServiceViewW svw = new ServiceViewW(con, own);
+				svw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
+		btnCancel.setBounds(10, 226, 130, 25);
+		contentPane.add(btnCancel);
+		btnCancel.setVisible(false);
+		
+		if (isGeneric) {
+			btnBack.setVisible(true);
+		} else {
+			btnCancel.setVisible(true);
+		}
 	}
 	
 	//Return dates
@@ -199,6 +237,7 @@ public class ScheduleViewW extends JFrame {
 		Technician tec = null;
 		Schedule tempShift = getShift();
 		try {
+			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT TECHNICIAN.* FROM TECHNICIAN, SCHEDULE WHERE SHIFT_NUM = " + tempShift.getNum() + " AND TECHNICIAN.EMP_NUM = SCHEDULE.EMP_NUM");
 			myRs.next();
 			tec = new Technician(tempShift.getNum(), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
@@ -215,6 +254,7 @@ public class ScheduleViewW extends JFrame {
 		Appointment tempApt = null;
 		Schedule tempShift = getShift();
 		try {
+			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT * FROM APPOINTMENT WHERE SHIFT_NUM = " + tempShift.getNum());
 			if (myRs.next()) {
 				tempApt = new Appointment(myRs.getInt("APT_NUM"), myRs.getString("VIN"), tempShift.getNum(), myRs.getInt("SERV_NUM"));
@@ -231,6 +271,7 @@ public class ScheduleViewW extends JFrame {
 		Ownership tempOwn = null;
 		if (tempApt != null) {
 			try {
+				myStmt = con.createStatement();
 				myRs = myStmt.executeQuery("SELECT * FROM OWNER WHERE VIN = \"" + tempApt.getVin() + "\";");
 				myRs.next();
 				tempOwn = new Ownership(myRs.getString("VIN"), myRs.getInt("CUS_NUM"), myRs.getInt("VCL_NUM"), myRs.getInt("OWN_MILES"), myRs.getString("OWN_RECORD"));
@@ -252,7 +293,7 @@ public class ScheduleViewW extends JFrame {
 		Ownership tempOwn = getOwn(tempApt);
 		if (tempOwn != null) {
 			try {
-				myRs = myStmt.executeQuery(tempApt.aptDisplayQuery());
+				myRs = myStmt.executeQuery(tempApt.displayAptQuery());
 				myRs.next();
 				tempCus = new Customer(myRs.getInt("CUS_NUM"), myRs.getString("CUS_FNAME"), myRs.getString("CUS_LNAME"), myRs.getString("CUS_CONTACT"));
 				tempVcl = new Vehicle(myRs.getInt("VCL_NUM"), myRs.getString("VCL_MAKE"), myRs.getString("VCL_MODEL"), myRs.getInt("VCL_YEAR"), myRs.getString("VCL_MISC"));
@@ -272,18 +313,40 @@ public class ScheduleViewW extends JFrame {
 		if (isGeneric) {
 			//If there is an appointment already scheduled
 			if (getApt()!=null) {
-				
+				btnCloseApt.setVisible(true);
 			//If there is no appointment
 			} else {
-				
+				btnCloseApt.setVisible(false);
 			}
 		//If we got here from a customer
 		} else {
 			if (getApt()!=null) {
-				
+				btnScheduleApt.setVisible(false);
 			} else {
-				
+				btnScheduleApt.setVisible(true);
 			}
+		}
+	}
+	
+	//Add appointment
+	public void addApt(Appointment apt) {
+		try{
+			myStmt = con.createStatement();
+			myStmt.executeUpdate(apt.addAptStmt());
+		} catch (SQLException eAptAdd) {
+			eAptAdd.printStackTrace();
+			System.out.println("Error adding appointment");
+		}
+	}
+	
+	//Close appointment
+	public void closeApt(Appointment apt) {
+		try{
+			myStmt = con.createStatement();
+			myStmt.executeUpdate(apt.delAptStmt());
+		} catch (SQLException eAptDel) {
+			eAptDel.printStackTrace();
+			System.out.println("Error deleting appointment");
 		}
 	}
 }

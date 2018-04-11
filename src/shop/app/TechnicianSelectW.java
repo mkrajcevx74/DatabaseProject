@@ -56,7 +56,7 @@ public class TechnicianSelectW extends JFrame{
 		JButton btnSelect = new JButton("Select");
 		btnSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TechnicianProfileW tpw = new TechnicianProfileW(con, tec);
+				TechnicianProfileW tpw = new TechnicianProfileW(con, tec, false);
 				tpw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
