@@ -3,6 +3,7 @@ package shop.core;
 public class Ownership {
 	//Specific vehicle/ownership attributes
 	private String vin;
+	private int cNum;
 	private int vNum;
 	private int miles;
 	private String record;
