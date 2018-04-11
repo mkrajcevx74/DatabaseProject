@@ -180,6 +180,15 @@ public class ServiceViewW extends JFrame {
 		return servList;
 	}
 	
+	//Populate services box
+	public void setServices(JComboBox<Service> servBox) {
+		servBox.setModel(getServices());
+		if (servBox.getItemCount() > 0) {
+			servBox.setSelectedIndex(0);
+		}
+		serv = (Service) servBox.getSelectedItem();
+	}
+	
 	//Update buttons
 	public void setButtons() {
 		if (rdbtnViewAll.isSelected()) {
@@ -195,15 +204,6 @@ public class ServiceViewW extends JFrame {
 			btnAddRec.setVisible(true);
 			btnDelRec.setVisible(false);
 		}
-	}
-	
-	//Populate services box
-	public void setServices(JComboBox<Service> servBox) {
-		servBox.setModel(getServices());
-		if (servBox.getItemCount() > 0) {
-			servBox.setSelectedIndex(0);
-		}
-		serv = (Service) servBox.getSelectedItem();
 	}
 	
 	//Add recommended service

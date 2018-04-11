@@ -59,7 +59,7 @@ public class AppHomeW extends JFrame {
 
 		btnViewSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScheduleViewW vsw = new ScheduleViewW(con);
+				ScheduleViewW vsw = new ScheduleViewW(con, null,null);
 				vsw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}

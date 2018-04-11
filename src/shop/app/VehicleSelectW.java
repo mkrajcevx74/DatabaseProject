@@ -145,7 +145,7 @@ public class VehicleSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnAddVehicle.setBounds(323, 227, 101, 23);
+		btnAddVehicle.setBounds(294, 225, 130, 25);
 		contentPane.add(btnAddVehicle);
 		
 		//Cancel button
@@ -157,7 +157,7 @@ public class VehicleSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnCancel.setBounds(10, 227, 101, 23);
+		btnCancel.setBounds(10, 225, 130, 25);
 		contentPane.add(btnCancel);
 	}
 	
