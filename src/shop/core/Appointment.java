@@ -54,4 +54,14 @@ public class Appointment {
 	public void setServNum(int newServNum) {
 		servNum = newServNum;
 	}
+	
+	//Appointment display search query
+	public String aptDisplayQuery() {
+		return "SELECT CUSTOMER.*, VEHICLE.*, SERVICE.* FROM APPOINTMENT, OWNER, CUSTOMER, VEHICLE, SERVICE WHERE APPOINTMENT.VIN = \"" + vin  +
+				"\" AND APPOINTMENT.VIN = OWNER.VIN AND OWNER.CUS_NUM = CUSTOMER.CUS_NUM AND OWNER.VCL_NUM = VEHICLE.VCL_NUM AND APPOINTMENT.SERV_NUM = SERVICE.SERV_NUM;"; 
+	}
+	
+	public String insertQuery() {
+		return "INSERT INTO APPOINTMENT VALUES (NULL, \"" + vin + "\", " + shiftNum + ", " + servNum + ");";
+	}
 }

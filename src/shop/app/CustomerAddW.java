@@ -12,109 +12,79 @@ import java.sql.*;
 import shop.core.Customer;
 
 public class CustomerAddW extends JFrame {
-	//Component vars
-	private JPanel pane;
+	//Component variables
+	private JPanel contentPane;
+	JLabel lblInvalid;
 	private JTextField fNameField;
 	private JTextField lNameField;
 	private JTextField contactField;
-	
-	//Connection vars
-	Connection con;
-	Statement myStmt = null;
-	ResultSet myRs = null;
-	
-	Customer cus;
 
-	public CustomerAddW(Connection c, int n) {
-		//Panel ini
+	public CustomerAddW(Connection con, int n) {		
+		//Panel initialization
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		pane = new JPanel();
-		pane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(pane);
-		pane.setLayout(null);
-		
-		con = c;
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		//Head label
 		JLabel lblAddACustomer = new JLabel("Add a customer:");
 		lblAddACustomer.setBounds(171, 35, 128, 14);
-		pane.add(lblAddACustomer);
+		contentPane.add(lblAddACustomer);
 		
 		//FName label
 		JLabel lblFirstName = new JLabel("First name:");
 		lblFirstName.setBounds(45, 81, 89, 14);
-		pane.add(lblFirstName);
+		contentPane.add(lblFirstName);
 		
 		//LName label
 		JLabel lblLastName = new JLabel("Last name:");
 		lblLastName.setBounds(45, 112, 89, 14);
-		pane.add(lblLastName);
+		contentPane.add(lblLastName);
 		
 		//Contact label
 		JLabel lblContactNumber = new JLabel("Contact number:");
 		lblContactNumber.setBounds(45, 143, 89, 14);
-		pane.add(lblContactNumber);
+		contentPane.add(lblContactNumber);
 		
 		//Invalid label
-		JLabel lblPleaseEnterValid = new JLabel("Please enter valid information.");
-		lblPleaseEnterValid.setBounds(130, 168, 199, 14);
-		pane.add(lblPleaseEnterValid);
-		lblPleaseEnterValid.setVisible(false);
+		lblInvalid = new JLabel("*Please enter valid information*");
+		lblInvalid.setBounds(130, 168, 199, 14);
+		contentPane.add(lblInvalid);
+		lblInvalid.setVisible(false);
 		
 		//FName field
 		fNameField = new JTextField();
 		fNameField.setBounds(161, 78, 136, 20);
-		pane.add(fNameField);
+		contentPane.add(fNameField);
 		fNameField.setColumns(10);
 		
 		//LName field
 		lNameField = new JTextField();
 		lNameField.setColumns(10);
 		lNameField.setBounds(161, 109, 136, 20);
-		pane.add(lNameField);
+		contentPane.add(lNameField);
 		
 		//Contact field
 		contactField = new JTextField();
 		contactField.setColumns(10);
 		contactField.setBounds(161, 140, 136, 20);
-		pane.add(contactField);
+		contentPane.add(contactField);
 		
 		//Add customer button
 		JButton btnAddCustomer = new JButton("Add customer");
 		btnAddCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					cus = new Customer(n+1, "NULL", "NULL", "NULL");
-					if (fNameField.getText().equals("")) {
-						cus.setFName("NULL");
-					} else {
-						cus.setFName("\"" + fNameField.getText() + "\"");
-					}
-					if (lNameField.getText().equals("")) {
-						cus.setLName("NULL");
-					} else {
-						cus.setLName("\"" + lNameField.getText() + "\"");
-					}
-					if (contactField.getText().equals("")) {
-						cus.setContact("NULL");
-					} else {
-						cus.setContact("\"" + contactField.getText() + "\"");
-					}
-					myStmt = con.createStatement();
-					myStmt.executeUpdate("INSERT INTO CUSTOMER VALUES(" + cus.insertString()+ ");");
+				if (addCustomer(con)) {
 					CustomerSelectW w = new CustomerSelectW(con);
 					w.setVisible(true);
-					((Window) pane.getTopLevelAncestor()).dispose();
-				} catch(SQLException e3) {
-					e3.printStackTrace();
-					System.out.println("3");
-					lblPleaseEnterValid.setVisible(true);
+					((Window) contentPane.getTopLevelAncestor()).dispose();
 				}
 			}
 		});
 		btnAddCustomer.setBounds(229, 201, 111, 23);
-		pane.add(btnAddCustomer);
+		contentPane.add(btnAddCustomer);
 		
 		//Cancel button
 		JButton btnCancel = new JButton("Cancel");
@@ -122,10 +92,35 @@ public class CustomerAddW extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CustomerSelectW w = new CustomerSelectW(con);
 				w.setVisible(true);
-				((Window) pane.getTopLevelAncestor()).dispose();
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
 		btnCancel.setBounds(79, 201, 89, 23);
-		pane.add(btnCancel);
+		contentPane.add(btnCancel);
+	}
+	
+	//Add customer to database
+	public boolean addCustomer(Connection con) {
+		Customer cus = new Customer(0, "NULL", "NULL", "NULL");
+		if (!fNameField.getText().equals("")) {
+			cus.setFName("\"" + fNameField.getText() + "\"");
+		}
+		if (!lNameField.getText().equals("")) {
+			cus.setLName("\"" + lNameField.getText() + "\"");
+		}
+		if (!contactField.getText().equals("")) {
+			cus.setContact("\"" + contactField.getText() + "\"");
+		}
+		try {
+			Statement myStmt = con.createStatement();
+			System.out.println(cus.insertString());
+			myStmt.executeUpdate(cus.insertString());
+			return true;
+		} catch (SQLException eCusAdd) {
+			eCusAdd.printStackTrace();
+			System.out.println("Error adding customer to database");
+			lblInvalid.setVisible(true);
+			return false;
+		}
 	}
 }

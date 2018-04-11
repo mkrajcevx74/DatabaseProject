@@ -66,4 +66,8 @@ public class Schedule {
 	public void setEmpNum(int newEmpNum) {
 		empNum = newEmpNum;
 	}
+	
+	public String toString() {
+		return date + " from " + startTime + " to " + endTime;
+	}
 }

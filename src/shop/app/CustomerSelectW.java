@@ -12,19 +12,13 @@ import java.sql.*;
 import shop.core.Customer;
 
 public class CustomerSelectW extends JFrame {
-	//Component vars
+	//Component variables
 	private JPanel contentPane;
 	private JButton btnSelectCustomer;
-	private JLabel lblCustomer;
-	
-	//Connection vars
-	Connection con;
-	Statement myStmt = null;
-	ResultSet myRs = null;
 	
 	//Customer selection screen constructor
-	public CustomerSelectW(Connection c) {
-		//Panel ini
+	public CustomerSelectW(Connection con) {
+		//Panel initialization
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -32,23 +26,17 @@ public class CustomerSelectW extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		con = c;
-		
 		//Head label
 		JLabel lblHead = new JLabel("Select a customer to work with:");
-		lblHead.setBounds(136, 28, 200, 14);
+		lblHead.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHead.setBounds(124, 61, 187, 14);
 		contentPane.add(lblHead);
-		
-		//Customer label
-		lblCustomer = new JLabel("Customer:");
-		lblCustomer.setBounds(29, 69, 68, 14);
-		contentPane.add(lblCustomer);
 		
 		//Customer box
 		JComboBox<Customer> comboBox_Cus = new JComboBox<Customer>();
-		comboBox_Cus.setBounds(122, 66, 244, 20);
+		comboBox_Cus.setBounds(92, 86, 244, 20);
 		contentPane.add(comboBox_Cus);
-		comboBox_Cus.setModel(getCustomers());
+		comboBox_Cus.setModel(getCustomers(con));
 		
 		//Select button
 		btnSelectCustomer = new JButton("Select customer");
@@ -59,10 +47,10 @@ public class CustomerSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectCustomer.setBounds(149, 133, 137, 23);
+		btnSelectCustomer.setBounds(294, 225, 130, 25);
 		contentPane.add(btnSelectCustomer);
 		
-		//Add button
+		//Add customer button
 		JButton btnAddACustomer = new JButton("Add a customer");
 		btnAddACustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,28 +59,29 @@ public class CustomerSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnAddACustomer.setBounds(149, 169, 137, 23);
+		btnAddACustomer.setBounds(154, 225, 130, 25);
 		contentPane.add(btnAddACustomer);
 		
-		JButton btnHome = new JButton("Home");
-		btnHome.addActionListener(new ActionListener() {
+		//Back button
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AppHomeW ahw = new AppHomeW(con);
 				ahw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnHome.setBounds(149, 205, 137, 23);
-		contentPane.add(btnHome);
+		btnBack.setBounds(10, 225, 130, 25);
+		contentPane.add(btnBack);
 	}
 	
 	//Return customers
-	public ComboBoxModel<Customer> getCustomers() {
+	public ComboBoxModel<Customer> getCustomers(Connection con) {
 		DefaultComboBoxModel<Customer> cusList = new DefaultComboBoxModel<Customer>();
-		Customer cus;
+		Customer cus = null;
 		try {
-			myStmt = con.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM CUSTOMER;");
+			Statement myStmt = con.createStatement();
+			ResultSet myRs = myStmt.executeQuery("SELECT * FROM CUSTOMER;");
 			while (myRs.next()) {
 				cus = new Customer(myRs.getInt("CUS_NUM"), myRs.getString("CUS_FNAME"), myRs.getString("CUS_LNAME"), myRs.getString("CUS_CONTACT"));
 				cusList.addElement(cus);

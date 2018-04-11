@@ -64,6 +64,10 @@ public class Customer {
 	
 	//Customer search query builder
 	public String insertString() {
-		return num + ", " + fName + ", " + lName + ", " + contact;
+		return "INSERT INTO CUSTOMER VALUES (NULL, " + fName + ", " + lName + ", " + contact + ");";
+	}
+	
+	public String updateString() {
+		return "UPDATE CUSTOMER SET CUS_NUM = " + num + ", CUS_FNAME = \"" + fName + "\", CUS_LNAME = \"" + lName + "\", CUS_CONTACT = \"" + contact + "\" WHERE CUS_NUM = " + num + ";";
 	}
 }

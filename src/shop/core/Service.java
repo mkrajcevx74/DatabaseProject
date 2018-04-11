@@ -30,4 +30,9 @@ public class Service {
 	public void setString(String newDesc) {
 		desc = newDesc;
 	}
+	
+	@Override
+	public String toString() {
+		return desc;
+	}
 }

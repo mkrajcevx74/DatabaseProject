@@ -10,21 +10,28 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 
 import shop.core.Customer;
+import shop.core.Ownership;
 import shop.core.Vehicle;
 
 public class CustomerProfileW extends JFrame {
-	//Component vars
+	//Component variables
 	private JPanel contentPane;
+	private JButton btnEdit;
+	private JButton btnConfirm;
+	private JTextField textField_Contact;
 	
-	//Connection vars
-	Connection con;
-	Statement myStmt = null;
-	ResultSet myRs = null;
+	//Connection variables
+	private Connection con;
+	private Statement myStmt = null;
+	private ResultSet myRs = null;
 	
-	String vin;
+	//Entity variables
+	private Vehicle vcl;
 
 	public CustomerProfileW(Connection c, Customer cus) {
-		//Panel ini
+		con = c;
+		
+		//Panel initialization
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -32,44 +39,77 @@ public class CustomerProfileW extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		con = c;
-		
 		//Title label
-		JLabel lblNewLabel = new JLabel("Customer Profile:");
-		lblNewLabel.setBounds(12, 13, 131, 14);
+		JLabel lblNewLabel = new JLabel(cus.toString());
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(141, 11, 131, 14);
 		contentPane.add(lblNewLabel);
+		
+		//Contact label
+		JLabel lblContact = new JLabel("Contact #:");
+		lblContact.setBounds(25, 70, 100, 14);
+		contentPane.add(lblContact);
 		
 		//Vehicle label
 		JLabel lblSelectAVehicle = new JLabel("Owned vehicle:");
-		lblSelectAVehicle.setBounds(12, 71, 105, 17);
+		lblSelectAVehicle.setBounds(25, 110, 100, 17);
 		contentPane.add(lblSelectAVehicle);
+		
+		//Contact # field
+		textField_Contact = new JTextField(cus.getContact());
+		textField_Contact.setBounds(135, 67, 163, 20);
+		contentPane.add(textField_Contact);
+		textField_Contact.setColumns(10);
+		textField_Contact.setEditable(false);
 		
 		//Vehicle box
 		JComboBox<Vehicle> comboBox = new JComboBox<Vehicle>();
-		comboBox.setBounds(129, 69, 143, 20);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vcl = (Vehicle) comboBox.getSelectedItem();
+			}
+		});
+		comboBox.setBounds(135, 108, 163, 20);
 		contentPane.add(comboBox);
 		comboBox.setModel(getVehicles(cus.getNum()));
+		
+		//Edit info button
+		btnEdit = new JButton("Edit");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textField_Contact.setEditable(true);
+				btnEdit.setVisible(false);
+				btnConfirm.setVisible(true);
+			}
+		});
+		btnEdit.setBounds(325, 64, 90, 25);
+		contentPane.add(btnEdit);
+		
+		//Confirm update button
+		btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cus.setContact(textField_Contact.getText());
+				updateCusInfo(cus);
+				textField_Contact.setEditable(false);
+				btnConfirm.setVisible(false);
+				btnEdit.setVisible(true);
+			}
+		});
+		btnConfirm.setBounds(325, 64, 90, 25);
+		contentPane.add(btnConfirm);
+		btnConfirm.setVisible(false);
 		
 		//Select owned vehicle button
 		JButton btnSelectVehicle = new JButton("Select Vehicle");
 		btnSelectVehicle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					myStmt = con.createStatement();
-					myRs = myStmt.executeQuery("SELECT VIN FROM OWNER WHERE CUS_NUM = " + cus.getNum() + " AND VCL_NUM = " + ((Vehicle) comboBox.getSelectedItem()).getNum());
-					while (myRs.next()) {
-						vin = myRs.getString("VIN");
-					}	
-					OwnerViewW ovw = new OwnerViewW(con, vin, cus, ((Vehicle) comboBox.getSelectedItem()));
-					ovw.setVisible(true);
-					((Window) contentPane.getTopLevelAncestor()).dispose();
-				} catch (SQLException e4) {
-					e4.printStackTrace();
-					System.out.println(4);
-				}
+				OwnerViewW ovw = new OwnerViewW(con, getOwn(cus, vcl));
+				ovw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectVehicle.setBounds(149, 191, 123, 23);
+		btnSelectVehicle.setBounds(294, 225, 130, 25);
 		contentPane.add(btnSelectVehicle);
 		
 		//Add vehicle button
@@ -81,9 +121,10 @@ public class CustomerProfileW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnAddAVehicle.setBounds(289, 191, 131, 23);
+		btnAddAVehicle.setBounds(154, 225, 130, 25);
 		contentPane.add(btnAddAVehicle);
 		
+		//Back button
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -92,14 +133,13 @@ public class CustomerProfileW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnBack.setBounds(12, 190, 123, 25);
+		btnBack.setBounds(10, 225, 130, 25);
 		contentPane.add(btnBack);
 	}
 	
 	//Return owned vehicles
 	public ComboBoxModel<Vehicle> getVehicles(int i) {
 		DefaultComboBoxModel<Vehicle> vclsList = new DefaultComboBoxModel<Vehicle>();
-		Vehicle vcl;
 		try {
 			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT VIN, VEHICLE.VCL_NUM, VCL_MAKE, VCL_MODEL, VCL_YEAR, VCL_MISC FROM OWNER, VEHICLE WHERE OWNER.CUS_NUM = " + i + " AND OWNER.VCL_NUM=VEHICLE.VCL_NUM");
@@ -109,8 +149,35 @@ public class CustomerProfileW extends JFrame {
 			}
 		} catch (SQLException eVclGet) {
 			eVclGet.printStackTrace();
-			System.out.println("Customer's vehicle retrieval failure");
+			System.out.println("Error retrieving vehicles");
 		}
 		return vclsList;
+	}
+	
+	//Retrieve vehicle ownership
+	public Ownership getOwn(Customer cus, Vehicle vcl) {
+		Ownership own = null;
+		try {
+			myStmt = con.createStatement();
+			myRs = myStmt.executeQuery("SELECT * FROM OWNER WHERE CUS_NUM = " + cus.getNum() + " AND VCL_NUM = " + vcl.getNum() + ";");
+			while (myRs.next()) {
+				own = new Ownership(myRs.getString("VIN"), myRs.getInt("CUS_NUM"), myRs.getInt("VCL_NUM"), myRs.getInt("OWN_MILES"), myRs.getString("OWN_RECORD"));
+			}	
+		} catch (SQLException eOwnGet) {
+			eOwnGet.printStackTrace();
+			System.out.println("Error retrieving ownership");
+		}
+		return own;
+	}
+	
+	//Update customer info in database
+	public void updateCusInfo(Customer cus) {
+		try {
+			myStmt = con.createStatement();
+			myStmt.executeUpdate(cus.updateString());
+		} catch (SQLException eCusUpdate) {
+			eCusUpdate.printStackTrace();
+			System.out.println("Error updating customer");
+		}
 	}
 }

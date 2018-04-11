@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import shop.core.Customer;
 import shop.core.Vehicle;
-import shop.core.Owner;
+import shop.core.Ownership;
 
 import java.awt.*;
 
@@ -15,27 +15,25 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 
 public class OwnerViewW extends JFrame {
-
-	//Connection variables
-
-	Connection con;
-	Statement myStmt = null;
-	ResultSet myRs = null;
-	
-	
-	Owner owner = null;
-
+	//Component variables
 	private JPanel contentPane;
-	private JTextField mileageText;
-	private JButton commitButton;
-	private JButton editButton;
+	private JTextField textField_Mileage;
+	private JButton btnUpdate;
+	private JButton btnEdit;
 	private JTextArea carRecord;
-	private JTextArea recArea;
+	
+	//Connection variables
+	private Connection con;
+	private Statement myStmt = null;
+	private ResultSet myRs = null;
 
-	public OwnerViewW(Connection c, String vin, Customer cus, Vehicle vcl) {
-
+	public OwnerViewW(Connection c, Ownership own) {
+		//Parameter pass
 		con = c;
+		Customer cus = getCustomer(own);
+		Vehicle vcl = getVehicle(own);
 
+		//Panel initialization
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -44,165 +42,151 @@ public class OwnerViewW extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
 		
-
-		getOwner(vin);
-
-		
+		//Customer label
 		JLabel lblCustomer = new JLabel("Customer:");
 		lblCustomer.setBounds(24, 5, 72, 16);
 		contentPane.add(lblCustomer);
 		
+		//Vehicle label
 		JLabel lblVehicle = new JLabel("Vehicle:");
 		lblVehicle.setBounds(24, 34, 72, 16);
 		contentPane.add(lblVehicle);
 		
-		JLabel lblNewLabel = new JLabel("VIN:");
-		lblNewLabel.setBounds(24, 63, 72, 16);
-		contentPane.add(lblNewLabel);
+		//VIN label
+		JLabel lblVIN = new JLabel("VIN:");
+		lblVIN.setBounds(24, 63, 72, 16);
+		contentPane.add(lblVIN);
 		
-		JLabel lblNewLabel_1 = new JLabel("Mileage:");
-		lblNewLabel_1.setBounds(24, 92, 72, 16);
-		contentPane.add(lblNewLabel_1);
+		//Mileage label
+		JLabel lblMileage = new JLabel("Mileage:");
+		lblMileage.setBounds(24, 92, 72, 16);
+		contentPane.add(lblMileage);
 		
-		JLabel lblCarHistory = new JLabel("Car History:");
-		lblCarHistory.setBounds(24, 121, 72, 16);
-		contentPane.add(lblCarHistory);
+		//History label
+		JLabel lblHistory = new JLabel("Car History:");
+		lblHistory.setBounds(24, 121, 72, 16);
+		contentPane.add(lblHistory);
 		
-		JLabel cusField = new JLabel(cus.toString());	    		  
-		cusField.setBounds(108, 5, 150, 16);
-		contentPane.add(cusField);
+		//Customer display label
+		JLabel lblCusDisplay = new JLabel(cus.toString());	    		  
+		lblCusDisplay.setBounds(108, 5, 150, 16);
+		contentPane.add(lblCusDisplay);
 		
-		JLabel vclField = new JLabel(vcl.toString());
-		vclField.setBounds(108, 34, 154, 16);
-		contentPane.add(vclField);
+		//Vehicle display label
+		JLabel lblVclDisplay = new JLabel(vcl.toString());
+		lblVclDisplay.setBounds(108, 34, 154, 16);
+		contentPane.add(lblVclDisplay);
 		
-		JLabel vinField = new JLabel(vin);
-		vinField.setBounds(108, 63, 150, 16);
-		contentPane.add(vinField);
+		//VIN display label
+		JLabel vlblVINDisplay = new JLabel(own.getVin());
+		vlblVINDisplay.setBounds(108, 63, 150, 16);
+		contentPane.add(vlblVINDisplay);
 		
-		JLabel lblNewLabel_2 = new JLabel("Recommendations:");
-		lblNewLabel_2.setBounds(270, 13, 137, 16);
-		contentPane.add(lblNewLabel_2);
+		//Mileage text field
+		textField_Mileage = new JTextField(Integer.toString(own.getMiles()));
+		textField_Mileage.setBounds(108, 89, 123, 22);
+		contentPane.add(textField_Mileage);
+		textField_Mileage.setColumns(10);
+		textField_Mileage.setEditable(false);
 		
-		mileageText = new JTextField(Integer.toString(owner.getMiles()));
-		mileageText.setBounds(108, 89, 123, 22);
-		contentPane.add(mileageText);
-		mileageText.setColumns(10);
-		mileageText.setEditable(false);
-		
-		carRecord = new JTextArea(owner.getRecord());
-		carRecord.setBounds(24, 143, 238, 57);
+		//Record text field
+		carRecord = new JTextArea(own.getRecord());
+		carRecord.setBounds(24, 143, 385, 57);
 		carRecord.setEditable(false);
 		contentPane.add(carRecord);
 		
-		recArea = new JTextArea(getRecommendations(vin));
-		recArea.setBounds(270, 42, 137, 66);
-		recArea.setEditable(false);
-		contentPane.add(recArea);
-		
-
-		commitButton = new JButton("Commit");
-		commitButton.addActionListener(new ActionListener() {
+		//Services window button
+		JButton btnServices = new JButton("Services");
+		btnServices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mileageText.setEditable(false);
-				carRecord.setEditable(false);
-				//System.out.println(Integer.parseInt(mileageText.getText()));
-				updateInfo( vin, cus.getNum(), vcl.getNum(), (int) Integer.parseInt(mileageText.getText()), carRecord.getText());
-				commitButton.setVisible(false);
-				editButton.setVisible(true);
+				ServiceViewW svw = new ServiceViewW(con, own);
+				svw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
+		btnServices.setBounds(287, 225, 137, 25);
+		contentPane.add(btnServices);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(270, 42, 137, 66);
-		contentPane.add(textArea);
-		
-		editButton = new JButton("Edit");
-		editButton.addActionListener(new ActionListener() {
+		//Edit owner info button
+		btnEdit = new JButton("Edit");
+		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mileageText.setEditable(true);
+				textField_Mileage.setEditable(true);
 				carRecord.setEditable(true);
-				commitButton.setVisible(true);
-				editButton.setVisible(false);
+				btnUpdate.setVisible(true);
+				btnEdit.setVisible(false);
 			}
 		});
-		editButton.setBounds(270, 142, 137, 25);
-
-		contentPane.add(editButton);
-		commitButton.setBounds(270, 175, 137, 25);
-		contentPane.add(commitButton);
-		commitButton.setVisible(false);
+		btnEdit.setBounds(287, 11, 137, 25);
+		contentPane.add(btnEdit);
 		
-		JButton backButton = new JButton("Back");
-		backButton.addActionListener(new ActionListener() {
+		//Update owner info button
+		btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_Mileage.setEditable(false);
+				updateInfo(own);
+				carRecord.setEditable(false);
+				btnUpdate.setVisible(false);
+				btnEdit.setVisible(true);
+			}
+		});
+		btnUpdate.setBounds(287, 11, 137, 25);
+		contentPane.add(btnUpdate);
+		btnUpdate.setVisible(false);
+		
+		//Back button
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerProfileW cpw = new CustomerProfileW(con, cus);
 				cpw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		backButton.setBounds(24, 215, 137, 25);
-		contentPane.add(backButton);
-		
-		JButton btnSchedule = new JButton("Schedule");
-		btnSchedule.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnSchedule.setBounds(270, 215, 137, 25);
-		contentPane.add(btnSchedule);
-	
+		btnBack.setBounds(10, 225, 137, 25);
+		contentPane.add(btnBack);
 	}
 	
-
-	//set up a connection to owner class using the vin of the vehicle passed
-	public void getOwner(String vin) {
+	//Update owner info in database
+	public void updateInfo(Ownership own) {
+		own = new Ownership(own.getVin(), own.getCNum(), own.getVNum(), ((int) Integer.parseInt(textField_Mileage.getText())), carRecord.getText());
 		try {
 			myStmt = con.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM OWNER WHERE VIN = \"" + vin + "\";");
-			myRs.next();
-			owner = new Owner(myRs.getString("VIN"), myRs.getInt("CUS_NUM"), myRs.getInt("VCL_NUM"), myRs.getInt("OWN_MILES"), myRs.getString("OWN_RECORD"));
-		} catch (SQLException eOwn) {
-			eOwn.printStackTrace();
-			System.out.println("Owner Failure");
-		}
-	}
-	
-	
-	public void updateInfo(String vin, int cusN, int vclN, int vclMile, String ownRecord) {
-		try {
-			owner = new Owner(vin, cusN, vclN, vclMile, ownRecord);
-			myStmt.executeUpdate("UPDATE OWNER SET " + owner.updateString() + " WHERE VIN = \"" + vin  + "\";");
+			myStmt.executeUpdate(own.updateString());
 		} catch (SQLException eOwnInsert) {
 			eOwnInsert.printStackTrace();
-			System.out.println("Owner Insertion Failure");
+			System.out.println("Owner insertion failure");
 		}
 	}
 	
-	//get recommendations for the vehicle
-	public String getRecommendations(String vin) {
-		String service = "";
+	//Get customer from owner
+	public Customer getCustomer(Ownership own) {
+		Customer cus = null;
 		try {
 			myStmt = con.createStatement();
-			myRs = myStmt.executeQuery("SELECT SERVICE.SERV_DESC FROM OWNER, RECOMMENDATION, SERVICE WHERE OWNER.VIN = \"" + vin + 
-					"\" AND OWNER.VIN = RECOMMENDATION.VIN AND RECOMMENDATION.SERV_NUM = SERVICE.SERV_NUM;");
-			while (myRs.next()) {
-				service = service + (myRs.getString("SERV_DESC") + "\n");
-				
-			}
-		} catch (SQLException eRecGet) {
-			eRecGet.printStackTrace();
-			System.out.println("Failed to retreive recs.");
+			myRs = myStmt.executeQuery(own.selectCusString());
+			myRs.next();
+			cus = new Customer(myRs.getInt("CUS_NUM"), myRs.getString("CUS_FNAME"), myRs.getString("CUS_LNAME"), myRs.getString("CUS_CONTACT"));
+		} catch (SQLException eCusGet) {
+			eCusGet.printStackTrace();
+			System.out.println("Error retrieving customer");
 		}
-		if (service.equals("")) {
-			service = "No Recommendations.";
-			return service;
+		return cus;
+	}
+	
+	//Get vehicle from owner
+	public Vehicle getVehicle(Ownership own) {
+		Vehicle vcl = null;
+		try {
+			myStmt = con.createStatement();
+			myRs = myStmt.executeQuery(own.selectVclString());
+			myRs.next();
+			vcl = new Vehicle(myRs.getInt("VCL_NUM"), myRs.getString("VCL_MAKE"), myRs.getString("VCL_MODEL"), myRs.getInt("VCL_YEAR"), myRs.getString("VCL_MISC"));
+		} catch (SQLException eVclGet) {
+			eVclGet.printStackTrace();
+			System.out.println("Error retrieving vehicle");
 		}
-		else {
-			return service;
-		}
-		
-		
+		return vcl;
 	}
 }

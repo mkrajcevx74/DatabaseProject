@@ -41,5 +41,4 @@ public class Recommendation {
 	public void setServNum(int newServiceNum) {
 		servNum = newServiceNum;
 	}
-
 }

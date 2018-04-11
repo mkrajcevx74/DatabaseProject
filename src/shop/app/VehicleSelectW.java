@@ -11,33 +11,33 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 
 import shop.core.Customer;
-import shop.core.Owner;
+import shop.core.Vehicle;
+import shop.core.Ownership;
 
 public class VehicleSelectW extends JFrame {
-	//Component vars
+	//Component variables
 	private JPanel contentPane;
-	private JTextField vinField;
 	
-	//Connection vars
+	//Connection variables
 	Connection con;
 	Statement myStmt = null;
 	ResultSet myRs = null;
 	
-	//Class vars
-	int vclNum = 1;
+	//Entity variables
+	Vehicle vcl;
 	String make;
 	String model;
 	int year;
 	String misc;
-	int cusNum;
 	
+	Customer cus;
 
-
-	public VehicleSelectW(Connection c, Customer cus) {
-		cusNum = cus.getNum();
+	public VehicleSelectW(Connection c, Customer u) {
+		//Parameter declarations
 		con = c;
+		cus = u;
 		
-		//Panel vars
+		//Panel variables
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -53,43 +53,43 @@ public class VehicleSelectW extends JFrame {
 		
 		//Manufacturer label
 		JLabel lblMake = new JLabel("Manufacturer:");
-		lblMake.setBounds(34, 34, 95, 14);
+		lblMake.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMake.setBounds(52, 36, 101, 14);
 		contentPane.add(lblMake);
 		
 		//Model label
 		JLabel lblModel = new JLabel("Model:");
 		lblModel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModel.setBounds(273, 34, 73, 14);
+		lblModel.setBounds(306, 36, 60, 14);
 		contentPane.add(lblModel);
 		
 		//Year label
 		JLabel lblYear = new JLabel("Year:");
 		lblYear.setHorizontalAlignment(SwingConstants.CENTER);
-		lblYear.setBounds(72, 119, 46, 14);
+		lblYear.setBounds(78, 90, 46, 14);
 		contentPane.add(lblYear);
 		
 		//Package label
 		JLabel lblPackage = new JLabel("Package:");
 		lblPackage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPackage.setBounds(273, 119, 83, 14);
+		lblPackage.setBounds(297, 90, 84, 14);
 		contentPane.add(lblPackage);
 		
 		//VIN label
 		JLabel lblVin = new JLabel("VIN:");
 		lblVin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVin.setBounds(72, 188, 46, 14);
+		lblVin.setBounds(193, 146, 60, 14);
 		contentPane.add(lblVin);
-		
-		
 		
 		//Package box
 		JComboBox<String> comboBox_Misc = new JComboBox<String>();
 		comboBox_Misc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				misc = comboBox_Misc.getSelectedItem().toString();
+				getVehicle();
 			}
 		});
-		comboBox_Misc.setBounds(244, 144, 180, 20);
+		comboBox_Misc.setBounds(244, 115, 180, 20);
 		contentPane.add(comboBox_Misc);
 		
 		//Year box
@@ -100,7 +100,7 @@ public class VehicleSelectW extends JFrame {
 				setMiscBox(comboBox_Misc);
 			}
 		});
-		comboBox_Years.setBounds(10, 144, 180, 20);
+		comboBox_Years.setBounds(10, 115, 180, 20);
 		contentPane.add(comboBox_Years);
 		
 		//Model box
@@ -109,7 +109,6 @@ public class VehicleSelectW extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				model = comboBox_Models.getSelectedItem().toString();
 				setYearsBox(comboBox_Years);
-				setMiscBox(comboBox_Misc);
 			}
 		});
 		comboBox_Models.setBounds(244, 59, 180, 20);
@@ -121,51 +120,32 @@ public class VehicleSelectW extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				make = comboBox_Makes.getSelectedItem().toString();
 				setModelsBox(comboBox_Models);
-				setYearsBox(comboBox_Years);
-				setMiscBox(comboBox_Misc);
 			}
 		});
 		comboBox_Makes.setBounds(10, 59, 180, 20);
 		contentPane.add(comboBox_Makes);
 		
 		//Initialize boxes
-		setMakesBox(comboBox_Makes);
-		setModelsBox(comboBox_Models);
-		setYearsBox(comboBox_Years);
-		setMiscBox(comboBox_Misc);
+		setMakesBox(comboBox_Makes, comboBox_Models, comboBox_Years, comboBox_Misc);
 		
 		
 		//VIN field
-		vinField = new JTextField();
-		vinField.setBounds(10, 213, 180, 22);
+		JTextField vinField = new JTextField();
+		vinField.setBounds(129, 171, 180, 22);
 		contentPane.add(vinField);
 		vinField.setColumns(10);
 		
-		//Add vehicle button
+		//Add vehicle to database button
 		JButton btnAddVehicle = new JButton("Add Vehicle");
 		btnAddVehicle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					myStmt = con.createStatement();
-					myRs = myStmt.executeQuery("SELECT VCL_NUM FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + " AND VCL_MISC = \"" + misc + "\";");
-					myRs.next();
-					vclNum = myRs.getInt("VCL_NUM");
-					try {
-						Owner owner = new Owner(vinField.getText(), cusNum, vclNum, 0, "");
-						myStmt.executeUpdate("INSERT INTO OWNER VALUES(" + owner.insertString() + ");");
-						CustomerProfileW cpw = new CustomerProfileW(con, cus);
-						cpw.setVisible(true);
-						((Window) contentPane.getTopLevelAncestor()).dispose();
-					} catch (SQLException e9) {
-						e9.printStackTrace();
-					}
-				} catch (SQLException e10) {
-					e10.printStackTrace();
-					System.out.println("Error retrieving vehicle number");
-				}
+				addOwnership(vinField.getText());
+				CustomerProfileW cpw = new CustomerProfileW(con, cus);
+				cpw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnAddVehicle.setBounds(273, 199, 101, 23);
+		btnAddVehicle.setBounds(323, 227, 101, 23);
 		contentPane.add(btnAddVehicle);
 		
 		//Cancel button
@@ -177,7 +157,7 @@ public class VehicleSelectW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnCancel.setBounds(273, 230, 101, 23);
+		btnCancel.setBounds(10, 227, 101, 23);
 		contentPane.add(btnCancel);
 	}
 	
@@ -192,15 +172,15 @@ public class VehicleSelectW extends JFrame {
 			}
 		} catch (SQLException eMakesGet) {
 			eMakesGet.printStackTrace();
+			System.out.print("Error retrieving makes");
 		}
 		return makesList;
 	}
 	
 	//Populate makes box
-	public void setMakesBox(JComboBox<String> makesBox) {
+	public void setMakesBox(JComboBox<String> makesBox, JComboBox<String> modelsBox, JComboBox<Integer> yearsBox, JComboBox<String> miscBox) {
 		makesBox.setModel(getMakes());
 		makesBox.setSelectedIndex(0);
-		make = makesBox.getSelectedItem().toString();
 	}
 	
 	//Return models
@@ -214,6 +194,7 @@ public class VehicleSelectW extends JFrame {
 			}
 		} catch (SQLException eModelsGet) {
 			eModelsGet.printStackTrace();
+			System.out.print("Error retrieving models");
 		}
 		return mdlsList;
 	}
@@ -222,7 +203,6 @@ public class VehicleSelectW extends JFrame {
 	public void setModelsBox(JComboBox<String> modelsBox) {
 		modelsBox.setModel(getModels(make));
 		modelsBox.setSelectedIndex(0);
-		model = modelsBox.getSelectedItem().toString();
 	}
 	
 	//Return years
@@ -230,12 +210,13 @@ public class VehicleSelectW extends JFrame {
 		DefaultComboBoxModel<Integer> yearsList = new DefaultComboBoxModel<Integer>();
 		try {
 			myStmt = con.createStatement();
-			myRs = myStmt.executeQuery("SELECT DISTINCT VCL_YEAR FROM VEHICLE WHERE VCL_MODEL = \"" + model + "\";");
+			myRs = myStmt.executeQuery("SELECT DISTINCT VCL_YEAR FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\";");
 			while(myRs.next()) {
 				yearsList.addElement(myRs.getInt("VCL_YEAR"));
 			}
 		} catch (SQLException eYearsGet) {
 			eYearsGet.printStackTrace();
+			System.out.print("Error retrieving years");
 		}
 		return yearsList;
 	}
@@ -244,7 +225,6 @@ public class VehicleSelectW extends JFrame {
 	public void setYearsBox(JComboBox<Integer> yearsBox) {
 		yearsBox.setModel(getYears(model));
 		yearsBox.setSelectedIndex(0);
-		year = (int) yearsBox.getSelectedItem();
 	}
 	
 	//Return packages
@@ -252,12 +232,13 @@ public class VehicleSelectW extends JFrame {
 		DefaultComboBoxModel<String> mscsList = new DefaultComboBoxModel<String>();
 		try {
 			myStmt = con.createStatement();
-			myRs = myStmt.executeQuery("SELECT DISTINCT VCL_MISC FROM VEHICLE WHERE VCL_YEAR = " + year + ";");
+			myRs = myStmt.executeQuery("SELECT DISTINCT VCL_MISC FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + ";");
 			while(myRs.next()) {
 				mscsList.addElement(myRs.getString("VCL_MISC"));
 			}
 		} catch (SQLException eMiscsGet) {
 			eMiscsGet.printStackTrace();
+			System.out.print("Error retrieving packages");
 		}
 		return mscsList;
 	}
@@ -266,6 +247,29 @@ public class VehicleSelectW extends JFrame {
 	public void setMiscBox(JComboBox<String> miscBox) {
 		miscBox.setModel(getMisc(year));
 		miscBox.setSelectedIndex(0);
-		misc = miscBox.getSelectedItem().toString();
+	}
+	
+	//Get vehicle entity
+	public void getVehicle() {
+		try {
+			myRs = myStmt.executeQuery("SELECT DISTINCT VCL_NUM FROM VEHICLE WHERE VCL_MAKE = \"" + make + "\" AND VCL_MODEL = \"" + model + "\" AND VCL_YEAR = " + year + " AND VCL_MISC = \"" + misc + "\";");
+			while (myRs.next()) {
+				vcl = new Vehicle(myRs.getInt("VCL_NUM"), make, model, year, misc);
+			}
+		} catch (SQLException eVclGet) {
+			eVclGet.printStackTrace();
+			System.out.println("Error retrieving vehicle");
+		}
+	}
+	
+	//Add ownership to database
+	public void addOwnership(String vin) {
+		Ownership owner = new Ownership(vin, cus.getNum(), vcl.getNum(), 0, "");
+		try {
+			myStmt.executeUpdate(owner.insertString());
+		} catch (SQLException eOwnAdd) {
+			eOwnAdd.printStackTrace();
+			System.out.println("Error adding ownership");
+		}
 	}
 }

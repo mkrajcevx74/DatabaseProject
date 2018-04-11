@@ -11,12 +11,12 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 
 public class AppHomeW extends JFrame {
-	//Component vars
+	//Component variables
 	private JPanel contentPane;
 	
 	//Create home screen
 	public AppHomeW(Connection con) {
-		//Panel ini
+		//Panel initialization
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -46,8 +46,8 @@ public class AppHomeW extends JFrame {
 		JButton btnSelectAnEmployee = new JButton("Select an Employee");
 		btnSelectAnEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EmployeeSelectW ew = new EmployeeSelectW(con);
-				ew.setVisible(true);
+				TechnicianSelectW tsw = new TechnicianSelectW(con);
+				tsw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
@@ -59,13 +59,11 @@ public class AppHomeW extends JFrame {
 
 		btnViewSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ViewScheduleW vsw = new ViewScheduleW(con);
+				ScheduleViewW vsw = new ScheduleViewW(con);
 				vsw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnViewSchedule.setBounds(159, 203, 101, 23);
-
 		btnViewSchedule.setBounds(134, 203, 160, 23);
 
 		contentPane.add(btnViewSchedule);
