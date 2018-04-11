@@ -3,11 +3,11 @@ package shop.core;
 public class Recommendation {
 	//recommendation attributes
 	private int recNum;
-	private int vin;
+	private String vin;
 	private int servNum;
 	
 	//class entity constructor
-	public Recommendation(int newRecNum, int newVin, int newServNum) {
+	public Recommendation(int newRecNum, String newVin, int newServNum) {
 		recNum = newRecNum;
 		vin = newVin;
 		servNum = newServNum;
@@ -22,23 +22,32 @@ public class Recommendation {
 		recNum = newNum;
 	}
 		
-	//Return vin num
-	public int getVIN() {
+	//Return VIN
+	public String getVIN() {
 		return vin;
 	}
 		
-	//Set vin num
-	public void setVIN(int newVIN) {
+	//Set VIN
+	public void setVIN(String newVIN) {
 		vin = newVIN;
 	}
 	
-	//Return vin num
+	//Return service number
 	public int getServNum() {
 		return servNum;
 	}
 			
-	//Set vin num
+	//Set service number
 	public void setServNum(int newServiceNum) {
 		servNum = newServiceNum;
+	}
+	
+	//Add recommendation query
+	public String  addRecStmt() {
+		return "INSERT INTO RECOMMENDATION VALUES(NULL, \"" +  vin + "\", "  + servNum + ");";
+	}
+	
+	public String delRecStmt() {
+		return "DELETE FROM RECOMMENDATION WHERE VIN = \"" + vin + "\" AND SERV_NUM = " + servNum + ";";
 	}
 }

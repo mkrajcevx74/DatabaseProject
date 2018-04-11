@@ -55,19 +55,20 @@ public class Customer {
 		contact = newContact;
 	}
 	
-	//Get customer's name as string
+	//Get customer's full name string
 	@Override
 	public String toString() {
 		//return String.format("Customer [num=%s, fName=%s, lName=%s, contact=%s]", num, fName, lName, contact);
 		return fName + " " + lName;
 	}
 	
-	//Customer search query builder
+	//Customer insert statement builder
 	public String insertString() {
 		return "INSERT INTO CUSTOMER VALUES (NULL, " + fName + ", " + lName + ", " + contact + ");";
 	}
 	
+	//Customer update statement
 	public String updateString() {
-		return "UPDATE CUSTOMER SET CUS_NUM = " + num + ", CUS_FNAME = \"" + fName + "\", CUS_LNAME = \"" + lName + "\", CUS_CONTACT = \"" + contact + "\" WHERE CUS_NUM = " + num + ";";
+		return "UPDATE CUSTOMER SET  CUS_FNAME = \"" + fName + "\", CUS_LNAME = \"" + lName + "\", CUS_CONTACT = \"" + contact + "\" WHERE CUS_NUM = " + num + ";";
 	}
 }

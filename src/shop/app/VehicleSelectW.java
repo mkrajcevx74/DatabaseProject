@@ -97,7 +97,7 @@ public class VehicleSelectW extends JFrame {
 		comboBox_Years.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				year = (int) comboBox_Years.getSelectedItem();
-				setMiscBox(comboBox_Misc);
+				setComboBox(comboBox_Misc, 4);
 			}
 		});
 		comboBox_Years.setBounds(10, 115, 180, 20);
@@ -108,7 +108,7 @@ public class VehicleSelectW extends JFrame {
 		comboBox_Models.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				model = comboBox_Models.getSelectedItem().toString();
-				setYearsBox(comboBox_Years);
+				setComboBox(comboBox_Years, 3);
 			}
 		});
 		comboBox_Models.setBounds(244, 59, 180, 20);
@@ -119,14 +119,14 @@ public class VehicleSelectW extends JFrame {
 		comboBox_Makes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				make = comboBox_Makes.getSelectedItem().toString();
-				setModelsBox(comboBox_Models);
+				setComboBox(comboBox_Models, 2);
 			}
 		});
 		comboBox_Makes.setBounds(10, 59, 180, 20);
 		contentPane.add(comboBox_Makes);
 		
 		//Initialize boxes
-		setMakesBox(comboBox_Makes, comboBox_Models, comboBox_Years, comboBox_Misc);
+		setComboBox(comboBox_Makes, 1);
 		
 		
 		//VIN field
@@ -177,12 +177,6 @@ public class VehicleSelectW extends JFrame {
 		return makesList;
 	}
 	
-	//Populate makes box
-	public void setMakesBox(JComboBox<String> makesBox, JComboBox<String> modelsBox, JComboBox<Integer> yearsBox, JComboBox<String> miscBox) {
-		makesBox.setModel(getMakes());
-		makesBox.setSelectedIndex(0);
-	}
-	
 	//Return models
 	public ComboBoxModel<String> getModels(String make) {
 		DefaultComboBoxModel<String> mdlsList = new DefaultComboBoxModel<String>();
@@ -197,12 +191,6 @@ public class VehicleSelectW extends JFrame {
 			System.out.print("Error retrieving models");
 		}
 		return mdlsList;
-	}
-	
-	//Populate models box
-	public void setModelsBox(JComboBox<String> modelsBox) {
-		modelsBox.setModel(getModels(make));
-		modelsBox.setSelectedIndex(0);
 	}
 	
 	//Return years
@@ -221,12 +209,6 @@ public class VehicleSelectW extends JFrame {
 		return yearsList;
 	}
 	
-	//Populate years box
-	public void setYearsBox(JComboBox<Integer> yearsBox) {
-		yearsBox.setModel(getYears(model));
-		yearsBox.setSelectedIndex(0);
-	}
-	
 	//Return packages
 	public ComboBoxModel<String> getMisc(int year) {
 		DefaultComboBoxModel<String> mscsList = new DefaultComboBoxModel<String>();
@@ -243,10 +225,22 @@ public class VehicleSelectW extends JFrame {
 		return mscsList;
 	}
 	
-	//Populate packages box
-	public void setMiscBox(JComboBox<String> miscBox) {
-		miscBox.setModel(getMisc(year));
-		miscBox.setSelectedIndex(0);
+	//Populate combo box
+	public void setComboBox(JComboBox box, int n) {
+		DefaultComboBoxModel m = new DefaultComboBoxModel();
+		if (n==1) {
+			m = (DefaultComboBoxModel<String>) getMakes();
+		} else if (n==2) {
+			m = (DefaultComboBoxModel<String>) getModels(make);
+		} else if (n==3) {
+			m = (DefaultComboBoxModel<Integer>) getYears(model);
+		} else if (n==4) {
+			m = (DefaultComboBoxModel<String>) getMisc(year);
+		}
+		box.setModel(m);
+		if(box.getItemCount() > 0) {
+			box.setSelectedIndex(0);
+		}
 	}
 	
 	//Get vehicle entity

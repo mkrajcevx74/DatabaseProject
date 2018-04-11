@@ -21,85 +21,92 @@ public class Technician {
 		wage = newWage;
 	}
 	
-	//Return employee's index
+	//Return technician's index
 	public int getNum() {
 		return num;
 	}
 		
-	//Set employee's index
+	//Set technician's index
 	public void setNum(int newNum) {
 		num = newNum;
 	}
 	
-	//Return employee's first name
+	//Return technician's first name
 	public String getFName() {
 		return fName;
 	}
 	
-	//Set employee's first name
+	//Set technician's first name
 	public void setFName(String newFName) {
 		fName = newFName;
 	}
 	
-	//Return employee's last name
+	//Return technician's last name
 	public String getLName() {
 		return lName;
 	}
 	
-	//Set employee's last name
+	//Set technician's last name
 	public void setLName(String newLName) {
 		lName = newLName;
 	}
 	
-	//Return employee's contact info
+	//Return technician's contact info
 	public String getContact() {
 		return contact;
 	}
 	
-	//Set employee's contact info
+	//Set technician's contact info
 	public void setContact(String newContact) {
 		contact = newContact;
 	}
 	
-	//Return employee's rating
+	//Return technician's rating
 	public float getRating() {
 		return rating;
 	}
 	
-	//Set employee's rating
+	//Set technician's rating
 	public void setRating(float newRating) {
 		rating = newRating;
 	}
 	
-	//Return employee's rating count
+	//Return technician's rating count
 	public int getRCount() {
 		return rCount;
 	}
 	
-	//Set employee's rating count
+	//Set technician's rating count
 	public void setRCount(int newRCount) {
 		rCount = newRCount;
 	}
 	
-	//Update employee's rating
+	//Update technician's rating
 	public void updateRating(int newRating) {
 		float totalRating = rating * rCount;
 		rCount++;
 		rating = (newRating + totalRating)/rCount;
 	}
 	
-	//Return employee's wage
+	//Return technician's wage
 	public float getWage() {
 		return wage;
 	}
 	
-	//Set employee's wage
+	//Set technician's wage
 	public void setWage(float newWage) {
 		wage = newWage;
 	}
 	
+	//Get technician's full name string
 	@Override
 	public String toString() {
 		return fName + " " + lName;
+	}
+	
+	//Technician update statement
+	public String updateString() {
+		return "UPDATE TECHNICIAN SET EMP_FNAME = \"" + fName + "\", EMP_LNAME = \"" + lName + "\", EMP_CONTACT = \"" + contact + 
+				"\", EMP_RATING = " + rating + ", EMP_RATING_COUNT = " + rCount + ", EMP_WAGE = " + wage + "WHERE EMP_NUM = " + num + ";";
 	}
 }

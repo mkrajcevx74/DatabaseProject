@@ -50,7 +50,8 @@ public class CustomerAddW extends JFrame {
 		
 		//Invalid label
 		lblInvalid = new JLabel("*Please enter valid information*");
-		lblInvalid.setBounds(130, 168, 199, 14);
+		lblInvalid.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInvalid.setBounds(128, 168, 199, 14);
 		contentPane.add(lblInvalid);
 		lblInvalid.setVisible(false);
 		
@@ -83,7 +84,7 @@ public class CustomerAddW extends JFrame {
 				}
 			}
 		});
-		btnAddCustomer.setBounds(229, 201, 111, 23);
+		btnAddCustomer.setBounds(294, 225, 130, 25);
 		contentPane.add(btnAddCustomer);
 		
 		//Cancel button
@@ -95,7 +96,7 @@ public class CustomerAddW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnCancel.setBounds(79, 201, 89, 23);
+		btnCancel.setBounds(10, 225, 130, 25);
 		contentPane.add(btnCancel);
 	}
 	
@@ -113,7 +114,6 @@ public class CustomerAddW extends JFrame {
 		}
 		try {
 			Statement myStmt = con.createStatement();
-			System.out.println(cus.insertString());
 			myStmt.executeUpdate(cus.insertString());
 			return true;
 		} catch (SQLException eCusAdd) {

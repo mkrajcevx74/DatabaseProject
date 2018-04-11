@@ -16,12 +16,12 @@ public class TechnicianSelectW extends JFrame{
 	private JPanel contentPane;
 	
 	//Connection variables
-	Connection con;
-	Statement myStmt = null;
-	ResultSet myRs = null;
+	private Connection con;
+	private Statement myStmt = null;
+	private ResultSet myRs = null;
 	
 	//Entity variables
-	Technician tec = null;
+	private Technician tec = null;
 
 	//Employee selection screen constructor
 	public TechnicianSelectW(Connection c) {
@@ -37,52 +37,32 @@ public class TechnicianSelectW extends JFrame{
 		contentPane.setLayout(null);
 		
 		//Technician label
-		JLabel lblTec = new JLabel("Technician:");
-		lblTec.setBounds(31, 13, 77, 16);
+		JLabel lblTec = new JLabel("Select a technician:");
+		lblTec.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTec.setBounds(82, 58, 274, 16);
 		contentPane.add(lblTec);
-		
-		//Contact number label
-		JLabel lblContact = new JLabel("Contact:");
-		lblContact.setBounds(31, 99, 56, 16);
-		contentPane.add(lblContact);
-		
-		//Rating label
-		JLabel lblRating = new JLabel("Rating:");
-		lblRating.setBounds(31, 126, 56, 16);
-		contentPane.add(lblRating);
-		
-		//Wage label
-		JLabel lblWage = new JLabel("Wage:");
-		lblWage.setBounds(31, 158, 56, 16);
-		contentPane.add(lblWage);
-		
-		//Contact display
-		JLabel lblContactDisplay = new JLabel("New label");
-		lblContactDisplay.setBounds(144, 100, 150, 16);
-		contentPane.add(lblContactDisplay);
-		
-		//Rating display
-		JLabel lblRatingDisplay = new JLabel("New label");
-		lblRatingDisplay.setBounds(144, 129, 150, 16);
-		contentPane.add(lblRatingDisplay);
-		
-		//Wage display
-		JLabel lblWageDisplay = new JLabel("New label");
-		lblWageDisplay.setBounds(144, 158, 150, 16);
-		contentPane.add(lblWageDisplay);
 		
 		//Technician display box
 		JComboBox<Technician> comboBox_Tec = new JComboBox<Technician>();
 		comboBox_Tec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				lblContactDisplay.setText(((Technician) comboBox_Tec.getSelectedItem()).getContact());
-				lblRatingDisplay.setText(Float.toString(((Technician) comboBox_Tec.getSelectedItem()).getRating()));
-				lblWageDisplay.setText(Float.toString(((Technician) comboBox_Tec.getSelectedItem()).getWage()));
+				tec = (Technician) comboBox_Tec.getSelectedItem();
 			}
 		});
-		comboBox_Tec.setBounds(120, 10, 274, 22);
+		comboBox_Tec.setBounds(82, 85, 274, 22);
 		contentPane.add(comboBox_Tec);
 		setTecsBox(comboBox_Tec);
+		
+		JButton btnSelect = new JButton("Select");
+		btnSelect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TechnicianProfileW tpw = new TechnicianProfileW(con, tec);
+				tpw.setVisible(true);
+				((Window) contentPane.getTopLevelAncestor()).dispose();
+			}
+		});
+		btnSelect.setBounds(294, 225, 130, 25);
+		contentPane.add(btnSelect);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {

@@ -100,11 +100,12 @@ public class ScheduleViewW extends JFrame {
 		comboBox_Dates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				date = comboBox_Dates.getSelectedItem().toString();
-				setTimesBox(comboBox_Times);
+				setComboBox(comboBox_Times, 2);
 			}
 		});
 		comboBox_Dates.setBounds(154, 26, 180, 20);
 		contentPane.add(comboBox_Dates);
+		setComboBox(comboBox_Dates, 1);
 		
 		//Home button
 		JButton btnHome = new JButton("Back");
@@ -115,12 +116,8 @@ public class ScheduleViewW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnHome.setBounds(31, 227, 89, 23);
+		btnHome.setBounds(10, 225, 130, 25);
 		contentPane.add(btnHome);
-		
-		//Initialize boxes
-		setDatesBox(comboBox_Dates);
-		setTimesBox(comboBox_Times);
 	}
 	
 	//Return dates
@@ -139,12 +136,11 @@ public class ScheduleViewW extends JFrame {
 		return datesList;
 	}
 	
-	//Populate dates box
-	public void setDatesBox(JComboBox<String> DatesBox) {
-		DatesBox.setModel(getDates());
-		DatesBox.setSelectedIndex(0);
-		date = DatesBox.getSelectedItem().toString();
-	}
+//	//Populate dates box
+//	public void setDatesBox(JComboBox<String> DatesBox) {
+//		DatesBox.setModel(getDates());
+//		DatesBox.setSelectedIndex(0);
+//	}
 	
 	//Return times
 	public ComboBoxModel<String> getTimes(String date) {
@@ -162,11 +158,18 @@ public class ScheduleViewW extends JFrame {
 		return timesList;
 	}
 	
-	//Populate times box
-	public void setTimesBox(JComboBox<String> TimesBox) {
-		TimesBox.setModel(getTimes(date));
-		TimesBox.setSelectedIndex(0);
-		timeRange = TimesBox.getSelectedItem().toString();
+	//Populate combo box
+	public void setComboBox(JComboBox<String> box, int n) {
+		DefaultComboBoxModel<String> m = new DefaultComboBoxModel<String>();
+		if (n==1) {
+			m = (DefaultComboBoxModel<String>) getDates();
+		} else if (n==2) {
+			m = (DefaultComboBoxModel<String>) getTimes(date);
+		}
+		box.setModel(m);
+		if(box.getItemCount() > 0) {
+			box.setSelectedIndex(0);
+		}
 	}
 	
 	//Get selected schedule as entity

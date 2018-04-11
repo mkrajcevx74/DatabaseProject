@@ -11,16 +11,21 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 
 import shop.core.Ownership;
+import shop.core.Recommendation;
 import shop.core.Service;
 
 
 public class ServiceViewW extends JFrame {
 	//Component variables
 	private JPanel contentPane;
+	JLabel lblMessage;
 	private ButtonGroup groop;
-	private JRadioButton rdbtnViewAllServices;
+	private JRadioButton rdbtnViewAll;
 	private JRadioButton rdbtnViewRecs;
 	private JRadioButton rdbtnAddRecs;
+	private JButton btnSchedule;
+	private JButton btnAddRec;
+	private JButton btnDelRec;
 	JComboBox<Service> comboBox;
 	
 	//Connection variables
@@ -31,8 +36,6 @@ public class ServiceViewW extends JFrame {
 	//Entity variables
 	private Ownership own;
 	private Service serv;
-	private JButton btnAddRec;
-	private JButton btnRemoveRec;
 	
 	public ServiceViewW(Connection c, Ownership o) {
 		//Parameter assignment
@@ -58,20 +61,27 @@ public class ServiceViewW extends JFrame {
 		lblSelectAService.setBounds(20, 85, 109, 14);
 		contentPane.add(lblSelectAService);
 		
+		//Action confirm message label
+		lblMessage = new JLabel("*message*");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setBounds(167, 59, 220, 14);
+		contentPane.add(lblMessage);
+		lblMessage.setVisible(false);
+		
 		//Radio button action listener
 		ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setServices(comboBox);
-				System.out.println("shit");
+				setButtons();
 			}
 		};
 		
 		//View all services radio button
-		rdbtnViewAllServices = new JRadioButton("View all services");
-		rdbtnViewAllServices.addActionListener(listener);
-		rdbtnViewAllServices.setBounds(20, 121, 210, 23);
-		contentPane.add(rdbtnViewAllServices);
+		rdbtnViewAll = new JRadioButton("View all services");
+		rdbtnViewAll.addActionListener(listener);
+		rdbtnViewAll.setBounds(20, 121, 210, 23);
+		contentPane.add(rdbtnViewAll);
 		
 		//View recommended services
 		rdbtnViewRecs = new JRadioButton("View recommended services");
@@ -87,10 +97,10 @@ public class ServiceViewW extends JFrame {
 		
 		//Initialize radio button group + listener
 		groop = new ButtonGroup();
-		groop.add(rdbtnViewAllServices);
+		groop.add(rdbtnViewAll);
 		groop.add(rdbtnViewRecs);
 		groop.add(rdbtnAddRecs);
-		rdbtnViewAllServices.setSelected(true);
+		rdbtnViewAll.setSelected(true);
 		
 		//Services box
 		comboBox = new JComboBox<Service>();
@@ -104,7 +114,7 @@ public class ServiceViewW extends JFrame {
 		setServices(comboBox);
 		
 		//Schedule appointment button
-		JButton btnSchedule = new JButton("Schedule");
+		btnSchedule = new JButton("Schedule");
 		btnSchedule.setBounds(294, 225, 130, 25);
 		contentPane.add(btnSchedule);
 		
@@ -112,19 +122,25 @@ public class ServiceViewW extends JFrame {
 		btnAddRec = new JButton("Recommend");
 		btnAddRec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				addRecommendation();
+				setServices(comboBox);
 			}
 		});
 		btnAddRec.setBounds(294, 225, 130, 25);
 		contentPane.add(btnAddRec);
+		btnAddRec.setVisible(false);
 		
 		//Remove recommendation button
-		btnRemoveRec = new JButton("Remove");
-		btnRemoveRec.addActionListener(new ActionListener() {
+		btnDelRec = new JButton("Remove");
+		btnDelRec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				deleteRecommendation();
+				setServices(comboBox);
 			}
 		});
-		btnRemoveRec.setBounds(154, 225, 130, 25);
-		contentPane.add(btnRemoveRec);
+		btnDelRec.setBounds(154, 225, 130, 25);
+		contentPane.add(btnDelRec);
+		btnDelRec.setVisible(false);
 		
 		//Back button
 		JButton btnBack = new JButton("Back");
@@ -144,17 +160,13 @@ public class ServiceViewW extends JFrame {
 		DefaultComboBoxModel<Service> servList = new DefaultComboBoxModel<Service>();
 		String query = "SELECT DISTINCT SERVICE.* FROM SERVICE";
 		if (rdbtnViewRecs.isSelected()) {
-			System.out.println(2);
 			query += ", RECOMMENDATION WHERE RECOMMENDATION.VIN = \"" + own.getVin() + "\" AND RECOMMENDATION.SERV_NUM = SERVICE.SERV_NUM;";
 		} else if (rdbtnAddRecs.isSelected()) {
-			System.out.println(3);
 			query += ", RECOMMENDATION WHERE SERVICE.SERV_NUM NOT IN (SELECT SERV_NUM FROM RECOMMENDATION WHERE VIN = \"" + own.getVin() + "\");";
 		} else {
-			System.out.println(1);
 			query += ";";
 		}
 		try {
-			System.out.println(query);
 			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery(query);
 			while (myRs.next()) {
@@ -165,29 +177,59 @@ public class ServiceViewW extends JFrame {
 			eServGet.printStackTrace();
 			System.out.println("Error retrieving services");
 		}
-		System.out.println("model returned");
 		return servList;
+	}
+	
+	//Update buttons
+	public void setButtons() {
+		if (rdbtnViewAll.isSelected()) {
+			btnSchedule.setVisible(true);
+			btnAddRec.setVisible(false);
+			btnDelRec.setVisible(false);
+		} else if (rdbtnViewRecs.isSelected()) {
+			btnSchedule.setVisible(true);
+			btnAddRec.setVisible(false);
+			btnDelRec.setVisible(true);
+		} else {
+			btnSchedule.setVisible(false);
+			btnAddRec.setVisible(true);
+			btnDelRec.setVisible(false);
+		}
 	}
 	
 	//Populate services box
 	public void setServices(JComboBox<Service> servBox) {
 		servBox.setModel(getServices());
-		servBox.setSelectedIndex(0);
+		if (servBox.getItemCount() > 0) {
+			servBox.setSelectedIndex(0);
+		}
 		serv = (Service) servBox.getSelectedItem();
 	}
 	
-	//
-	public void addAppointment() {
-
-	}
-	
-	//
+	//Add recommended service
 	public void addRecommendation() {
+		try {
+			Recommendation rec = new Recommendation(0, own.getVin(), serv.getNum());
+			myStmt = con.createStatement();
+			myStmt.executeUpdate(rec.addRecStmt());
+			lblMessage.setText("Recommendation added");
+		} catch (SQLException eRecAdd) {
+			eRecAdd.printStackTrace();
+			System.out.println("Error adding recommendation");
+		}
 		
 	}
 	
-	//
-	public void removeRecommmendation() {
-		
+	//Delete recommended service
+	public void deleteRecommendation() {
+		try {
+			Recommendation rec = new Recommendation(0, own.getVin(), serv.getNum());
+			myStmt = con.createStatement();
+			myStmt.executeUpdate(rec.delRecStmt());
+			lblMessage.setText("Recommendation removed");
+		} catch (SQLException eRecDel) {
+			eRecDel.printStackTrace();
+			System.out.println("Error deleting recommendation");
+		}
 	}
 }
