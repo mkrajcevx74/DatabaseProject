@@ -50,42 +50,48 @@ public class ScheduleViewW extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//Title label
+		JLabel lblNewLabel = new JLabel("Select a Shift");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(154, 30, 130, 14);
+		contentPane.add(lblNewLabel);
+		
 		//Date label
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDate.setBounds(10, 28, 180, 14);
+		lblDate.setBounds(25, 60, 180, 14);
 		contentPane.add(lblDate);
 		
 		//Time label
 		JLabel lblTime = new JLabel("Time:");
 		lblTime.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTime.setBounds(227, 28, 180, 14);
+		lblTime.setBounds(230, 60, 180, 14);
 		contentPane.add(lblTime);
 
 		//Technician head label
-		JLabel lblOnStaff = new JLabel("Technician on staff:");
+		JLabel lblOnStaff = new JLabel("Working technician:");
 		lblOnStaff.setHorizontalAlignment(SwingConstants.LEFT);
-		lblOnStaff.setBounds(10, 91, 120, 14);
+		lblOnStaff.setBounds(25, 120, 120, 14);
 		contentPane.add(lblOnStaff);
 		
 		//Technician display label
 		JLabel lblTechnician = new JLabel("Technician");
 		lblTechnician.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTechnician.setBounds(154, 91, 270, 14);
+		lblTechnician.setBounds(140, 120, 160, 14);
 		contentPane.add(lblTechnician);
 		
 		//Appointment head label
 		JLabel lblAppointmentSchd = new JLabel("Appointment Scheduled: ");
-		lblAppointmentSchd.setBounds(10, 116, 167, 14);
+		lblAppointmentSchd.setBounds(25, 160, 167, 14);
 		contentPane.add(lblAppointmentSchd);
 		
 		//Appointment display label
 		JLabel lblAppointment = new JLabel("No appointment scheduled");
-		lblAppointment.setBounds(20, 132, 393, 14);
+		lblAppointment.setBounds(35, 180, 365, 14);
 		contentPane.add(lblAppointment);
 		
 		//Add appointment button
-		btnScheduleApt = new JButton("Schedule");
+		btnScheduleApt = new JButton("Schedule Appt.");
 		btnScheduleApt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addApt(new Appointment(0, own.getVin(), shift.getNum(), serv.getNum()));
@@ -99,7 +105,7 @@ public class ScheduleViewW extends JFrame {
 		btnScheduleApt.setVisible(false);
 		
 		//Delete appointment button
-		btnCloseApt = new JButton("Close");
+		btnCloseApt = new JButton("Close Appt.");
 		btnCloseApt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				closeApt(getApt());
@@ -123,7 +129,7 @@ public class ScheduleViewW extends JFrame {
 				setButtons();
 			}
 		});
-		comboBox_Times.setBounds(227, 48, 180, 20);
+		comboBox_Times.setBounds(230, 80, 180, 20);
 		contentPane.add(comboBox_Times);
 		
 		//Dates box
@@ -134,7 +140,7 @@ public class ScheduleViewW extends JFrame {
 				setComboBox(comboBox_Times, 2);
 			}
 		});
-		comboBox_Dates.setBounds(10, 48, 180, 20);
+		comboBox_Dates.setBounds(25, 80, 180, 20);
 		contentPane.add(comboBox_Dates);
 		setComboBox(comboBox_Dates, 1);
 		
@@ -240,7 +246,7 @@ public class ScheduleViewW extends JFrame {
 			myStmt = con.createStatement();
 			myRs = myStmt.executeQuery("SELECT TECHNICIAN.* FROM TECHNICIAN, SCHEDULE WHERE SHIFT_NUM = " + tempShift.getNum() + " AND TECHNICIAN.EMP_NUM = SCHEDULE.EMP_NUM");
 			myRs.next();
-			tec = new Technician(tempShift.getNum(), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
+			tec = new Technician(myRs.getInt("EMP_NUM"), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
 					myRs.getString("EMP_CONTACT"), myRs.getFloat("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getFloat("EMP_WAGE"));
 		} catch (SQLException eTechGet) {
 			eTechGet.printStackTrace();

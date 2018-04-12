@@ -39,7 +39,7 @@ public class TechnicianSelectW extends JFrame{
 		//Technician label
 		JLabel lblTec = new JLabel("Select a technician:");
 		lblTec.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTec.setBounds(82, 58, 274, 16);
+		lblTec.setBounds(92, 30, 250, 16);
 		contentPane.add(lblTec);
 		
 		//Technician display box
@@ -49,7 +49,7 @@ public class TechnicianSelectW extends JFrame{
 				tec = (Technician) comboBox_Tec.getSelectedItem();
 			}
 		});
-		comboBox_Tec.setBounds(82, 85, 274, 22);
+		comboBox_Tec.setBounds(92, 80, 250, 22);
 		contentPane.add(comboBox_Tec);
 		setTecsBox(comboBox_Tec);
 		
@@ -81,10 +81,10 @@ public class TechnicianSelectW extends JFrame{
 		DefaultComboBoxModel<Technician> tecList = new DefaultComboBoxModel<Technician>();
 		try {
 			myStmt = con.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM TECHNICIAN;");
+			myRs = myStmt.executeQuery("SELECT DISTINCT * FROM TECHNICIAN;");
 			while (myRs.next()) {
 				tec = new Technician(myRs.getInt("EMP_NUM"), myRs.getString("EMP_FNAME"), myRs.getString("EMP_LNAME"),
-						myRs.getString("EMP_CONTACT"), myRs.getInt("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getInt("EMP_WAGE"));
+						myRs.getString("EMP_CONTACT"), myRs.getFloat("EMP_RATING"), myRs.getInt("EMP_RATING_COUNT"), myRs.getFloat("EMP_WAGE"));
 				tecList.addElement(tec);
 			}
 		} catch (SQLException eTecGet) {

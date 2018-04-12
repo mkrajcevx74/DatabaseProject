@@ -67,26 +67,28 @@ public class Ownership {
 		record = newRecord;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return String.format("Owner [vin=%s, cNum=%s, vNum=%s, miles=%s,record=%s]", vin, cNum, vNum, miles, record);
-	}
-	
+	//Customer search query
 	public String selectCusString() {
 		return "SELECT CUSTOMER.* FROM OWNER, CUSTOMER WHERE VIN = \"" + vin + "\" AND OWNER.CUS_NUM = CUSTOMER.CUS_NUM;";
 	}
 	
+	//Vehicle search query
 	public String selectVclString() {
 		return "SELECT VEHICLE.* FROM OWNER, VEHICLE WHERE VIN = \"" + vin + "\" AND OWNER.VCL_NUM = VEHICLE.VCL_NUM;";
 	}
 	
-	//Owner insert builder
-	public String insertString() {
-		return "INSERT INTO OWNER VALUES(\"" + vin + "\", " + cNum + ", " + vNum + ", " + miles + ", \"" + record + "\");";
+	//Appointment search query
+	public String selectAptString() {
+		return "SELECT SCHEDULE.SHIFT_DAY, SERVICE.SERV_DESC FROM OWNER, APPOINTMENT, SCHEDULE, SERVICE WHERE OWNER.VIN = \"" + vin + 
+				"\" AND APPOINTMENT.VIN = OWNER.VIN AND SCHEDULE.SHIFT_NUM = APPOINTMENT.SHIFT_NUM AND SERVICE.SERV_NUM = APPOINTMENT.SERV_NUM;";
 	}
 	
-	//Owner update builder
+	//Owner insert statement
+	public String insertString() {
+		return "INSERT INTO OWNER VALUES(" + vin + ", " + cNum + ", " + vNum + ", " + miles + ", \"" + record + "\");";
+	}
+	
+	//Owner update statement
 	public String updateString() {
 		return "UPDATE OWNER SET VIN = \"" + vin + "\", CUS_NUM = \"" + cNum + "\", VCL_NUM = \"" + vNum + 
 				"\", OWN_MILES = \"" + miles + "\", OWN_RECORD = \"" + record + "\" WHERE VIN = \"" + vin  + "\";";

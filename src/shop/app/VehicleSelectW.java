@@ -17,6 +17,8 @@ import shop.core.Ownership;
 public class VehicleSelectW extends JFrame {
 	//Component variables
 	private JPanel contentPane;
+	private JLabel lblInvalid;
+	private JTextField vinField;
 	
 	//Connection variables
 	Connection con;
@@ -45,41 +47,48 @@ public class VehicleSelectW extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//Head label
-		JLabel lblSelect = new JLabel("Select a vehicle to add");
-		lblSelect.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSelect.setBounds(146, 11, 154, 14);
-		contentPane.add(lblSelect);
+		//Titel label
+		JLabel lblTitle = new JLabel("Add a Vehicle");
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(154, 30, 130, 14);
+		contentPane.add(lblTitle);
 		
 		//Manufacturer label
 		JLabel lblMake = new JLabel("Manufacturer:");
 		lblMake.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMake.setBounds(52, 36, 101, 14);
+		lblMake.setBounds(25, 60, 180, 14);
 		contentPane.add(lblMake);
 		
 		//Model label
 		JLabel lblModel = new JLabel("Model:");
 		lblModel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModel.setBounds(306, 36, 60, 14);
+		lblModel.setBounds(230, 60, 180, 14);
 		contentPane.add(lblModel);
 		
 		//Year label
 		JLabel lblYear = new JLabel("Year:");
 		lblYear.setHorizontalAlignment(SwingConstants.CENTER);
-		lblYear.setBounds(78, 90, 46, 14);
+		lblYear.setBounds(25, 110, 180, 14);
 		contentPane.add(lblYear);
 		
 		//Package label
 		JLabel lblPackage = new JLabel("Package:");
 		lblPackage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPackage.setBounds(297, 90, 84, 14);
+		lblPackage.setBounds(230, 110, 180, 14);
 		contentPane.add(lblPackage);
 		
 		//VIN label
 		JLabel lblVin = new JLabel("VIN:");
 		lblVin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVin.setBounds(193, 146, 60, 14);
+		lblVin.setBounds(129, 160, 180, 14);
 		contentPane.add(lblVin);
+		
+		//Invalid label
+		lblInvalid = new JLabel("*Invalid information*");
+		lblInvalid.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInvalid.setBounds(129, 210, 180, 14);
+		contentPane.add(lblInvalid);
+		lblInvalid.setVisible(false);
 		
 		//Package box
 		JComboBox<String> comboBox_Misc = new JComboBox<String>();
@@ -89,7 +98,7 @@ public class VehicleSelectW extends JFrame {
 				getVehicle();
 			}
 		});
-		comboBox_Misc.setBounds(244, 115, 180, 20);
+		comboBox_Misc.setBounds(230, 130, 180, 20);
 		contentPane.add(comboBox_Misc);
 		
 		//Year box
@@ -100,7 +109,7 @@ public class VehicleSelectW extends JFrame {
 				setComboBox(comboBox_Misc, 4);
 			}
 		});
-		comboBox_Years.setBounds(10, 115, 180, 20);
+		comboBox_Years.setBounds(25, 130, 180, 20);
 		contentPane.add(comboBox_Years);
 		
 		//Model box
@@ -111,7 +120,7 @@ public class VehicleSelectW extends JFrame {
 				setComboBox(comboBox_Years, 3);
 			}
 		});
-		comboBox_Models.setBounds(244, 59, 180, 20);
+		comboBox_Models.setBounds(230, 80, 180, 20);
 		contentPane.add(comboBox_Models);
 		
 		//Manufacturer box
@@ -122,7 +131,7 @@ public class VehicleSelectW extends JFrame {
 				setComboBox(comboBox_Models, 2);
 			}
 		});
-		comboBox_Makes.setBounds(10, 59, 180, 20);
+		comboBox_Makes.setBounds(25, 80, 180, 20);
 		contentPane.add(comboBox_Makes);
 		
 		//Initialize boxes
@@ -130,19 +139,20 @@ public class VehicleSelectW extends JFrame {
 		
 		
 		//VIN field
-		JTextField vinField = new JTextField();
-		vinField.setBounds(129, 171, 180, 22);
-		contentPane.add(vinField);
+		vinField = new JTextField();
+		vinField.setBounds(129, 180, 180, 22);
 		vinField.setColumns(10);
+		contentPane.add(vinField);
 		
 		//Add vehicle to database button
 		JButton btnAddVehicle = new JButton("Add Vehicle");
 		btnAddVehicle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addOwnership(vinField.getText());
-				CustomerProfileW cpw = new CustomerProfileW(con, cus);
-				cpw.setVisible(true);
-				((Window) contentPane.getTopLevelAncestor()).dispose();
+				if (addOwnership()) {
+					CustomerProfileW cpw = new CustomerProfileW(con, cus);
+					cpw.setVisible(true);
+					((Window) contentPane.getTopLevelAncestor()).dispose();
+				}
 			}
 		});
 		btnAddVehicle.setBounds(294, 225, 130, 25);
@@ -257,13 +267,19 @@ public class VehicleSelectW extends JFrame {
 	}
 	
 	//Add ownership to database
-	public void addOwnership(String vin) {
-		Ownership owner = new Ownership(vin, cus.getNum(), vcl.getNum(), 0, "");
+	public boolean addOwnership() {
+		Ownership own = new Ownership("NULL", cus.getNum(), vcl.getNum(), 0, "");
+		if(!vinField.getText().equals("")) {
+			own.setVin("\"" + vinField.getText() + "\"");
+		}
 		try {
-			myStmt.executeUpdate(owner.insertString());
+			myStmt.executeUpdate(own.insertString());
+			return true;
 		} catch (SQLException eOwnAdd) {
 			eOwnAdd.printStackTrace();
 			System.out.println("Error adding ownership");
+			lblInvalid.setVisible(true);
+			return false;
 		}
 	}
 }

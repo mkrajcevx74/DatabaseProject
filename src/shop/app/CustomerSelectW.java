@@ -27,19 +27,19 @@ public class CustomerSelectW extends JFrame {
 		contentPane.setLayout(null);
 		
 		//Head label
-		JLabel lblHead = new JLabel("Select a customer to work with:");
+		JLabel lblHead = new JLabel("Select a customer:");
 		lblHead.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHead.setBounds(124, 61, 187, 14);
+		lblHead.setBounds(92, 30, 250, 14);
 		contentPane.add(lblHead);
 		
 		//Customer box
 		JComboBox<Customer> comboBox_Cus = new JComboBox<Customer>();
-		comboBox_Cus.setBounds(92, 86, 244, 20);
+		comboBox_Cus.setBounds(92, 80, 250, 20);
 		contentPane.add(comboBox_Cus);
 		comboBox_Cus.setModel(getCustomers(con));
 		
 		//Select button
-		btnSelectCustomer = new JButton("Select customer");
+		btnSelectCustomer = new JButton("Select Customer");
 		btnSelectCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CustomerProfileW cpw = new CustomerProfileW(con, ((Customer) comboBox_Cus.getSelectedItem()));
@@ -51,7 +51,7 @@ public class CustomerSelectW extends JFrame {
 		contentPane.add(btnSelectCustomer);
 		
 		//Add customer button
-		JButton btnAddACustomer = new JButton("Add a customer");
+		JButton btnAddACustomer = new JButton("Add a Customer");
 		btnAddACustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerAddW caw = new CustomerAddW(con, comboBox_Cus.getItemCount());
@@ -81,7 +81,7 @@ public class CustomerSelectW extends JFrame {
 		Customer cus = null;
 		try {
 			Statement myStmt = con.createStatement();
-			ResultSet myRs = myStmt.executeQuery("SELECT * FROM CUSTOMER;");
+			ResultSet myRs = myStmt.executeQuery("SELECT DISTINCT * FROM CUSTOMER;");
 			while (myRs.next()) {
 				cus = new Customer(myRs.getInt("CUS_NUM"), myRs.getString("CUS_FNAME"), myRs.getString("CUS_LNAME"), myRs.getString("CUS_CONTACT"));
 				cusList.addElement(cus);

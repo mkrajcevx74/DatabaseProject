@@ -19,6 +19,7 @@ public class CustomerProfileW extends JFrame {
 	private JButton btnEdit;
 	private JButton btnConfirm;
 	private JTextField textField_Contact;
+	private JLabel lblInvalid;
 	
 	//Connection variables
 	private Connection con;
@@ -42,25 +43,32 @@ public class CustomerProfileW extends JFrame {
 		//Title label
 		JLabel lblNewLabel = new JLabel(cus.toString());
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(141, 11, 131, 14);
+		lblNewLabel.setBounds(154, 30, 130, 14);
 		contentPane.add(lblNewLabel);
 		
 		//Contact label
 		JLabel lblContact = new JLabel("Contact #:");
-		lblContact.setBounds(25, 70, 100, 14);
+		lblContact.setBounds(25, 90, 100, 14);
 		contentPane.add(lblContact);
 		
 		//Vehicle label
 		JLabel lblSelectAVehicle = new JLabel("Owned vehicle:");
-		lblSelectAVehicle.setBounds(25, 110, 100, 17);
+		lblSelectAVehicle.setBounds(25, 125, 100, 17);
 		contentPane.add(lblSelectAVehicle);
 		
 		//Contact # field
 		textField_Contact = new JTextField(cus.getContact());
-		textField_Contact.setBounds(135, 67, 163, 20);
+		textField_Contact.setBounds(140, 87, 160, 20);
 		contentPane.add(textField_Contact);
 		textField_Contact.setColumns(10);
 		textField_Contact.setEditable(false);
+		
+		//Invalid label
+		lblInvalid = new JLabel("*Invalid information*");
+		lblInvalid.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInvalid.setBounds(140, 65, 163, 14);
+		lblInvalid.setVisible(false);
+		contentPane.add(lblInvalid);
 		
 		//Vehicle box
 		JComboBox<Vehicle> comboBox = new JComboBox<Vehicle>();
@@ -69,12 +77,12 @@ public class CustomerProfileW extends JFrame {
 				vcl = (Vehicle) comboBox.getSelectedItem();
 			}
 		});
-		comboBox.setBounds(135, 108, 163, 20);
+		comboBox.setBounds(140, 123, 160, 20);
 		contentPane.add(comboBox);
 		comboBox.setModel(getVehicles(cus.getNum()));
 		
 		//Edit info button
-		btnEdit = new JButton("Edit");
+		btnEdit = new JButton("Edit Info");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField_Contact.setEditable(true);
@@ -82,7 +90,7 @@ public class CustomerProfileW extends JFrame {
 				btnConfirm.setVisible(true);
 			}
 		});
-		btnEdit.setBounds(325, 64, 90, 25);
+		btnEdit.setBounds(310, 85, 100, 25);
 		contentPane.add(btnEdit);
 		
 		//Confirm update button
@@ -96,7 +104,7 @@ public class CustomerProfileW extends JFrame {
 				btnEdit.setVisible(true);
 			}
 		});
-		btnConfirm.setBounds(325, 64, 90, 25);
+		btnConfirm.setBounds(310, 85, 100, 25);
 		contentPane.add(btnConfirm);
 		btnConfirm.setVisible(false);
 		
@@ -178,6 +186,7 @@ public class CustomerProfileW extends JFrame {
 		} catch (SQLException eCusUpdate) {
 			eCusUpdate.printStackTrace();
 			System.out.println("Error updating customer");
+			lblInvalid.setVisible(true);
 		}
 	}
 }

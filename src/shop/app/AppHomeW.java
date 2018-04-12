@@ -25,9 +25,9 @@ public class AppHomeW extends JFrame {
 		contentPane.setLayout(null);
 		
 		//Head label
-		JLabel lblAppHome = new JLabel("App Home");
+		JLabel lblAppHome = new JLabel("Home");
 		lblAppHome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAppHome.setBounds(176, 34, 66, 14);
+		lblAppHome.setBounds(154, 30, 130, 14);
 		contentPane.add(lblAppHome);
 		
 		//Customer select button
@@ -39,20 +39,20 @@ public class AppHomeW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectACustomer.setBounds(134, 81, 160, 23);
+		btnSelectACustomer.setBounds(140, 80, 160, 25);
 		contentPane.add(btnSelectACustomer);
 		
 		//Employee select button
-		JButton btnSelectAnEmployee = new JButton("Select an Employee");
-		btnSelectAnEmployee.addActionListener(new ActionListener() {
+		JButton btnSelectTec = new JButton("Select a Technician");
+		btnSelectTec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TechnicianSelectW tsw = new TechnicianSelectW(con);
 				tsw.setVisible(true);
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnSelectAnEmployee.setBounds(134, 142, 160, 23);
-		contentPane.add(btnSelectAnEmployee);
+		btnSelectTec.setBounds(140, 135, 160, 25);
+		contentPane.add(btnSelectTec);
 		
 		//View schedule button
 		JButton btnViewSchedule = new JButton("View Schedule");
@@ -64,7 +64,7 @@ public class AppHomeW extends JFrame {
 				((Window) contentPane.getTopLevelAncestor()).dispose();
 			}
 		});
-		btnViewSchedule.setBounds(134, 203, 160, 23);
+		btnViewSchedule.setBounds(140, 190, 160, 25);
 
 		contentPane.add(btnViewSchedule);
 	}

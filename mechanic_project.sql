@@ -60,9 +60,9 @@ INSERT INTO `appointment` (`APT_NUM`, `VIN`, `SHIFT_NUM`, `SERV_NUM`) VALUES
 
 CREATE TABLE `customer` (
   `CUS_NUM` int(5) NOT NULL,
-  `CUS_FNAME` varchar(30) NOT NULL,
+  `CUS_FNAME` varchar(20) NOT NULL,
   `CUS_LNAME` varchar(20) NOT NULL,
-  `CUS_CONTACT` varchar(100) NOT NULL
+  `CUS_CONTACT` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -210,9 +210,9 @@ INSERT INTO `service` (`SERV_NUM`, `SERV_DESC`) VALUES
 
 CREATE TABLE `technician` (
   `EMP_NUM` int(255) NOT NULL,
-  `EMP_FNAME` varchar(10) NOT NULL,
-  `EMP_LNAME` varchar(10) NOT NULL,
-  `EMP_CONTACT` varchar(11) NOT NULL,
+  `EMP_FNAME` varchar(20) NOT NULL,
+  `EMP_LNAME` varchar(20) NOT NULL,
+  `EMP_CONTACT` varchar(20) NOT NULL,
   `EMP_RATING` double NOT NULL,
   `EMP_RATING_COUNT` int(4) NOT NULL,
   `EMP_WAGE` float NOT NULL
@@ -223,13 +223,13 @@ CREATE TABLE `technician` (
 --
 
 INSERT INTO `technician` (`EMP_NUM`, `EMP_FNAME`, `EMP_LNAME`, `EMP_CONTACT`, `EMP_RATING`, `EMP_RATING_COUNT`, `EMP_WAGE`) VALUES
-(1, 'Sean', 'Dallas', '248-000-000', 8, 1, 15.8),
-(2, 'Jenny', 'Jenny', '800-867-530', 9, 5, 15),
-(3, 'John', 'Doe', '248-000-000', 6, 3, 10.6),
-(4, 'Gordon', 'Freeman', '248-000-000', 10, 8, 15.9),
-(5, 'Cid', 'Highwind', '248-000-000', 9, 5, 15.5),
-(6, 'Hal', 'Emmerich', '248-000-000', 8, 4, 14.5),
-(7, 'Isaac', 'Clarke', '248-000-000', 8, 6, 13.5);
+(1, 'Sean', 'Dallas', '248-000-0000', 8, 1, 15.8),
+(2, 'Jenny', 'Jenny', '800-867-5309', 9, 5, 15),
+(3, 'John', 'Doe', '248-000-0000', 6, 3, 10.6),
+(4, 'Gordon', 'Freeman', '248-000-0000', 10, 8, 15.9),
+(5, 'Cid', 'Highwind', '248-000-0000', 9, 5, 15.5),
+(6, 'Hal', 'Emmerich', '248-000-0000', 8, 4, 14.5),
+(7, 'Isaac', 'Clarke', '248-000-0000', 8, 6, 13.5);
 
 -- --------------------------------------------------------
 

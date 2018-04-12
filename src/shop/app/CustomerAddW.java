@@ -14,7 +14,7 @@ import shop.core.Customer;
 public class CustomerAddW extends JFrame {
 	//Component variables
 	private JPanel contentPane;
-	JLabel lblInvalid;
+	private JLabel lblInvalid;
 	private JTextField fNameField;
 	private JTextField lNameField;
 	private JTextField contactField;
@@ -28,49 +28,50 @@ public class CustomerAddW extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//Head label
-		JLabel lblAddACustomer = new JLabel("Add a customer:");
-		lblAddACustomer.setBounds(171, 35, 128, 14);
-		contentPane.add(lblAddACustomer);
+		//Title label
+		JLabel lblNewLabel = new JLabel("Add a customer");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(154, 30, 130, 14);
+		contentPane.add(lblNewLabel);
 		
 		//FName label
 		JLabel lblFirstName = new JLabel("First name:");
-		lblFirstName.setBounds(45, 81, 89, 14);
+		lblFirstName.setBounds(35, 80, 100, 14);
 		contentPane.add(lblFirstName);
 		
 		//LName label
 		JLabel lblLastName = new JLabel("Last name:");
-		lblLastName.setBounds(45, 112, 89, 14);
+		lblLastName.setBounds(35, 115, 100, 14);
 		contentPane.add(lblLastName);
 		
 		//Contact label
 		JLabel lblContactNumber = new JLabel("Contact number:");
-		lblContactNumber.setBounds(45, 143, 89, 14);
+		lblContactNumber.setBounds(35, 150, 100, 14);
 		contentPane.add(lblContactNumber);
 		
 		//Invalid label
-		lblInvalid = new JLabel("*Please enter valid information*");
+		lblInvalid = new JLabel("*Invalid information*");
 		lblInvalid.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInvalid.setBounds(128, 168, 199, 14);
+		lblInvalid.setBounds(140, 170, 160, 14);
 		contentPane.add(lblInvalid);
 		lblInvalid.setVisible(false);
 		
 		//FName field
 		fNameField = new JTextField();
-		fNameField.setBounds(161, 78, 136, 20);
+		fNameField.setBounds(140, 77, 160, 20);
 		contentPane.add(fNameField);
 		fNameField.setColumns(10);
 		
 		//LName field
 		lNameField = new JTextField();
 		lNameField.setColumns(10);
-		lNameField.setBounds(161, 109, 136, 20);
+		lNameField.setBounds(140, 112, 160, 20);
 		contentPane.add(lNameField);
 		
 		//Contact field
 		contactField = new JTextField();
 		contactField.setColumns(10);
-		contactField.setBounds(161, 140, 136, 20);
+		contactField.setBounds(140, 147, 160, 20);
 		contentPane.add(contactField);
 		
 		//Add customer button

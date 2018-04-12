@@ -85,7 +85,7 @@ public class Technician {
 	public void updateRating(int newRating) {
 		float totalRating = rating * rCount;
 		rCount++;
-		rating = (newRating + totalRating)/rCount;
+		rating = ((newRating + totalRating)/rCount);
 	}
 	
 	//Return technician's wage

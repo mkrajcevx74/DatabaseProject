@@ -53,18 +53,13 @@ public class ServiceViewW extends JFrame {
 		//Head label
 		JLabel lblServices = new JLabel("Services");
 		lblServices.setHorizontalAlignment(SwingConstants.CENTER);
-		lblServices.setBounds(167, 11, 89, 14);
+		lblServices.setBounds(154, 30, 130, 14);
 		contentPane.add(lblServices);
-		
-		//Select label
-		JLabel lblSelectAService = new JLabel("Select a service:");
-		lblSelectAService.setBounds(20, 85, 109, 14);
-		contentPane.add(lblSelectAService);
 		
 		//Action confirm message label
 		lblMessage = new JLabel("*message*");
 		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMessage.setBounds(167, 59, 220, 14);
+		lblMessage.setBounds(230, 59, 180, 14);
 		contentPane.add(lblMessage);
 		lblMessage.setVisible(false);
 		
@@ -82,19 +77,19 @@ public class ServiceViewW extends JFrame {
 		//View all services radio button
 		rdbtnViewAll = new JRadioButton("View all services");
 		rdbtnViewAll.addActionListener(listener);
-		rdbtnViewAll.setBounds(20, 121, 210, 23);
+		rdbtnViewAll.setBounds(25, 80, 180, 23);
 		contentPane.add(rdbtnViewAll);
 		
 		//View recommended services
 		rdbtnViewRecs = new JRadioButton("View recommended services");
 		rdbtnViewRecs.addActionListener(listener);
-		rdbtnViewRecs.setBounds(20, 147, 210, 23);
+		rdbtnViewRecs.setBounds(25, 105, 200, 23);
 		contentPane.add(rdbtnViewRecs);
 		
 		//Add recommendation radio button
 		rdbtnAddRecs = new JRadioButton("Add recommendation");
 		rdbtnAddRecs.addActionListener(listener);
-		rdbtnAddRecs.setBounds(20, 173, 210, 23);
+		rdbtnAddRecs.setBounds(25, 130, 210, 23);
 		contentPane.add(rdbtnAddRecs);
 		
 		//Initialize radio button group + listener
@@ -111,7 +106,7 @@ public class ServiceViewW extends JFrame {
 				serv = (Service) comboBox.getSelectedItem();
 			}
 		});
-		comboBox.setBounds(167, 82, 220, 20);
+		comboBox.setBounds(230, 80, 180, 20);
 		contentPane.add(comboBox);
 		setServices(comboBox);
 		
@@ -224,6 +219,7 @@ public class ServiceViewW extends JFrame {
 			myStmt = con.createStatement();
 			myStmt.executeUpdate(rec.addRecStmt());
 			lblMessage.setText("Recommendation added");
+			lblMessage.setVisible(true);
 		} catch (SQLException eRecAdd) {
 			eRecAdd.printStackTrace();
 			System.out.println("Error adding recommendation");
@@ -238,6 +234,7 @@ public class ServiceViewW extends JFrame {
 			myStmt = con.createStatement();
 			myStmt.executeUpdate(rec.delRecStmt());
 			lblMessage.setText("Recommendation removed");
+			lblMessage.setVisible(true);
 		} catch (SQLException eRecDel) {
 			eRecDel.printStackTrace();
 			System.out.println("Error deleting recommendation");
